@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>🎀 Happy Birthday, My Wife Halima | A Journey of Love 🧸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    body {
+      background: linear-gradient(145deg, #ffe3ec, #ffc0d0);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* start overlay */
+    .start-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+    .start-card {
+      background: #fffaf5;
+      max-width: 550px;
+      margin: 20px;
+      padding: 45px 30px;
+      border-radius: 70px;
+      text-align: center;
+      animation: fadePop 0.5s;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+    }
+    @keyframes fadePop { from { opacity:0; transform: scale(0.9);} to { opacity:1; transform: scale(1);} }
+    .start-card h2 { font-family: 'Playfair Display'; color: #b34266; margin: 15px 0; }
+    .question-buttons { display: flex; gap: 25px; justify-content: center; margin-top: 30px; }
+    .yes-no { background: #e57393; border: none; padding: 14px 35px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; color: white; cursor: pointer; transition: 0.2s; }
+    .yes-no:hover { transform: scale(1.05); background: #c75373; }
+    .hidden-content { display: none; }
+    /* main site */
+    .main-site {
+      display: none;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 20px 28px 70px;
+      position: relative;
+      z-index: 10;
+    }
+    .glass-card { background: rgba(255,248,245,0.9); backdrop-filter: blur(10px); border-radius: 56px; padding: 30px; margin-bottom: 40px; box-shadow: 0 20px 35px rgba(0,0,0,0.1); }
+    .hero { text-align: center; background: linear-gradient(125deg, #fff0f4, #ffe0e8); border-radius: 90px; padding: 50px 20px; }
+    .hero h1 { font-size: 3.2rem; background: linear-gradient(135deg, #b82b56, #862a4b); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Playfair Display'; }
+    .section-title { font-size: 2rem; text-align: center; color: #a13e5c; margin: 30px 0 20px; font-family: 'Playfair Display'; }
+    /* interactive hug zone */
+    .hug-zone { text-align: center; background: #fff3f0; }
+    .hug-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 20px 0; }
+    .hug-btn { background: #e57393; border: none; padding: 12px 22px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .hug-message { background: #ffeef2; border-radius: 50px; padding: 20px; margin-top: 15px; min-height: 80px; }
+    /* love meter slider */
+    .love-slider { width: 100%; margin: 15px 0; }
+    .puzzle-lock, .quiz-area { background: #fff5f0; border-radius: 50px; padding: 20px; text-align: center; margin-top: 20px; }
+    .puzzle-input { padding: 12px; border-radius: 40px; border: 1px solid #ffb7c5; width: 70%; margin: 10px; text-align: center; }
+    .secret-btn { background: #b34266; border: none; padding: 10px 20px; border-radius: 40px; color: white; cursor: pointer; }
+    .floating-teddies { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+    .float-item { position: absolute; bottom: -30px; font-size: 1.6rem; animation: floatUpRandom 9s infinite; opacity: 0.5; }
+    @keyframes floatUpRandom { 0% { transform: translateY(0); opacity: 0.6; } 100% { transform: translateY(-120vh); opacity: 0; } }
+    footer { text-align: center; margin-top: 50px; background: rgba(255,235,225,0.8); border-radius: 60px; padding: 25px; }
+    @media (max-width:700px){ .hero h1{ font-size:2rem; } .section-title{font-size:1.6rem;} }
+  </style>
+</head>
+<body>
+
+<div class="start-overlay" id="startOverlay">
+  <div class="start-card">
+    <i class="fas fa-heart" style="font-size: 3rem; color:#e96479;"></i>
+    <h2>My Dearest Wife, Halima ❤️</h2>
+    <p style="font-size:1.2rem; margin:15px 0;">Your Teddy Bear has prepared something very special for your birthday... 🧸💕</p>
+    <p style="font-weight:bold;">Do you want to see what I made for you, my love?</p>
+    <div class="question-buttons">
+      <button class="yes-no" id="yesBtn">Yes, my husband! 🧸</button>
+      <button class="yes-no" id="noBtn">Not yet... (just kidding!)</button>
+    </div>
+    <p style="margin-top:20px; font-size:0.8rem;">*spoiler: full of hugs, surprises & endless love*</p>
+  </div>
+</div>
+
+<!-- MAIN INTERACTIVE SITE (hidden until yes) -->
+<div class="main-site" id="mainSite">
+  <!-- floating teddy container -->
+  <div class="floating-teddies" id="floatContainer"></div>
+  
+  <div class="hero glass-card">
+    <h1>🎂 Happy Birthday, My Wife Halima 🎂</h1>
+    <p class="sub" style="font-size:1.3rem; font-family:'Dancing Script';">To the queen of my heart — from your Teddy Bear husband 🧸</p>
+    <div class="badge-couple" style="background:#fcc4d2; display:inline-block; padding:8px 22px; border-radius:60px; margin-top:15px;"><i class="fas fa-ring"></i> Husband & Wife — best friends, lovers, soulmates <i class="fas fa-heart"></i></div>
+  </div>
+
+  <!-- INTERACTIVE LOVE LETTER + TEDDY BEAR MOMENT -->
+  <div class="glass-card" style="text-align:center;">
+    <i class="fas fa-bear" style="font-size:3rem; color:#b85a78;"></i>
+    <p style="font-size:1.2rem;">My beautiful wife, from the moment we met (April 1, 2024) until today — every second with you is a treasure. You're my best friend, my lover, and my forever. This is all for YOU, my Halima. 🧸💗</p>
+  </div>
+
+  <!-- HUG & CUDDLE ZONE (interactive with tap to hug) -->
+  <div class="hug-zone glass-card" id="hugZone">
+    <h2><i class="fas fa-hand-holding-heart"></i> Teddy Bear Hug & Cuddle Machine 🧸</h2>
+    <p>Tap any button — your husband will send you a warm hug instantly!</p>
+    <div class="hug-buttons">
+      <button class="hug-btn" id="warmHugBtn"><i class="fas fa-heart"></i> Warm Hug</button>
+      <button class="hug-btn" id="cuddleBtn"><i class="fas fa-bed"></i> Cuddle Time</button>
+      <button class="hug-btn" id="bearHugBtn"><i class="fas fa-bear"></i> Teddy Squeeze</button>
+      <button class="hug-btn" id="kissBtn"><i class="fas fa-kiss-wink-heart"></i> Kiss + Hug</button>
+    </div>
+    <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting... tap a hug, my love 🤗</div>
+    <div class="hug-counter" style="margin-top:12px;">❤️ Total hugs today: <span id="hugCount">0</span></div>
+  </div>
+
+  <!-- LOVE METER (interactive slider) -->
+  <div class="glass-card">
+    <h3><i class="fas fa-chart-line"></i> How much does your husband love you?</h3>
+    <input type="range" id="loveMeter" class="love-slider" min="0" max="100" value="100" disabled>
+    <p id="loveValueDisplay" style="font-size:1.5rem; font-weight:bold; color:#b34266;">∞ INFINITY + BEYOND ∞</p>
+    <p>(slide me but it's locked because his love is infinite 💕)</p>
+  </div>
+
+  <!-- SECRET PUZZLE LOCK: interactive unlock special message -->
+  <div class="glass-card puzzle-lock">
+    <i class="fas fa-lock" style="font-size:2rem;"></i>
+    <h3>🔐 A Secret Message from Your Husband</h3>
+    <p>What’s the special nickname your husband calls you? (Hint: it's fluffy and starts with "Teddy"...)</p>
+    <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type here...">
+    <button id="unlockPuzzleBtn" class="secret-btn"><i class="fas fa-key"></i> Unlock Surprise</button>
+    <div id="puzzleResult" style="margin-top:15px; font-weight:bold;"></div>
+  </div>
+
+  <!-- QUIZ: how well do you know your husband? -->
+  <div class="glass-card quiz-area">
+    <h3><i class="fas fa-question-circle"></i> Mini Quiz: You & Me 💑</h3>
+    <p><strong>1. On which date did we first meet?</strong></p>
+    <button class="secret-btn" data-quiz="q1" data-ans="april 1 2024">April 1, 2024</button>
+    <button class="secret-btn" data-quiz="q1" data-ans="march 1">March 1, 2024</button>
+    <p><strong>2. What does your husband call you most?</strong></p>
+    <button class="secret-btn" data-quiz="q2" data-ans="my wife">My Wife</button>
+    <button class="secret-btn" data-quiz="q2" data-ans="darling">Darling</button>
+    <div id="quizFeedback" style="margin-top:20px; font-style:italic;"></div>
+  </div>
+
+  <!-- Journey timeline interactive -->
+  <div class="glass-card" style="text-align:center;">
+    <h3><i class="fas fa-road"></i> Our Love Journey</h3>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;">
+      <div class="memory-timeline" style="background:#ffe2ea; border-radius:50px; padding:10px 18px;">✨ 1st April 2024 — we met</div>
+      <div class="memory-timeline" style="background:#ffe2ea; border-radius:50px; padding:10px 18px;">💞 Friends → Best friends → Lovers</div>
+      <div class="memory-timeline" style="background:#ffe2ea; border-radius:50px; padding:10px 18px;">🧸 Husband & Wife (forever in our hearts)</div>
+    </div>
+  </div>
+
+  <!-- Countdown to birthday cheer + more interactive -->
+  <div class="glass-card">
+    <h3><i class="fas fa-gift"></i> Birthday Surprise Confetti 🎉</h3>
+    <button id="confettiRainBtn" class="secret-btn" style="background:#e35f7e;"><i class="fas fa-star"></i> Shower Birthday Magic!</button>
+    <button id="specialLoveNoteBtn" class="secret-btn" style="margin-left:10px;"><i class="fas fa-envelope"></i> A Secret Love Note</button>
+  </div>
+
+  <footer>
+    <i class="fas fa-cake-candles"></i> To my wife Halima — from your Teddy Bear husband. May 3rd is YOUR day. Every day I thank the universe for you. 🧸💗
+  </footer>
+</div>
+
+<!-- MODAL for love note -->
+<div id="loveNoteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(5px); z-index:5000; justify-content:center; align-items:center;">
+  <div style="background:#fffaf5; max-width:450px; margin:20px; padding:35px; border-radius:70px; text-align:center;">
+    <i class="fas fa-heart" style="font-size:3rem; color:#e75480;"></i>
+    <h2>To my darling wife Halima 💌</h2>
+    <p>From your Teddy Bear: You are the melody of my soul, the sunshine of my mornings. I will love you until the stars burn out. Happy Birthday, my beautiful wife. 🧸</p>
+    <button id="closeModalBtn" style="background:#c75373; border:none; padding:10px 25px; border-radius:40px; color:white; margin-top:15px;">I love you, hubby 🧸</button>
+  </div>
+</div>
+
+<script>
+  // START INTERACTION: Yes/No
+  const startOverlay = document.getElementById('startOverlay');
+  const mainSite = document.getElementById('mainSite');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  
+  function launchStartConfetti(){
+    canvasConfetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#ff9eb5', '#ff6f8f'] });
+  }
+  
+  yesBtn.addEventListener('click', () => {
+    startOverlay.style.opacity = '0';
+    setTimeout(() => {
+      startOverlay.style.display = 'none';
+      mainSite.style.display = 'block';
+      launchStartConfetti();
+      setTimeout(() => {
+        canvasConfetti({ particleCount: 300, spread: 100, origin: { y: 0.5 } });
+      }, 200);
+      // start floating bears and extra
+      for(let i=0;i<15;i++) setTimeout(() => createFloating(), i*150);
+    }, 400);
+  });
+  
+  noBtn.addEventListener('click', () => {
+    alert("I know you're joking, my love! But tap 'Yes' — your Teddy Bear has a beautiful surprise for you 🧸💕");
+    // little teaser
+    canvasConfetti({ particleCount: 80, spread: 50, origin: { y: 0.7 } });
+  });
+  
+  // floating teddies
+  function createFloating() {
+    const container = document.getElementById('floatContainer');
+    if(!container) return;
+    const el = document.createElement('div');
+    el.classList.add('float-item');
+    const icons = ['🧸', '🐻', '❤️', '🌸', '🧸', '💖'];
+    el.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+    el.style.left = Math.random() * 100 + '%';
+    el.style.animationDuration = Math.random() * 8 + 6 + 's';
+    el.style.fontSize = Math.random() * 28 + 18 + 'px';
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 11000);
+  }
+  setInterval(() => { if(mainSite.style.display === 'block') createFloating(); }, 700);
+  
+  // HUG SYSTEM
+  let totalHugs = 0;
+  const hugCounterSpan = document.getElementById('hugCount');
+  const hugMsgDiv = document.getElementById('hugMessageDisplay');
+  function updateHugCounter(){ hugCounterSpan.innerText = totalHugs; }
+  function showHug(msg, emoji){
+    hugMsgDiv.innerHTML = `<i class="fas fa-heart"></i> ${msg} ${emoji} <i class="fas fa-heart"></i>`;
+    canvasConfetti({ particleCount: 35, spread: 40, origin: { y: 0.8 }, startVelocity: 7, colors: ['#ffb7c5'] });
+    if(totalHugs === 5) hugMsgDiv.innerHTML += `<br>🎉 5 hugs! I'm holding you tight, my wife! 🎉`;
+    if(totalHugs === 10) { hugMsgDiv.innerHTML += `<br>💗 10 HUGS! You're my everything, Halima 💗`; burstHeavy(); }
+    if(totalHugs === 20) { hugMsgDiv.innerHTML += `<br>✨ 20 Hugs! I love you more than infinity ✨`; burstHeavy(); }
+  }
+  function burstHeavy(){
+    canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+    setTimeout(()=>canvasConfetti({ particleCount: 300, spread: 120, origin: { y: 0.5 } }),150);
+  }
+  function addHug(type){
+    totalHugs++;
+    updateHugCounter();
+    if(type==='warm') showHug("Your husband wraps you in a warm, cozy hug. Feel my arms around you, my love.", "🤗🧸");
+    else if(type==='cuddle') showHug("Teddy Bear cuddle time! Let's curl up together, my wife.", "🛌💤");
+    else if(type==='bear') showHug("A GIANT Teddy Bear squeeze! I'm hugging you with all my heart.", "🐻❤️");
+    else if(type==='kiss') showHug("A sweet kiss on your forehead + the warmest hug. You're so loved!", "💋🧸");
+    createFloating();
+  }
+  document.getElementById('warmHugBtn')?.addEventListener('click',()=>addHug('warm'));
+  document.getElementById('cuddleBtn')?.addEventListener('click',()=>addHug('cuddle'));
+  document.getElementById('bearHugBtn')?.addEventListener('click',()=>addHug('bear'));
+  document.getElementById('kissBtn')?.addEventListener('click',()=>addHug('kiss'));
+  
+  // PUZZLE LOCK: secret message (answer: teddy bear)
+  const unlockBtn = document.getElementById('unlockPuzzleBtn');
+  const puzzleAns = document.getElementById('puzzleAnswer');
+  const puzzleResultDiv = document.getElementById('puzzleResult');
+  unlockBtn?.addEventListener('click',()=>{
+    let ans = puzzleAns.value.trim().toLowerCase();
+    if(ans === "teddy bear" || ans === "teddybear" || ans === "my teddy bear"){
+      puzzleResultDiv.innerHTML = "🔓✨ You unlocked a special message from your husband: 'My beautiful wife, I will be your Teddy Bear forever. I love you more than every star. Happy Birthday, Halima! 🧸💖'";
+      canvasConfetti({ particleCount: 180, spread: 70, origin: { y: 0.6 }, colors: ['#ffb7c5','#ff6f91'] });
+    } else {
+      puzzleResultDiv.innerHTML = "❌ Not quite, my love! Hint: it's what you call me all the time... 🧸 (Teddy Bear)";
+    }
+  });
+  
+  // QUIZ INTERACTION
+  const quizBtns = document.querySelectorAll('[data-quiz]');
+  const quizFeedback = document.getElementById('quizFeedback');
+  let q1Correct = false, q2Correct = false;
+  quizBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const q = btn.getAttribute('data-quiz');
+      const answer = btn.getAttribute('data-ans');
+      if(q === 'q1'){
+        if(answer === 'april 1 2024'){
+          q1Correct = true;
+          quizFeedback.innerHTML = "✅ Yes! We met on April 1, 2024 — the most beautiful day! 💖";
+          canvasConfetti({ particleCount: 60, spread: 40, origin: { y: 0.7 } });
+        } else {
+          quizFeedback.innerHTML = "❌ Not that day, sweetheart. It's April 1st, 2024 (our magical start!)";
+        }
+      } else if(q === 'q2'){
+        if(answer === 'my wife'){
+          q2Correct = true;
+          quizFeedback.innerHTML = "❤️ Exactly! I call you 'my wife' because you are my everything. Forever yours.";
+          canvasConfetti({ particleCount: 80, spread: 50, origin: { y: 0.7 } });
+        } else {
+          quizFeedback.innerHTML = "💞 I love calling you 'my wife' — because in my heart, you're my soulmate.";
+        }
+      }
+      if(q1Correct && q2Correct){
+        quizFeedback.innerHTML += "<br><br>🎉 You know me so well, my love! You're truly my wife in every way 🎉";
+        burstHeavy();
+      }
+    });
+  });
+  
+  // CONFETTI RAIN and Love Note Modal
+  const confettiBtn = document.getElementById('confettiRainBtn');
+  confettiBtn?.addEventListener('click', ()=>{
+    burstHeavy();
+    setTimeout(()=>{ canvasConfetti({ particleCount: 500, spread: 120, origin: { y: 0.4 }, startVelocity: 18 }); }, 100);
+    setTimeout(()=>{ canvasConfetti({ particleCount: 300, spread: 100, origin: { y: 0.7 } }); }, 300);
+  });
+  
+  const loveNoteModal = document.getElementById('loveNoteModal');
+  const specialNoteBtn = document.getElementById('specialLoveNoteBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  specialNoteBtn?.addEventListener('click', ()=>{
+    loveNoteModal.style.display = 'flex';
+    canvasConfetti({ particleCount: 100, spread: 60, origin: { y: 0.5 } });
+  });
+  closeModalBtn?.addEventListener('click', ()=>{
+    loveNoteModal.style.display = 'none';
+  });
+  window.addEventListener('click', (e)=>{
+    if(e.target === loveNoteModal) loveNoteModal.style.display = 'none';
+  });
+  
+  // extra interactive: Memory cards click effect + heart effect
+  const memoryDivs = document.querySelectorAll('.memory-timeline');
+  memoryDivs.forEach(div => {
+    div.addEventListener('click', (e) => {
+      canvasConfetti({ particleCount: 35, spread: 35, origin: { y: 0.8 } });
+      const heartFly = document.createElement('div');
+      heartFly.innerHTML = '🧸❤️';
+      heartFly.style.position = 'fixed';
+      heartFly.style.left = e.clientX + 'px';
+      heartFly.style.top = e.clientY + 'px';
+      heartFly.style.fontSize = '2rem';
+      heartFly.style.pointerEvents = 'none';
+      heartFly.style.transition = 'all 1s ease';
+      document.body.appendChild(heartFly);
+      setTimeout(()=>{ heartFly.style.opacity = '0'; heartFly.style.transform = 'translateY(-60px)'; setTimeout(()=>heartFly.remove(),800); }, 30);
+    });
+  });
+  
+  // love meter disabled but infinite message
+  const loveMeter = document.getElementById('loveMeter');
+  if(loveMeter) loveMeter.addEventListener('input', (e)=>{
+    document.getElementById('loveValueDisplay').innerHTML = "∞ INFINITY + " + e.target.value + "% more ∞";
+  });
+  
+  // initial welcome confetti when main loads
+  window.onload = () => {
+    // just prepare but start hidden
+  };
+</script>
+</body>
+</html>
