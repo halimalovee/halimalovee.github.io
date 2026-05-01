@@ -6,15 +6,18 @@
     <title>🎀 Happy Birthday, Halima | Endless Love from Your Teddy Bear 🧸</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1">
+    </script>
     <style>
         :root {
             --pink-light: #ffe8ee;
             --pink-mid: #ffc4d4;
             --pink-rose: #e57393;
             --pink-deep: #b34266;
-            --card-bg: rgba(255, 248, 245, 0.9);
+            --card-bg: rgba(255, 248, 245, 0.92);
             --shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
             --radius: 48px;
+            --text-dark: #5a3e4b;
         }
         * {
             margin: 0;
@@ -33,7 +36,50 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             position: relative;
-            cursor: default;
+            transition: background 0.6s ease, color 0.6s ease;
+        }
+        /* Night mode */
+        body.night-mode {
+            background: #0b0c1a;
+            color: #eee;
+        }
+        body.night-mode::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: transparent;
+            box-shadow: 0 0 150px 40px rgba(255, 255, 255, 0.03);
+            animation: starPulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes starPulse {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+        body.night-mode .glass-card {
+            background: rgba(25, 25, 40, 0.85);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #f0e6ef;
+        }
+        body.night-mode .hero {
+            background: linear-gradient(135deg, rgba(40, 30, 50, 0.9), rgba(30, 20, 45, 0.9));
+        }
+        body.night-mode .hug-message {
+            background: rgba(60, 50, 70, 0.7);
+        }
+        body.night-mode .reason-card {
+            background: rgba(50, 40, 60, 0.8);
+        }
+        body.night-mode .countdown {
+            color: #ffb3c6;
         }
         body::before {
             content: '';
@@ -48,6 +94,40 @@
                 radial-gradient(ellipse at 18% 22%, rgba(255, 182, 193, 0.22) 0%, transparent 50%),
                 radial-gradient(ellipse at 78% 58%, rgba(255, 160, 180, 0.18) 0%, transparent 50%),
                 radial-gradient(ellipse at 48% 82%, rgba(255, 190, 200, 0.25) 0%, transparent 50%);
+            transition: opacity 0.6s;
+        }
+        body.night-mode::before {
+            opacity: 0;
+        }
+
+        /* Night mode toggle button */
+        .night-toggle {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            z-index: 5000;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 40px;
+            padding: 10px 18px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: var(--pink-deep);
+        }
+        body.night-mode .night-toggle {
+            background: rgba(40, 40, 60, 0.8);
+            color: #ffb3c6;
+        }
+        .night-toggle:hover {
+            transform: scale(1.05);
         }
 
         /* start overlay */
@@ -94,6 +174,12 @@
                 transform: scale(1) translateY(0);
             }
         }
+        .start-card .heart-icon {
+            font-size: 3rem;
+            color: #e96479;
+            animation: pulse 1.2s ease-in-out infinite;
+            display: inline-block;
+        }
         @keyframes pulse {
             0%,
             100% {
@@ -102,12 +188,6 @@
             50% {
                 transform: scale(1.16);
             }
-        }
-        .start-card .heart-icon {
-            font-size: 3rem;
-            color: #e96479;
-            animation: pulse 1.2s ease-in-out infinite;
-            display: inline-block;
         }
         .start-card h2 {
             font-family: 'Playfair Display', serif;
@@ -139,9 +219,6 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 28px rgba(229, 115, 147, 0.5);
             background: #d4627f;
-        }
-        .yes-no:active {
-            transform: scale(0.95);
         }
         .yes-no.no-btn {
             background: #c9a9b5;
@@ -252,12 +329,6 @@
         .hug-btn.btn-alt:hover {
             background: #9e3857;
         }
-        .hug-btn.btn-soft {
-            background: #d4a0b5;
-        }
-        .hug-btn.btn-soft:hover {
-            background: #c48da3;
-        }
         .hug-message {
             background: #ffeef3;
             border-radius: 42px;
@@ -279,10 +350,8 @@
             margin: 8px;
             text-align: center;
             font-size: 1rem;
-            font-family: 'Inter', sans-serif;
             background: #fff;
             outline: none;
-            transition: all 0.25s;
         }
         .puzzle-input:focus {
             border-color: #e57393;
@@ -300,18 +369,16 @@
             text-align: center;
             box-shadow: 0 5px 14px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 200, 210, 0.35);
-            vertical-align: top;
         }
         .reason-card:hover {
             transform: translateY(-4px) scale(1.04);
             background: #ffe8ee;
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
         }
         .countdown {
             font-size: clamp(1.4rem, 3.5vw, 2rem);
             font-weight: 700;
             color: #b34266;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             font-family: 'Playfair Display', serif;
         }
         .countdown.celebration {
@@ -323,7 +390,7 @@
                 text-shadow: 0 0 8px rgba(200, 60, 100, 0.5);
             }
             100% {
-                text-shadow: 0 0 28px rgba(220, 70, 110, 0.9), 0 0 50px rgba(255, 150, 180, 0.6);
+                text-shadow: 0 0 28px rgba(220, 70, 110, 0.9);
             }
         }
         .candle-row {
@@ -338,7 +405,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             animation: flicker 0.7s ease-in-out infinite alternate;
-            display: inline-block;
             filter: drop-shadow(0 0 10px rgba(255, 170, 50, 0.7));
         }
         .candle.blown {
@@ -365,7 +431,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.82);
             backdrop-filter: blur(7px);
-            -webkit-backdrop-filter: blur(7px);
             z-index: 6000;
             justify-content: center;
             align-items: center;
@@ -375,7 +440,7 @@
         }
         .love-modal .modal-content {
             background: #fffaf7;
-            max-width: 460px;
+            max-width: 480px;
             width: 90%;
             margin: 20px;
             padding: 34px 26px;
@@ -396,11 +461,47 @@
             color: #b34266;
             opacity: 0.7;
         }
-        .modal-content .close-btn:hover {
-            opacity: 1;
+        .certificate-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 7000;
+            justify-content: center;
+            align-items: center;
         }
-
-        /* floating teddies */
+        .certificate-modal.active {
+            display: flex;
+        }
+        .certificate-content {
+            background: #fffef7;
+            padding: 40px 30px;
+            border-radius: 30px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            border: 4px double #e57393;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+        }
+        .certificate-content h2 {
+            font-size: 2.5rem;
+            color: #b34266;
+            margin-bottom: 10px;
+        }
+        .certificate-content .name {
+            font-size: 2.8rem;
+            color: #c0395b;
+            font-family: 'Dancing Script', cursive;
+            margin: 15px 0;
+        }
+        .certificate-content .seal {
+            font-size: 3rem;
+            margin-top: 20px;
+        }
         .floating-teddies {
             position: fixed;
             top: 0;
@@ -417,7 +518,6 @@
             font-size: 1.4rem;
             animation: floatUp linear infinite;
             opacity: 0;
-            will-change: transform, opacity;
         }
         @keyframes floatUp {
             0% {
@@ -435,8 +535,6 @@
                 opacity: 0;
             }
         }
-
-        /* heart garden */
         .garden-grid {
             display: flex;
             flex-wrap: wrap;
@@ -460,38 +558,6 @@
         .garden-plot.planted {
             border: 2px solid #e57393;
             background: #fff0f4;
-            animation: plantedPop 0.5s ease;
-        }
-        @keyframes plantedPop {
-            0% {
-                transform: scale(0.5);
-            }
-            50% {
-                transform: scale(1.3);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-        /* kiss counter heart */
-        .growing-heart {
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 2.5rem;
-            animation: gentlePulse 2s ease-in-out infinite;
-        }
-        .growing-heart:active {
-            transform: scale(1.4);
-        }
-        @keyframes gentlePulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.12);
-            }
         }
         .promise-star {
             display: inline-block;
@@ -507,7 +573,6 @@
         .promise-star.revealed {
             background: #ffe8ee;
             border-color: #e57393;
-            animation: popIn 0.4s ease;
         }
         @media (max-width: 700px) {
             .hero h1 {
@@ -519,8 +584,6 @@
             .reason-card {
                 width: 135px;
                 font-size: 0.8rem;
-                border-radius: 26px;
-                padding: 10px 6px;
             }
             .glass-card {
                 border-radius: 36px;
@@ -535,15 +598,39 @@
                 border-radius: 46px;
                 padding: 30px 18px 26px;
             }
-            .garden-plot {
-                width: 42px;
-                height: 42px;
-                font-size: 1.3rem;
+        }
+        /* Print styles for certificate */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .certificate-modal,
+            .certificate-modal * {
+                visibility: visible;
+            }
+            .certificate-modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                background: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+            .certificate-content {
+                box-shadow: none;
+                border: 4px double #b34266;
+                page-break-inside: avoid;
             }
         }
     </style>
 </head>
 <body>
+
+    <!-- Night mode toggle -->
+    <button class="night-toggle" id="nightModeToggle" title="Toggle starry night mode">🌙 Night Mode</button>
 
     <!-- START OVERLAY -->
     <div class="start-overlay" id="startOverlay">
@@ -571,21 +658,27 @@
             <div style="background:#fcc4d2;display:inline-block;padding:7px 20px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;">
                 <i class="fas fa-ring"></i> Husband &amp; Wife — best friends, lovers, soulmates <i class="fas fa-heart"></i>
             </div>
-            <p style="margin-top:6px;font-size:0.7rem;color:#8a6b75;">💡 Double-tap anywhere on this card for a bear hug attack! 🐻</p>
+            <p style="margin-top:6px;font-size:0.7rem;color:#8a6b75;">💡 Double‑tap this card for a bear hug attack! 🐻</p>
+        </div>
+
+        <!-- DAYS TOGETHER COUNTER -->
+        <div class="glass-card" style="text-align:center;">
+            <h3><i class="fas fa-calendar-alt"></i> We've Been Together Since April 1, 2024</h3>
+            <div class="countdown" id="daysTogetherCounter" style="font-size:1.6rem;">Loading…</div>
+            <p style="font-size:0.8rem;">Every second with you is a gift 💝</p>
         </div>
 
         <!-- LOVE METER -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-chart-line"></i> How much does your husband love you?</h3>
-            <input type="range" id="loveMeter" min="0" max="100" value="100" disabled style="width:80%;max-width:380px;margin:10px auto;display:block;accent-color:#e57393;opacity:0.85;">
-            <p id="loveValueDisplay" style="font-size:1.6rem;font-weight:700;color:#b34266;min-height:38px;">∞ INFINITY + BEYOND ∞</p>
-            <p style="font-size:0.75rem;color:#8a6b75;">(slider locked — his love has <strong>no limits</strong> 💕)</p>
+            <input type="range" id="loveMeter" min="0" max="100" value="100" disabled style="width:80%;max-width:380px;margin:10px auto;display:block;accent-color:#e57393;">
+            <p id="loveValueDisplay" style="font-size:1.6rem;font-weight:700;color:#b34266;">∞ INFINITY + BEYOND ∞</p>
+            <p style="font-size:0.75rem;">(slider locked — his love has <strong>no limits</strong> 💕)</p>
         </div>
 
         <!-- HUG ZONE -->
         <div class="glass-card" style="text-align:center;">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Teddy Bear Hug Machine 🧸</h3>
-            <p>Tap any button — your husband sends you a warm hug instantly!</p>
             <div class="hug-buttons">
                 <button class="hug-btn" id="warmHugBtn"><i class="fas fa-heart"></i> Warm Hug</button>
                 <button class="hug-btn" id="cuddleBtn"><i class="fas fa-bed"></i> Cuddle Time</button>
@@ -593,152 +686,157 @@
                 <button class="hug-btn" id="kissBtn"><i class="fas fa-kiss-wink-heart"></i> Kiss + Hug</button>
             </div>
             <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting… tap a hug, my love 🤗</div>
-            <div style="margin-top:10px;font-size:0.88rem;color:#6b3d4e;">
-                ❤️ Total hugs: <strong id="hugCount" style="color:#b34266;">0</strong> &nbsp;|&nbsp;
-                🔥 Streak: <strong id="hugStreak" style="color:#b34266;">0</strong>
-                <br><small>(saved with love 💾 — refresh and they stay!)</small>
+            <div style="margin-top:10px;">
+                ❤️ Total hugs: <strong id="hugCount">0</strong> &nbsp;|&nbsp; 🔥 Streak: <strong id="hugStreak">0</strong>
+                <br><small>(saved with love 💾)</small>
             </div>
         </div>
 
-        <!-- KISS COUNTER + GROWING HEART -->
+        <!-- KISS COUNTER -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-kiss"></i> Kiss Counter &amp; Growing Heart 💋</h3>
-            <p>Tap the heart — every kiss makes it grow bigger!</p>
+            <p>Tap the heart — every kiss makes it grow!</p>
             <div class="growing-heart" id="growingHeart" style="font-size:2.5rem;">❤️</div>
-            <p>💋 Kisses given: <strong id="kissCountDisplay">0</strong></p>
-            <p style="font-size:0.75rem;color:#8a6b75;">Each kiss is a promise of forever 💕</p>
+            <p>💋 Kisses: <strong id="kissCountDisplay">0</strong></p>
         </div>
 
         <!-- BLOW OUT CANDLES -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-cake-candles"></i> Blow Out Your Birthday Candles 🎂</h3>
-            <p>Tap each candle to blow it out — make a wish!</p>
             <div class="candle-row" id="candleRow">
-                <span class="candle" data-lit="true">🕯️</span>
-                <span class="candle" data-lit="true">🕯️</span>
-                <span class="candle" data-lit="true">🕯️</span>
-                <span class="candle" data-lit="true">🕯️</span>
-                <span class="candle" data-lit="true">🕯️</span>
+                <span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span>
             </div>
-            <p id="candleMessage" style="font-style:italic;min-height:22px;"></p>
+            <p id="candleMessage" style="font-style:italic;"></p>
         </div>
 
         <!-- SECRET PUZZLE -->
         <div class="glass-card" style="text-align:center;">
             <i class="fas fa-lock" style="font-size:2rem;color:#b34266;"></i>
             <h3>🔐 A Secret Message from Your Husband</h3>
-            <p>What's the special nickname your husband calls you?<br><small>(Hint: it's fluffy and starts with "Teddy"…)</small></p>
-            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type answer here…" aria-label="Nickname">
-            <br>
-            <button id="unlockPuzzleBtn" class="hug-btn btn-alt"><i class="fas fa-key"></i> Unlock Surprise</button>
-            <div id="puzzleResult" style="margin-top:12px;font-weight:600;font-size:0.9rem;min-height:26px;"></div>
+            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type nickname…">
+            <button id="unlockPuzzleBtn" class="hug-btn btn-alt"><i class="fas fa-key"></i> Unlock</button>
+            <div id="puzzleResult" style="margin-top:12px;font-weight:600;"></div>
         </div>
 
         <!-- MINI QUIZ -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-question-circle"></i> Mini Quiz: You &amp; Me 💑</h3>
-            <p><strong>1. On which date did we first meet?</strong></p>
-            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-                <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="april-1-2024">April 1, 2024</button>
-                <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="march-1">March 1, 2024</button>
-            </div>
-            <p style="margin-top:12px;"><strong>2. What does your husband call you most?</strong></p>
-            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-                <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="my-wife">My Wife</button>
-                <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="darling">Darling</button>
-            </div>
-            <div id="quizFeedback" style="margin-top:14px;font-style:italic;font-size:0.9rem;min-height:24px;"></div>
+            <p><strong>1. First meeting date?</strong></p>
+            <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="april-1-2024">April 1, 2024</button>
+            <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="march-1">March 1, 2024</button>
+            <p style="margin-top:12px;"><strong>2. What does he call you most?</strong></p>
+            <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="my-wife">My Wife</button>
+            <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="darling">Darling</button>
+            <div id="quizFeedback" style="margin-top:14px;font-style:italic;"></div>
         </div>
 
         <!-- LOVE GARDEN -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-seedling"></i> 🌸 Our Love Garden 🌸</h3>
-            <p>Tap each plot to plant a flower — each one blooms with a memory of us!</p>
             <div class="garden-grid" id="gardenGrid"></div>
-            <p id="gardenMessage" style="margin-top:8px;font-style:italic;min-height:22px;font-size:0.9rem;"></p>
+            <p id="gardenMessage" style="font-style:italic;"></p>
         </div>
 
         <!-- DAILY LOVE NOTE -->
         <div class="glass-card" style="text-align:center;">
-            <i class="fas fa-envelope-open-text" style="font-size:2.4rem;color:#e57393;"></i>
-            <h3>📬 Daily Love Note from Your Husband</h3>
-            <p id="dailyLoveNote" style="font-size:1rem;margin:12px 0;font-style:italic;min-height:45px;">"Click the button to receive a fresh love note, my wife."</p>
-            <button id="generateNoteBtn" class="hug-btn btn-alt"><i class="fas fa-heart"></i> New Love Note</button>
+            <h3>📬 Daily Love Note</h3>
+            <p id="dailyLoveNote" style="font-style:italic;">"Click for a fresh love note, my wife."</p>
+            <button id="generateNoteBtn" class="hug-btn btn-alt">New Note</button>
         </div>
 
-        <!-- VIRTUAL GIFT BOX -->
+        <!-- VIRTUAL GIFT -->
         <div class="glass-card" style="text-align:center;" id="giftBoxSection">
-            <i class="fas fa-gift" style="font-size:2.8rem;color:#eb7a9e;display:block;margin-bottom:4px;"></i>
             <h3>🎁 Unwrap Your Birthday Gift</h3>
-            <p id="giftMessage">Tap the button to open a surprise from your husband!</p>
-            <button id="openGiftBtn" class="hug-btn" style="background:#c75373;"><i class="fas fa-unlock-alt"></i> Open Gift</button>
+            <p id="giftMessage">Tap to open a surprise!</p>
+            <button id="openGiftBtn" class="hug-btn">Open Gift</button>
         </div>
 
         <!-- PROMISE WALL -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-star"></i> 🌟 Promise Wall 🌟</h3>
-            <p>Tap each star to reveal a promise your husband makes to you:</p>
-            <div id="promiseWall" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:10px 0;"></div>
-            <p id="promiseReveal" style="min-height:22px;font-style:italic;font-size:0.9rem;"></p>
+            <h3>🌟 Promise Wall 🌟</h3>
+            <div id="promiseWall" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;"></div>
+            <p id="promiseReveal" style="font-style:italic;"></p>
         </div>
 
         <!-- 10 REASONS -->
         <div class="glass-card">
-            <h3 style="text-align:center;"><i class="fas fa-heart"></i> 10 Reasons Why I Love You <span style="font-size:0.7rem;">(Tap each)</span></h3>
-            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;" id="reasonsContainer"></div>
+            <h3 style="text-align:center;">10 Reasons Why I Love You</h3>
+            <div id="reasonsContainer" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;"></div>
         </div>
 
-        <!-- COUNTDOWN -->
+        <!-- BIRTHDAY COUNTDOWN -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-clock"></i> Countdown to Your Special Day (May 3rd)</h3>
-            <div class="countdown" id="birthdayCountdown">-- days -- hours -- mins</div>
-            <p style="margin-top:4px;">🎉 First meeting: <strong>April 1, 2024</strong> | From friends to husband &amp; wife 🎉</p>
-            <button id="celebrateTodayBtn" class="hug-btn" style="background:#e57393;"><i class="fas fa-glass-cheers"></i> Celebrate NOW</button>
+            <h3>🎂 Countdown to May 3rd</h3>
+            <div class="countdown" id="birthdayCountdown">--</div>
+            <button id="celebrateTodayBtn" class="hug-btn">Celebrate NOW</button>
         </div>
 
         <!-- MOOD ADVISOR -->
-        <div class="glass-card">
-            <h3 style="text-align:center;"><i class="fas fa-cloud-sun"></i> Teddy Bear's Mood Advice</h3>
-            <p style="text-align:center;">How are you feeling, my wife?</p>
+        <div class="glass-card" style="text-align:center;">
+            <h3>🧸 Mood Advice</h3>
             <div class="hug-buttons">
                 <button class="hug-btn moodBtn" data-mood="happy">😊 Happy</button>
-                <button class="hug-btn moodBtn" data-mood="sad">😢 A little sad</button>
+                <button class="hug-btn moodBtn" data-mood="sad">😢 Sad</button>
                 <button class="hug-btn moodBtn" data-mood="loved">🥰 Loved</button>
                 <button class="hug-btn moodBtn" data-mood="tired">😴 Tired</button>
             </div>
-            <div id="moodResponse" style="margin-top:12px;background:#fff2f5;border-radius:32px;padding:14px;min-height:44px;text-align:center;"></div>
+            <div id="moodResponse" style="margin-top:12px;"></div>
         </div>
 
-        <!-- CONFETTI + SECRET LETTER -->
+        <!-- CONFETTI + CERTIFICATE -->
         <div class="glass-card" style="text-align:center;">
-            <i class="fas fa-star-of-life" style="color:#e57393;"></i>
-            <h3>✨ Birthday Confetti Cannon ✨</h3>
             <button id="confettiRainBtn" class="hug-btn btn-alt"><i class="fas fa-candy-cane"></i> Shower Magic Confetti</button>
-            <button id="specialLoveNoteBtn" class="hug-btn" style="background:#e57393;margin-left:6px;"><i class="fas fa-envelope"></i> Secret Love Letter</button>
-            <p style="font-size:0.7rem;margin-top:8px;color:#8a6b75;">📱 On mobile? Confetti works best after interacting with the page first!</p>
+            <button id="specialLoveNoteBtn" class="hug-btn">💌 Secret Love Letter</button>
+            <button id="certificateBtn" class="hug-btn" style="background:#c75373;">🏆 Best Wife Certificate</button>
+            <p style="font-size:0.7rem;margin-top:8px;">📱 Confetti works best after page interaction!</p>
+        </div>
+
+        <!-- RESET BUTTON -->
+        <div class="glass-card" style="text-align:center;">
+            <button id="resetCountersBtn" class="hug-btn" style="background:#aaa;">🔄 Reset All Hugs & Kisses</button>
+            <p style="font-size:0.7rem;">(clears counters back to zero)</p>
         </div>
 
         <footer style="text-align:center;margin-top:36px;background:rgba(255,240,235,0.85);border-radius:44px;padding:22px;backdrop-filter:blur(8px);">
             <i class="fas fa-cake-candles"></i> To my wife <strong>Halima</strong> — from your Teddy Bear husband.<br>
-            May 3rd is YOUR day. Every day I thank the universe for you. 🧸💗<br>
-            <span style="font-size:0.78rem;color:#7a4a5c;">✨ I love you more than all the stars in the sky ✨</span>
+            <span style="font-size:0.9rem;">✨ I love you more than all the stars in the sky ✨</span>
+            <br><br>
+            <span style="font-size:1rem;font-weight:600;">💖 Made with love by <strong>Y</strong> for <strong>Halima</strong> 🧸</span>
         </footer>
     </div>
 
     <!-- LOVE NOTE MODAL -->
     <div class="love-modal" id="loveNoteModal">
         <div class="modal-content">
-            <button class="close-btn" id="closeModalBtn" aria-label="Close">&times;</button>
+            <button class="close-btn" id="closeModalBtn">&times;</button>
             <i class="fas fa-heart" style="font-size:2.8rem;color:#e75480;"></i>
-            <h2 style="font-family:'Playfair Display',serif;color:#b34266;">To my darling wife Halima 💌</h2>
-            <p id="modalLoveText" style="margin:12px 0;line-height:1.6;font-size:0.95rem;">From your Teddy Bear: You are the melody of my soul. I will love you until the stars burn out. Happy Birthday, my beautiful wife. 🧸</p>
+            <h2>To my darling wife Halima 💌</h2>
+            <p id="modalLoveText"></p>
             <button id="closeModalBtn2" class="hug-btn btn-alt">I love you, hubby 🧸</button>
+        </div>
+    </div>
+
+    <!-- CERTIFICATE MODAL -->
+    <div class="certificate-modal" id="certificateModal">
+        <div class="certificate-content" id="certificateContent">
+            <h2>🎀 Certificate of Love 🎀</h2>
+            <p style="font-size:1.3rem;">This certifies that</p>
+            <div class="name">Halima</div>
+            <p style="font-size:1.2rem;">is the <strong>Best Wife in the Universe</strong></p>
+            <p>For bringing endless joy, love, and cuddles to her Teddy Bear husband.</p>
+            <p style="margin-top:15px;">Awarded with all my heart,<br><strong>Your Teddy Bear, Y</strong></p>
+            <div class="seal">🧸💖</div>
+            <p style="font-size:0.7rem;margin-top:15px;">Date: <span id="certDate"></span></p>
+            <div style="margin-top:15px;">
+                <button class="hug-btn btn-alt" id="printCertificateBtn">🖨️ Print / Save as PDF</button>
+                <button class="hug-btn" id="closeCertificateBtn">Close</button>
+            </div>
         </div>
     </div>
 
     <script>
         (function() {
-            // ─── DOM REFS ────────────────────────────
+            // ---------- DOM refs ----------
             const startOverlay = document.getElementById('startOverlay');
             const mainSite = document.getElementById('mainSite');
             const yesBtn = document.getElementById('yesBtn');
@@ -750,6 +848,7 @@
             const loveDisplay = document.getElementById('loveValueDisplay');
             const loveMeter = document.getElementById('loveMeter');
             const birthdayCountdown = document.getElementById('birthdayCountdown');
+            const daysTogetherCounter = document.getElementById('daysTogetherCounter');
             const candleRow = document.getElementById('candleRow');
             const candleMessage = document.getElementById('candleMessage');
             const puzzleAnswer = document.getElementById('puzzleAnswer');
@@ -760,7 +859,6 @@
             const generateNoteBtn = document.getElementById('generateNoteBtn');
             const openGiftBtn = document.getElementById('openGiftBtn');
             const giftMsg = document.getElementById('giftMessage');
-            const giftBoxSection = document.getElementById('giftBoxSection');
             const reasonsContainer = document.getElementById('reasonsContainer');
             const celebrateTodayBtn = document.getElementById('celebrateTodayBtn');
             const moodResponse = document.getElementById('moodResponse');
@@ -776,110 +874,199 @@
             const gardenMessage = document.getElementById('gardenMessage');
             const promiseWall = document.getElementById('promiseWall');
             const promiseReveal = document.getElementById('promiseReveal');
+            const nightModeToggle = document.getElementById('nightModeToggle');
+            const certificateModal = document.getElementById('certificateModal');
+            const certificateContent = document.getElementById('certificateContent');
+            const printCertificateBtn = document.getElementById('printCertificateBtn');
+            const closeCertificateBtn = document.getElementById('closeCertificateBtn');
+            const certificateBtn = document.getElementById('certificateBtn');
+            const certDateSpan = document.getElementById('certDate');
+            const resetCountersBtn = document.getElementById('resetCountersBtn');
 
-            // ─── CONFETTI (ROBUST) ───────────────────
+            // ---------- Confetti (robust with fallback) ----------
+            function isConfettiAvailable() {
+                return typeof canvasConfetti === 'function';
+            }
+
             function safeConfetti(opts) {
-                try {
-                    if (typeof canvasConfetti === 'function') {
-                        canvasConfetti(opts);
-                    } else {
-                        console.warn('🎊 Confetti library not loaded yet — skipping confetti');
-                    }
-                } catch (e) {
-                    console.warn('🎊 Confetti error:', e.message);
+                if (isConfettiAvailable()) {
+                    try { canvasConfetti(opts); } catch (e) { console.warn('Confetti error:', e); }
+                } else {
+                    fallbackConfetti();
                 }
             }
 
-            function burstLight() {
-                safeConfetti({ particleCount: 55, spread: 48, origin: { y: 0.62 }, colors: ['#ffb7c5', '#ff6f91',
-                        '#ff9eb5', '#fff'
-                    ], startVelocity: 9 });
+            function fallbackConfetti(count = 40) {
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.className = 'float-item';
+                        el.textContent = ['🎉', '✨', '💖', '🌸', '🧸'][Math.floor(Math.random() * 5)];
+                        el.style.left = Math.random() * 100 + '%';
+                        el.style.bottom = '0px';
+                        el.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                        el.style.fontSize = (Math.random() * 20 + 14) + 'px';
+                        floatContainer.appendChild(el);
+                        setTimeout(() => el.remove(), 5000);
+                    }, i * 20);
+                }
             }
 
+            function burstLight() { safeConfetti({ particleCount: 55, spread: 48, origin: { y: 0.62 },
+                colors: ['#ffb7c5', '#ff6f91', '#ff9eb5', '#fff'], startVelocity: 9 }); }
+
             function burstMedium() {
-                safeConfetti({ particleCount: 140, spread: 90, origin: { y: 0.55 }, colors: ['#ff9eb5', '#ff6f8f',
-                        '#ffc4d4', '#fff0f4', '#ffb3c6'
+                safeConfetti({ particleCount: 140, spread: 90, origin: { y: 0.55 }, colors: ['#ff9eb5',
+                        '#ff6f8f', '#ffc4d4', '#fff0f4'
                     ], startVelocity: 15 });
-                setTimeout(() => safeConfetti({ particleCount: 180, spread: 100, origin: { y: 0.48 }, colors: [
-                        '#ffb3c6', '#ff6f91', '#ffe0e8'
-                    ], startVelocity: 12 }), 120);
+                setTimeout(() => safeConfetti({ particleCount: 180, spread: 100, origin: { y: 0.48 },
+                    colors: ['#ffb3c6', '#ff6f91', '#ffe0e8'], startVelocity: 12 }), 120);
             }
 
             function burstHeavy() {
                 burstMedium();
-                setTimeout(() => safeConfetti({ particleCount: 250, spread: 120, origin: { y: 0.4 }, colors: [
-                        '#fff', '#ffb7c5', '#ff8faa', '#ffc4d4', '#ffe8ee'
-                    ], startVelocity: 20 }), 250);
-                setTimeout(() => safeConfetti({ particleCount: 160, spread: 70, origin: { y: 0.32 }, colors: [
-                        '#ff9eb5', '#fff0f4'
-                    ], startVelocity: 10 }), 500);
+                setTimeout(() => safeConfetti({ particleCount: 250, spread: 120, origin: { y: 0.4 },
+                    colors: ['#fff', '#ffb7c5', '#ff8faa', '#ffc4d4'], startVelocity: 20 }), 250);
+                setTimeout(() => safeConfetti({ particleCount: 160, spread: 70, origin: { y: 0.32 },
+                    colors: ['#ff9eb5', '#fff0f4'], startVelocity: 10 }), 500);
             }
 
-            function megaConfetti() {
-                burstHeavy();
+            function megaConfetti() { burstHeavy();
                 setTimeout(burstHeavy, 350);
-                setTimeout(burstHeavy, 700);
-            }
+                setTimeout(burstHeavy, 700); }
 
-            // ─── LOCAL STORAGE WITH FALLBACK ─────────
-            function safeGet(key, fallback) {
-                try { const v = localStorage.getItem(key); return v !== null ? v : fallback; } catch (e) { return fallback; }
-            }
+            // ---------- Storage ----------
+            function safeGet(k, fb) { try { return localStorage.getItem(k) || fb; } catch (e) { return fb; } }
 
-            function safeSet(key, val) {
-                try { localStorage.setItem(key, val); } catch (e) { /* ignore */ }
-            }
+            function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-            let totalHugs = parseInt(safeGet('halima_bday_hugs', '0'));
-            let hugStreak = parseInt(safeGet('halima_bday_streak', '0'));
-            let totalKisses = parseInt(safeGet('halima_bday_kisses', '0'));
-            let kissHeartSize = parseFloat(safeGet('halima_bday_heart_size', '2.5'));
+            let totalHugs = parseInt(safeGet('halima_hugs', '0'));
+            let hugStreak = parseInt(safeGet('halima_streak', '0'));
+            let totalKisses = parseInt(safeGet('halima_kisses', '0'));
+            let kissHeartSize = parseFloat(safeGet('halima_heart', '2.5'));
+            let gardenPlanted = JSON.parse(safeGet('halima_garden', '[]'));
+            let revealedPromises = JSON.parse(safeGet('halima_promises', '[]'));
 
             function saveAll() {
-                safeSet('halima_bday_hugs', totalHugs);
-                safeSet('halima_bday_streak', hugStreak);
-                safeSet('halima_bday_kisses', totalKisses);
-                safeSet('halima_bday_heart_size', kissHeartSize);
+                safeSet('halima_hugs', totalHugs);
+                safeSet('halima_streak', hugStreak);
+                safeSet('halima_kisses', totalKisses);
+                safeSet('halima_heart', kissHeartSize);
+                safeSet('halima_garden', JSON.stringify(gardenPlanted));
+                safeSet('halima_promises', JSON.stringify(revealedPromises));
             }
 
-            function updateHugUI() {
-                if (hugCounterSpan) hugCounterSpan.textContent = totalHugs;
-                if (hugStreakSpan) hugStreakSpan.textContent = hugStreak;
-                saveAll();
-            }
+            function updateHugUI() { hugCounterSpan.textContent = totalHugs;
+                hugStreakSpan.textContent = hugStreak;
+                saveAll(); }
 
             function updateKissUI() {
-                if (kissCountDisplay) kissCountDisplay.textContent = totalKisses;
-                if (growingHeart) {
-                    growingHeart.style.fontSize = kissHeartSize + 'rem';
-                    if (kissHeartSize >= 8) growingHeart.textContent = '💝';
-                    else if (kissHeartSize >= 5) growingHeart.textContent = '💗';
-                    else if (kissHeartSize >= 3.5) growingHeart.textContent = '💖';
-                    else growingHeart.textContent = '❤️';
-                }
+                kissCountDisplay.textContent = totalKisses;
+                growingHeart.style.fontSize = kissHeartSize + 'rem';
+                if (kissHeartSize >= 8) growingHeart.textContent = '💝';
+                else if (kissHeartSize >= 5) growingHeart.textContent = '💗';
+                else if (kissHeartSize >= 3.5) growingHeart.textContent = '💖';
+                else growingHeart.textContent = '❤️';
                 saveAll();
             }
 
-            // ─── FLOATING ELEMENTS ───────────────────
+            // ---------- Floating items ----------
             function createFloating() {
                 if (!floatContainer) return;
                 const el = document.createElement('div');
                 el.classList.add('float-item');
-                const icons = ['🧸', '🐻', '❤️', '🌸', '💖', '🎀', '✨', '💕', '🕊️', '🌷', '💝', '🦋', '💐', '🍯', '🧸‍❄️'];
+                const icons = ['🧸', '🐻', '❤️', '🌸', '💖', '🎀', '✨', '💕', '🦋', '💝'];
                 el.textContent = icons[Math.floor(Math.random() * icons.length)];
                 el.style.left = Math.random() * 93 + '%';
                 const dur = Math.random() * 8 + 7;
                 el.style.animationDuration = dur + 's';
-                el.style.animationDelay = Math.random() * 1.5 + 's';
                 el.style.fontSize = (Math.random() * 22 + 15) + 'px';
                 floatContainer.appendChild(el);
-                const totalMs = (dur + parseFloat(el.style.animationDelay)) * 1000 + 500;
-                setTimeout(() => { if (el.parentNode) el.remove(); }, totalMs);
+                setTimeout(() => el.remove(), (dur + 1) * 1000);
             }
 
-            function spawnFloaters(n = 22) { for (let i = 0; i < n; i++) setTimeout(createFloating, i * 90); }
+            function spawnFloaters(n = 20) { for (let i = 0; i < n; i++) setTimeout(createFloating, i * 80); }
 
-            // ─── START OVERLAY ────────────────────────
+            // ---------- Night mode ----------
+            nightModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('night-mode');
+                nightModeToggle.innerHTML = document.body.classList.contains('night-mode') ?
+                    '☀️ Day Mode' : '🌙 Night Mode';
+            });
+
+            // ---------- Days together counter ----------
+            function updateDaysTogether() {
+                const start = new Date(2024, 3, 1); // April 1, 2024 (month is 0-indexed)
+                const now = new Date();
+                const diff = now - start;
+                const days = Math.floor(diff / 86400000);
+                const hours = Math.floor((diff % 86400000) / 3600000);
+                const mins = Math.floor((diff % 3600000) / 60000);
+                const secs = Math.floor((diff % 60000) / 1000);
+                daysTogetherCounter.textContent =
+                    `${days} days ${hours}h ${mins}m ${secs}s`;
+            }
+            updateDaysTogether();
+            setInterval(updateDaysTogether, 1000);
+
+            // ---------- Countdown to birthday ----------
+            function updateBirthdayCountdown() {
+                if (!birthdayCountdown) return;
+                const now = new Date();
+                if (now.getMonth() === 4 && now.getDate() === 3) {
+                    birthdayCountdown.classList.add('celebration');
+                    birthdayCountdown.textContent = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
+                    return;
+                }
+                birthdayCountdown.classList.remove('celebration');
+                let bday = new Date(now.getFullYear(), 4, 3);
+                if (now > bday) bday.setFullYear(now.getFullYear() + 1);
+                const diff = bday - now;
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                birthdayCountdown.textContent = `${d}d ${h}h ${m}m until YOUR day 🎂`;
+            }
+            updateBirthdayCountdown();
+            setInterval(updateBirthdayCountdown, 60000);
+
+            // ---------- Certificate ----------
+            function openCertificate() {
+                certDateSpan.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric',
+                    month: 'long', day: 'numeric' });
+                certificateModal.classList.add('active');
+            }
+            certificateBtn.addEventListener('click', openCertificate);
+            closeCertificateBtn.addEventListener('click', () => certificateModal.classList.remove(
+            'active'));
+            printCertificateBtn.addEventListener('click', () => {
+                window.print();
+            });
+            certificateModal.addEventListener('click', (e) => {
+                if (e.target === certificateModal) certificateModal.classList.remove('active');
+            });
+
+            // ---------- Reset counters ----------
+            resetCountersBtn.addEventListener('click', () => {
+                if (confirm(
+                        'Are you sure you want to reset all hugs, kisses, garden and promises back to zero? This cannot be undone.'
+                        )) {
+                    totalHugs = 0;
+                    hugStreak = 0;
+                    totalKisses = 0;
+                    kissHeartSize = 2.5;
+                    gardenPlanted = [];
+                    revealedPromises = [];
+                    updateHugUI();
+                    updateKissUI();
+                    buildGarden();
+                    buildPromiseWall();
+                    saveAll();
+                    hugMsgDiv.innerHTML = '🔄 Counters reset! But my love for you is eternal, Halima. 💖';
+                }
+            });
+
+            // ---------- Start overlay logic ----------
             let noClicks = 0;
             const noMsgs = [
                 "Oh come on, my love! Just tap Yes — your Teddy Bear worked so hard! 🧸💕",
@@ -887,127 +1074,43 @@
                 "You're teasing your husband! 😄 Tap Yes and let me shower you with hugs! 🧸✨",
                 "Alright… I'll give you EXTRA teddy snuggles if you tap Yes! 🤗💗",
                 "You're adorable. Now please tap Yes so I can celebrate my beautiful wife! 🎂🧸",
-                "OKAY fine — I moved the Yes button closer… wait, it was always there! 😂💕 Tap it!",
             ];
-
             yesBtn.addEventListener('click', () => {
                 startOverlay.classList.add('hidden');
                 mainSite.classList.add('visible');
                 mainSite.style.display = 'block';
-                // Initialize everything
                 updateHugUI();
                 updateKissUI();
-                updateCountdown();
+                updateBirthdayCountdown();
                 spawnFloaters(28);
-                checkBirthday();
                 buildGarden();
                 buildPromiseWall();
                 hugMsgDiv.innerHTML =
                     "🧸 <strong>Welcome, my queen!</strong> I'm so happy you're here. Tap any hug button — I'm ready to hold you! 💖";
                 setTimeout(megaConfetti, 300);
             });
-
             noBtn.addEventListener('click', () => {
                 noClicks++;
                 const msg = noMsgs[Math.min(noClicks - 1, noMsgs.length - 1)];
-                noBtn.style.transform = 'translateX(-7px)';
-                setTimeout(() => { noBtn.style.transform = 'translateX(7px)'; }, 90);
-                setTimeout(() => { noBtn.style.transform = ''; }, 180);
                 const card = document.querySelector('.start-card');
                 const old = card.querySelector('.playful-msg');
                 if (old) old.remove();
                 const p = document.createElement('p');
                 p.className = 'playful-msg';
                 p.style.cssText =
-                    'color:#c75373;font-weight:600;margin-top:10px;font-size:0.85rem;animation:popIn 0.3s ease;';
+                    'color:#c75373;font-weight:600;margin-top:10px;font-size:0.85rem;';
                 p.textContent = msg;
                 card.appendChild(p);
                 safeConfetti({ particleCount: 25, spread: 30, origin: { y: 0.7 }, colors: ['#ffb7c5'],
-                startVelocity: 5 });
-                if (noClicks >= 5) {
-                    noBtn.textContent = 'OKAY FINE, YES! 🧸';
-                    noBtn.style.background = '#e57393';
-                    noBtn.classList.remove('no-btn');
-                }
+                    startVelocity: 5 });
             });
 
-            // ─── BIRTHDAY CHECK ──────────────────────
-            function isBirthdayToday() { const n = new Date(); return n.getMonth() === 4 && n.getDate() === 3; }
-
-            function checkBirthday() {
-                if (isBirthdayToday() && birthdayCountdown) {
-                    birthdayCountdown.classList.add('celebration');
-                    birthdayCountdown.innerHTML = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
-                    setTimeout(() => {
-                        megaConfetti();
-                        hugMsgDiv.innerHTML =
-                            "🎉✨ <strong>IT'S YOUR BIRTHDAY, HALIMA!</strong> Your Teddy Bear husband is celebrating YOU! Every hug is EXTRA special today! 🧸💗🎂";
-                    }, 1400);
-                }
-            }
-
-            function updateCountdown() {
-                if (!birthdayCountdown) return;
-                if (isBirthdayToday()) {
-                    birthdayCountdown.classList.add('celebration');
-                    birthdayCountdown.innerHTML = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
-                    return;
-                }
-                birthdayCountdown.classList.remove('celebration');
-                const now = new Date();
-                let bday = new Date(now.getFullYear(), 4, 3);
-                if (now > bday) bday.setFullYear(now.getFullYear() + 1);
-                const diff = bday - now;
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                birthdayCountdown.innerHTML = `${d}d ${h}h ${m}m until YOUR day 🎂`;
-            }
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
-
-            celebrateTodayBtn?.addEventListener('click', () => {
-                megaConfetti();
-                const msg = isBirthdayToday() ?
-                    "🎉 It's YOUR day, Halima! Your Teddy Bear is squeezing you with the BIGGEST birthday hug ever! 🧸💗🎂" :
-                    "🎉 Every day is worth celebrating because I have YOU, my beautiful wife! Early birthday magic! 🧸💕";
-                hugMsgDiv.innerHTML = msg;
-                alert(msg.replace(/<[^>]*>/g, ''));
-            });
-
-            // ─── CANDLES ─────────────────────────────
-            let candlesBlown = 0;
-            const totalCandles = 5;
-            if (candleRow) {
-                candleRow.addEventListener('click', (e) => {
-                    const c = e.target.closest('.candle');
-                    if (!c || c.classList.contains('blown')) return;
-                    c.classList.add('blown');
-                    c.dataset.lit = 'false';
-                    candlesBlown++;
-                    safeConfetti({ particleCount: 18, spread: 28, origin: { y: 0.6 }, colors: ['#ffe0a0',
-                            '#ffcc70', '#fff'
-                        ], startVelocity: 5 });
-                    if (candlesBlown === totalCandles) {
-                        candleMessage.innerHTML =
-                            '🎉✨ <strong>All candles blown!</strong> Your wish is sealed with a kiss from your Teddy Bear. I hope it comes true! 💋🧸';
-                        megaConfetti();
-                    } else if (candlesBlown >= 3) {
-                        candleMessage.innerHTML =
-                            `🕯️ ${totalCandles - candlesBlown} candle(s) left… make your wish count! 💫`;
-                    } else {
-                        candleMessage.innerHTML = '🕯️ Keep blowing, my love! Each one carries my love… 💕';
-                    }
-                });
-            }
-
-            // ─── HUG SYSTEM ──────────────────────────
+            // ---------- Hug system ----------
             function showHug(msg, emoji) {
                 hugMsgDiv.innerHTML = `<i class="fas fa-heart"></i> ${msg} ${emoji} <i class="fas fa-heart"></i>`;
                 burstLight();
                 const milestones = { 5: '🎉 5 hugs! You\'re my everything!', 10: '💗 10 HUGS! Holding you forever!',
-                    20: '✨ 20 Hugs! Infinity & beyond!', 30: '🎂 30 HUGS! You deserve the universe!',
-                    50: '🌟 50 HUGS! My heart is yours eternally!', 100: '👑 100 HUGS! My queen forever!' };
+                    20: '✨ 20 Hugs! Infinity & beyond!', 30: '🎂 30 HUGS! You deserve the universe!' };
                 if (milestones[totalHugs]) {
                     hugMsgDiv.innerHTML += `<br>${milestones[totalHugs]} 🧸💕`;
                     if (totalHugs >= 10) burstHeavy();
@@ -1020,109 +1123,85 @@
             function addHug(type) {
                 totalHugs++;
                 const map = {
-                    warm: ['Your husband wraps you in a warm, cozy hug. Feel my arms around you.', '🤗🧸'],
-                    cuddle: ['Teddy Bear cuddle time! Let\'s curl up together, my wife.', '🛌💤'],
-                    bear: ['A GIANT Teddy Bear squeeze! Hugging you with all my heart.', '🐻❤️'],
-                    kiss: ['A sweet kiss on your forehead + the warmest hug. You\'re so loved!', '💋🧸'],
+                    warm: ['Your husband wraps you in a warm, cozy hug.', '🤗🧸'],
+                    cuddle: ['Teddy Bear cuddle time! Curl up together.', '🛌💤'],
+                    bear: ['A GIANT Teddy Bear squeeze!', '🐻❤️'],
+                    kiss: ['A sweet kiss + the warmest hug.', '💋🧸'],
                 };
-                const [msg, emoji] = map[type] || map['warm'];
-                showHug(msg, emoji);
+                showHug(...map[type]);
             }
             document.getElementById('warmHugBtn')?.addEventListener('click', () => addHug('warm'));
             document.getElementById('cuddleBtn')?.addEventListener('click', () => addHug('cuddle'));
             document.getElementById('bearHugBtn')?.addEventListener('click', () => addHug('bear'));
             document.getElementById('kissBtn')?.addEventListener('click', () => addHug('kiss'));
 
-            // ─── KISS COUNTER ────────────────────────
-            if (growingHeart) {
-                growingHeart.addEventListener('click', () => {
-                    totalKisses++;
-                    kissHeartSize = Math.min(12, kissHeartSize + 0.15);
-                    updateKissUI();
-                    burstLight();
-                    hugMsgDiv.innerHTML =
-                        `💋 <strong>${totalKisses} kisses!</strong> Each one makes my heart grow bigger for you, my wife! 💗`;
-                    createFloating();
-                    if (totalKisses % 10 === 0) burstMedium();
-                    if (totalKisses === 50) megaConfetti();
-                });
-            }
+            // ---------- Kiss counter ----------
+            growingHeart.addEventListener('click', () => {
+                totalKisses++;
+                kissHeartSize = Math.min(12, kissHeartSize + 0.15);
+                updateKissUI();
+                burstLight();
+                hugMsgDiv.innerHTML =
+                    `💋 <strong>${totalKisses} kisses!</strong> My heart grows bigger for you, my wife! 💗`;
+                createFloating();
+                if (totalKisses % 10 === 0) burstMedium();
+            });
 
-            // ─── LOVE METER ──────────────────────────
-            if (loveMeter) {
-                setInterval(() => {
-                    if (mainSite.classList.contains('visible') && loveMeter.disabled) {
-                        const v = 97 + Math.floor(Math.random() * 7);
-                        loveMeter.value = v;
-                        loveDisplay.innerHTML = `∞ INFINITY + ${v}% more ∞`;
-                    }
-                }, 2200);
-            }
+            // ---------- Love meter animation ----------
+            setInterval(() => {
+                if (mainSite.classList.contains('visible') && loveMeter.disabled) {
+                    loveMeter.value = 97 + Math.floor(Math.random() * 7);
+                    loveDisplay.innerHTML = `∞ INFINITY + ${loveMeter.value}% more ∞`;
+                }
+            }, 2200);
 
-            // ─── PUZZLE ──────────────────────────────
-            unlockBtn?.addEventListener('click', () => {
+            // ---------- Puzzle ----------
+            unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
-                const correct = ['teddy bear', 'teddybear', 'my teddy bear', 'teddy', 'my teddy', 'teddy bear husband',
-                    'teddybear husband'
-                ];
+                const correct = ['teddy bear', 'teddybear', 'my teddy bear', 'teddy', 'my teddy'];
                 if (correct.includes(ans)) {
                     puzzleResultDiv.innerHTML =
-                        '🔓✨ <strong>Unlocked!</strong><br><em>"My beautiful wife, I will be your Teddy Bear forever. I love you more than every star. Happy Birthday, Halima! 🧸💖 You are my whole world."</em>';
-                    puzzleResultDiv.style.color = '#2d6b4f';
-                    puzzleAnswer.style.borderColor = '#4caf84';
+                        '🔓✨ <strong>Unlocked!</strong><br><em>"My beautiful wife, I will be your Teddy Bear forever. I love you more than every star. Happy Birthday, Halima! 🧸💖"</em>';
                     megaConfetti();
                 } else {
                     puzzleResultDiv.innerHTML =
-                        '❌ Not quite, my love! Hint: the fluffy nickname you call me… 🧸 <strong>(Teddy Bear)</strong>';
-                    puzzleResultDiv.style.color = '#b34266';
-                    puzzleAnswer.style.borderColor = '#e57393';
-                    puzzleAnswer.focus();
+                        '❌ Hint: the fluffy nickname you call me… 🧸 <strong>(Teddy Bear)</strong>';
                 }
             });
-            puzzleAnswer?.addEventListener('keydown', e => { if (e.key === 'Enter') unlockBtn?.click(); });
+            puzzleAnswer.addEventListener('keydown', e => { if (e.key === 'Enter') unlockBtn.click(); });
 
-            // ─── QUIZ ────────────────────────────────
+            // ---------- Quiz ----------
             let q1ok = false,
                 q2ok = false;
             document.querySelectorAll('.quiz-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const q = btn.dataset.quiz;
                     const ans = btn.dataset.ans;
-                    document.querySelectorAll(`.quiz-opt[data-quiz="${q}"]`).forEach(b => b.style
-                        .background = '');
                     if (q === 'q1') {
-                        if (ans === 'april-1-2024') { q1ok = true;
-                            btn.style.background = '#4caf84';
-                            quizFeedback.innerHTML =
-                                '✅ Yes! We met on <strong>April 1, 2024</strong> — the most beautiful day! 💖';
-                            burstLight(); } else { btn.style.background = '#d49595';
-                            quizFeedback.innerHTML =
-                                '❌ Not that day, sweetheart. It\'s <strong>April 1st, 2024</strong> — our magical start!'; }
-                    } else if (q === 'q2') {
-                        if (ans === 'my-wife') { q2ok = true;
-                            btn.style.background = '#4caf84';
-                            quizFeedback.innerHTML =
-                                '❤️ Exactly! I call you <strong>"my wife"</strong> — you are my everything.';
-                            burstLight(); } else { btn.style.background = '#d49595';
-                            quizFeedback.innerHTML =
-                                '💞 I love calling you <strong>"my wife"</strong> — because you\'re my soulmate.'; }
+                        q1ok = (ans === 'april-1-2024');
+                        quizFeedback.innerHTML = q1ok ?
+                            '✅ Yes! April 1, 2024 — magical day! 💖' :
+                            '❌ It\'s April 1st, 2024!';
+                    } else {
+                        q2ok = (ans === 'my-wife');
+                        quizFeedback.innerHTML = q2ok ?
+                            '❤️ Exactly! "My wife" — you are my everything.' :
+                            '💞 I call you "my wife" because you\'re my soulmate.';
                     }
-                    if (q1ok && q2ok) { quizFeedback.innerHTML +=
-                            '<br><br>🎉 <strong>You know me so well!</strong> You\'re truly my wife in every way! 🎉';
-                        megaConfetti(); }
-                    setTimeout(() => { btn.style.background = ''; }, 600);
+                    if (q1ok && q2ok) quizFeedback.innerHTML +=
+                        '<br>🎉 You know me so well, my love!';
+                    if (q1ok || q2ok) burstLight();
                 });
             });
 
-            // ─── LOVE GARDEN ─────────────────────────
+            // ---------- Love garden ----------
             const gardenMemories = [
-                '🌸 Our first meeting — April 1, 2024', '🌷 Our first laugh together', '🌼 The day I knew you were the one',
-                '🌻 Our first cuddle', '🌹 The day you called me Teddy Bear', '🪷 Our first "I love you"',
-                '🌺 Every sunset we shared', '💐 The day we became husband & wife', '🌾 Every morning I wake up next to you',
-                '🍀 Our inside jokes', '🌿 The way you look at me', '🪻 Your beautiful smile every day',
-                '🌴 Our dreams together', '🌵 All the hard times we conquered', '🌸 Forever & always, my wife',
+                '🌸 Our first meeting', '🌷 Our first laugh', '🌼 The day I knew you were the one',
+                '🌻 Our first cuddle', '🌹 You called me Teddy Bear', '🪷 Our first "I love you"',
+                '🌺 Every sunset together', '💐 The day we became husband & wife', '🌾 Morning beside you',
+                '🍀 Our inside jokes', '🌿 The way you look at me', '🪻 Your beautiful smile',
+                '🌴 Our dreams', '🌵 Conquering hard times', '🌸 Forever & always',
             ];
-            let gardenPlanted = JSON.parse(safeGet('halima_garden', '[]'));
 
             function buildGarden() {
                 if (!gardenGrid) return;
@@ -1131,150 +1210,136 @@
                     const plot = document.createElement('div');
                     plot.className = 'garden-plot' + (gardenPlanted.includes(i) ? ' planted' : '');
                     plot.textContent = gardenPlanted.includes(i) ? '🌸' : '🕳️';
-                    plot.title = gardenPlanted.includes(i) ? mem : 'Tap to plant a flower!';
                     plot.addEventListener('click', () => {
                         if (!gardenPlanted.includes(i)) {
                             gardenPlanted.push(i);
                             plot.classList.add('planted');
                             plot.textContent = '🌸';
-                            plot.title = mem;
                             safeSet('halima_garden', JSON.stringify(gardenPlanted));
                             gardenMessage.innerHTML =
-                                `🌸 <strong>${mem}!</strong> Our love garden grows richer every day. 💕`;
+                                `🌸 <strong>${mem}!</strong> Our love garden grows richer. 💕`;
                             burstLight();
                             createFloating();
                             if (gardenPlanted.length === gardenMemories.length) {
                                 gardenMessage.innerHTML +=
-                                    '<br>🌷 <strong>Our garden is COMPLETE!</strong> Every memory blooms forever, my wife! 🌷';
+                                    '<br>🌷 Garden COMPLETE! Every memory blooms forever!';
                                 megaConfetti();
                             }
                         } else {
-                            gardenMessage.innerHTML = `💖 <strong>${mem}</strong> — a beautiful memory that lives forever!`;
-                            burstLight();
+                            gardenMessage.innerHTML =
+                            `💖 <strong>${mem}</strong> — a beautiful memory forever!`;
                         }
                     });
                     gardenGrid.appendChild(plot);
                 });
             }
 
-            // ─── PROMISE WALL ────────────────────────
+            // ---------- Promise wall ----------
             const promises = [
-                '🤍 I promise to always be your Teddy Bear',
-                '💛 I promise to make you laugh every day',
-                '🧡 I promise to hold you when you\'re sad',
-                '❤️ I promise to love you more each sunrise',
-                '💚 I promise to be your best friend forever',
-                '💙 I promise to listen with my whole heart',
-                '💜 I promise to grow old with you, hand in hand',
-                '🩷 I promise to never stop courting you',
-                '🩵 I promise to cherish every moment with you',
+                '🤍 Always be your Teddy Bear', '💛 Make you laugh every day',
+                '🧡 Hold you when you\'re sad', '❤️ Love you more each sunrise',
+                '💚 Be your best friend forever', '💙 Listen with my whole heart',
+                '💜 Grow old with you', '🩷 Never stop courting you', '🩵 Cherish every moment',
             ];
-            let revealedPromises = JSON.parse(safeGet('halima_promises', '[]'));
 
             function buildPromiseWall() {
                 if (!promiseWall) return;
                 promiseWall.innerHTML = '';
                 promises.forEach((p, i) => {
                     const star = document.createElement('span');
-                    star.className = 'promise-star' + (revealedPromises.includes(i) ? ' revealed' : '');
+                    star.className = 'promise-star' + (revealedPromises.includes(i) ? ' revealed' :
+                        '');
                     star.textContent = revealedPromises.includes(i) ? p : '⭐';
-                    star.style.cursor = 'pointer';
                     star.addEventListener('click', () => {
                         if (!revealedPromises.includes(i)) {
                             revealedPromises.push(i);
                             star.classList.add('revealed');
                             star.textContent = p;
                             safeSet('halima_promises', JSON.stringify(revealedPromises));
-                            promiseReveal.innerHTML = `🌟 <strong>Promise revealed:</strong> "${p}" — and I mean every word, my wife. 🧸`;
+                            promiseReveal.innerHTML =
+                                `🌟 <strong>Promise:</strong> "${p}" — and I mean every word. 🧸`;
                             burstLight();
                             createFloating();
                             if (revealedPromises.length === promises.length) {
                                 promiseReveal.innerHTML +=
-                                    '<br>✨ <strong>ALL promises revealed!</strong> My heart is an open book for you, Halima. ✨';
+                                    '<br>✨ ALL promises revealed! My heart is yours.';
                                 megaConfetti();
                             }
                         } else {
-                            promiseReveal.innerHTML = `💫 <strong>"${p}"</strong> — this promise is eternal, my love.`;
-                            burstLight();
+                            promiseReveal.innerHTML =
+                            `💫 <strong>"${p}"</strong> — eternal promise.`;
                         }
                     });
                     promiseWall.appendChild(star);
                 });
             }
 
-            // ─── LOVE NOTES ──────────────────────────
+            // ---------- Love notes ----------
             const loveNotes = [
-                "Every day I wake up grateful that you're my wife. You make life magical, Halima. 🧸",
-                "You're the sunshine that breaks my darkest clouds. I love you infinitely, my queen.",
-                "Being your husband is the greatest honor of my life. Happy birthday, my love!",
-                "You make my heart smile in ways I never knew possible. Forever yours, Teddy Bear.",
-                "Whenever I see you, I fall in love all over again. You're my dream come true. 💖",
-                "My love for you grows stronger with each sunrise. Thank you for being my wife.",
-                "You are the melody of my soul. Happy Birthday, my beautiful Halima! 🎂",
-                "With you, every moment is a treasure. I'm the luckiest husband in the universe. 🧸💗",
-                "Your laughter is my favorite sound. Your smile, my greatest joy. I love you!",
-                "If I had to choose all over again, I'd still choose you — every single time. 💕",
-                "You're not just my wife — you're my home, my peace, my forever. 🏡💗",
-                "The universe gave me the greatest gift: you. I'll spend eternity grateful. 🌌🧸",
+                "Every day I wake up grateful that you're my wife. 🧸",
+                "You're the sunshine that breaks my darkest clouds. I love you infinitely.",
+                "Being your husband is the greatest honor. Happy birthday, my love!",
+                "You make my heart smile in ways I never knew possible. Forever yours.",
+                "Whenever I see you, I fall in love all over again. 💖",
+                "My love for you grows stronger with each sunrise.",
+                "You are the melody of my soul. Happy Birthday, Halima! 🎂",
+                "With you, every moment is a treasure. I'm the luckiest husband.",
             ];
-            generateNoteBtn?.addEventListener('click', () => {
+            generateNoteBtn.addEventListener('click', () => {
                 dailyNoteSpan.innerHTML = `"${loveNotes[Math.floor(Math.random() * loveNotes.length)]}" ❤️`;
                 burstLight();
                 createFloating();
             });
 
-            // ─── GIFT BOX ────────────────────────────
+            // ---------- Gift box ----------
             let giftOpened = false;
-            openGiftBtn?.addEventListener('click', () => {
+            openGiftBtn.addEventListener('click', () => {
                 if (!giftOpened) {
                     giftMsg.innerHTML =
-                        '🎁✨ <strong>SURPRISE!</strong> Your husband got you:<br>✨ <em>Unlimited cuddles for life</em><br>✨ <em>A lifetime of love letters</em><br>✨ <em>Teddy Bear hugs on demand</em><br>✨ <em>A star named after your smile</em><br><br>I love you, Halima! 🧸❤️✨';
-                    giftBoxSection.style.background = 'linear-gradient(135deg, #ffe8f0, #ffdce7)';
+                        '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles for life<br>✨ Lifetime of love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br>I love you, Halima! 🧸❤️';
                     megaConfetti();
                     giftOpened = true;
-                    openGiftBtn.textContent = '🎁 Open Again for More Love';
+                    openGiftBtn.textContent = 'Open Again for More Love';
                 } else {
                     giftMsg.innerHTML =
-                        '🎁 You already opened your gift! Here\'s an <strong>extra</strong> surprise: another infinite Teddy Bear hug coming your way 🤗🧸💗 I love you more each second, my wife.';
+                        '🎁 Extra surprise: another infinite Teddy Bear hug coming your way 🤗🧸💗';
                     burstHeavy();
                     addHug('bear');
                 }
             });
 
-            // ─── 10 REASONS ──────────────────────────
+            // ---------- Reasons ----------
             const reasonsList = [
                 'Your beautiful smile', 'The way you laugh', 'Your kind heart', 'You call me Teddy Bear',
                 'Your intelligence', 'You make me a better man', 'Your gentle hugs', 'You\'re my best friend',
                 'You chose me as your husband', 'Your endless strength & grace',
             ];
-            if (reasonsContainer) {
-                reasonsList.forEach(r => {
-                    const card = document.createElement('div');
-                    card.className = 'reason-card';
-                    card.innerHTML =
-                        `<span style="font-size:1.4rem;display:block;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;color:#8a6b75;">tap to send love</p>`;
-                    card.addEventListener('click', () => {
-                        burstLight();
-                        hugMsgDiv.innerHTML =
-                            `💖 I love your <strong>${r.toLowerCase()}</strong>, my beautiful wife! Forever yours, Teddy Bear. 💖`;
-                        createFloating();
-                        totalHugs++;
-                        hugStreak++;
-                        updateHugUI();
-                    });
-                    reasonsContainer.appendChild(card);
+            reasonsList.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'reason-card';
+                card.innerHTML =
+                    `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;">tap to send love</p>`;
+                card.addEventListener('click', () => {
+                    burstLight();
+                    hugMsgDiv.innerHTML =
+                        `💖 I love your <strong>${r.toLowerCase()}</strong>, my beautiful wife! Forever yours. 💖`;
+                    createFloating();
+                    totalHugs++;
+                    hugStreak++;
+                    updateHugUI();
                 });
-            }
+                reasonsContainer.appendChild(card);
+            });
 
-            // ─── MOOD ADVISOR ────────────────────────
+            // ---------- Mood advisor ----------
             document.querySelectorAll('.moodBtn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const m = btn.dataset.mood;
                     const resp = {
-                        happy: '🧸 I\'m so glad you\'re happy, my love! Let me hug you tighter. You deserve all the joy! ❤️ *warm teddy embrace*',
-                        sad: '🧸 Oh my sweet wife, come here. Your Teddy Bear holds you close. We\'ll face everything together. I love you. 🤗💗 You\'re <strong>never</strong> alone.',
-                        loved: '🥰 You ARE loved beyond words. Every day I thank God for you, Halima. You\'re my forever. 🧸',
-                        tired: '😴 Rest now, my queen. Lay your head on my shoulder. Teddy Bear watches over you. 🌙🧸 Tomorrow I\'ll bring tea & cuddles.',
+                        happy: '🧸 So glad you\'re happy! Let me hug you tighter. ❤️',
+                        sad: '🧸 Oh sweet wife, come here. Your Teddy Bear holds you close. I love you. 🤗💗',
+                        loved: '🥰 You ARE loved beyond words. Every day I thank God for you. 🧸',
+                        tired: '😴 Rest now, my queen. Teddy Bear watches over you. 🌙🧸',
                     };
                     moodResponse.innerHTML =
                         `<i class="fas fa-comment-dots" style="color:#e57393;"></i> ${resp[m] || resp['happy']}`;
@@ -1283,67 +1348,66 @@
                 });
             });
 
-            // ─── CONFETTI RAIN ───────────────────────
-            confettiRainBtn?.addEventListener('click', () => {
-                megaConfetti();
-                setTimeout(() => safeConfetti({ particleCount: 400, spread: 140, origin: { y: 0.3 },
-                    startVelocity: 22, colors: ['#ffb3c6', '#ff6f91', '#ff9eb5', '#fff', '#ffe0e8'] }), 180);
-                hugMsgDiv.innerHTML =
-                    '✨🎉 <strong>BIRTHDAY MAGIC!</strong> Every sparkle is a kiss from your Teddy Bear! I love you, Halima! 🎉✨';
+            // ---------- Confetti rain button (fix) ----------
+            confettiRainBtn.addEventListener('click', () => {
+                // visual feedback
+                confettiRainBtn.style.transform = 'scale(0.9)';
+                setTimeout(() => confettiRainBtn.style.transform = '', 150);
+                if (isConfettiAvailable()) {
+                    megaConfetti();
+                    setTimeout(() => safeConfetti({ particleCount: 400, spread: 140, origin: { y: 0.3 },
+                        startVelocity: 22, colors: ['#ffb3c6', '#ff6f91', '#ff9eb5', '#fff',
+                            '#ffe0e8'
+                        ] }), 180);
+                    hugMsgDiv.innerHTML =
+                        '✨🎉 <strong>BIRTHDAY MAGIC!</strong> Every sparkle is a kiss from your Teddy Bear! 🎉✨';
+                } else {
+                    fallbackConfetti(80);
+                    hugMsgDiv.innerHTML =
+                        '✨🎉 <strong>Magic shower!</strong> (offline confetti mode) I love you, Halima! 🧸💗';
+                }
             });
 
-            // ─── SECRET LOVE LETTER MODAL ────────────
+            // ---------- Secret love letter modal ----------
             const secretMsgs = [
-                'My darling Halima, you are the greatest gift of my life. As your husband and Teddy Bear, I promise to adore you every single day. Happy birthday, my wife! 🧸💖 You make my world whole.',
-                'Every love story is beautiful, but ours is my favorite. From friends to lovers to husband & wife — it\'s magical. I love you infinitely. Happy Birthday, my everything. 🎂',
+                'My darling Halima, you are the greatest gift of my life. As your husband and Teddy Bear, I promise to adore you every single day. Happy birthday, my wife! 🧸💖',
+                'Every love story is beautiful, but ours is my favorite. From friends to lovers to husband & wife — it\'s magical. I love you infinitely. 🎂',
                 'You make my world brighter just by existing. Thank you for being mine. Your Teddy Bear will always hold you tight. I cannot wait for forever with you.',
                 'If I had to relive every moment, I\'d still choose you. You are my soulmate, Halima. May 3rd is yours, but my heart is yours every day. 🧸💗',
-                'April 1, 2024 — the day the universe smiled at me. Being your husband is the most beautiful chapter of my life. I love you beyond words. 💕',
-                'When I count my blessings, I count you twice. You\'re not just my wife — you\'re my answered prayer. Happy birthday, my beautiful Halima. 🧸🙏💗',
             ];
-            specialLoveNoteBtn?.addEventListener('click', () => {
+            specialLoveNoteBtn.addEventListener('click', () => {
                 modalLoveText.textContent = secretMsgs[Math.floor(Math.random() * secretMsgs.length)];
                 loveNoteModal.classList.add('active');
                 burstHeavy();
             });
-            closeModalBtn?.addEventListener('click', () => loveNoteModal.classList.remove('active'));
-            closeModalBtn2?.addEventListener('click', () => loveNoteModal.classList.remove('active'));
-            loveNoteModal?.addEventListener('click', e => { if (e.target === loveNoteModal) loveNoteModal.classList
-                    .remove('active'); });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') loveNoteModal.classList.remove(
-                    'active'); });
+            closeModalBtn.addEventListener('click', () => loveNoteModal.classList.remove('active'));
+            closeModalBtn2.addEventListener('click', () => loveNoteModal.classList.remove('active'));
+            loveNoteModal.addEventListener('click', e => { if (e.target === loveNoteModal) loveNoteModal
+                    .classList.remove('active'); });
 
-            // ─── HERO DOUBLE-TAP BEAR ATTACK ─────────
-            const hero = document.getElementById('heroSection');
-            hero?.addEventListener('dblclick', () => {
+            // ---------- Hero double-tap bear attack ----------
+            document.getElementById('heroSection').addEventListener('dblclick', () => {
                 megaConfetti();
                 hugMsgDiv.innerHTML =
-                    '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear husband showers you with EXTRA love! I ADORE you, Halima! 💗💗💗';
+                    '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear husband showers you with EXTRA love! 💗💗💗';
                 totalHugs += 2;
                 hugStreak += 2;
                 updateHugUI();
                 spawnFloaters(14);
             });
 
-            // ─── INIT ────────────────────────────────
+            // ---------- Initial setup ----------
             updateHugUI();
             updateKissUI();
-            updateCountdown();
             buildGarden();
             buildPromiseWall();
-
             if (mainSite.classList.contains('visible')) {
                 spawnFloaters(16);
-                checkBirthday();
             }
-
             setInterval(() => {
-                if (mainSite.classList.contains('visible') && floatContainer && floatContainer.children
-                    .length < 20) createFloating();
+                if (mainSite.classList.contains('visible') && floatContainer.children.length < 20)
+                    createFloating();
             }, 1700);
-
-            console.log('🧸🎀 Happy Birthday, Halima! Everything is ready! 💖');
-            console.log('💡 Tips: Double-tap hero | Blow candles | Plant garden | Reveal promises | Tap the growing heart!');
         })();
     </script>
 </body>
