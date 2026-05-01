@@ -39,7 +39,7 @@
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
         }
-        /* ---------- NIGHT MODE ---------- */
+        /* Night mode */
         body.night-mode {
             background: #0b0c1a;
             color: #f0e0e8;
@@ -110,7 +110,7 @@
             border-color: #b34266;
         }
 
-        /* ---------- NIGHT TOGGLE (moon/sun icon only) ---------- */
+        /* Night toggle */
         .night-toggle {
             position: fixed;
             top: 18px;
@@ -141,7 +141,7 @@
             pointer-events: none;
         }
 
-        /* ---------- START OVERLAY ---------- */
+        /* Start overlay */
         .start-overlay {
             position: fixed;
             top: 0;
@@ -150,7 +150,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -210,7 +209,6 @@
             color: #fff;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-family: 'Inter', sans-serif;
             box-shadow: 0 6px 20px rgba(229, 115, 147, 0.35);
             touch-action: manipulation;
         }
@@ -230,7 +228,7 @@
             background: #b8939f;
         }
 
-        /* ---------- MAIN SITE ---------- */
+        /* Main site */
         .main-site {
             display: none;
             max-width: 1100px;
@@ -300,7 +298,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
             box-shadow: 0 5px 16px rgba(229, 115, 147, 0.3);
             white-space: nowrap;
             touch-action: manipulation;
@@ -341,7 +338,6 @@
             font-size: 1rem;
             background: #fff;
             outline: none;
-            font-family: 'Inter', sans-serif;
         }
         .reason-card {
             background: #fff2f5;
@@ -388,7 +384,6 @@
             0% { transform: scale(1) rotate(-2deg); }
             100% { transform: scale(1.07) rotate(2deg); }
         }
-        /* Love Garden – crisp, visible */
         .garden-grid {
             display: flex;
             flex-wrap: wrap;
@@ -444,7 +439,7 @@
             50% { transform: scale(1.12); }
         }
 
-        /* ---------- FLOATING ITEMS (gentle, sparse) ---------- */
+        /* Floating items */
         .floating-teddies {
             position: fixed;
             top: 0;
@@ -461,7 +456,6 @@
             font-size: 1.2rem;
             animation: floatUp linear forwards;
             opacity: 0;
-            will-change: transform, opacity;
             pointer-events: none;
         }
         @keyframes floatUp {
@@ -471,35 +465,38 @@
             100% { transform: translateY(-115vh) scale(0.85); opacity: 0; }
         }
 
-        /* ---------- MODALS ---------- */
-        .love-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.82);
-            backdrop-filter: blur(7px);
-            -webkit-backdrop-filter: blur(7px);
-            z-index: 6000;
-            justify-content: center;
-            align-items: center;
+        /* Typed letter effect */
+        .typed-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #fffaf5;
+            border-radius: 36px;
+            padding: 24px 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 220, 220, 0.6);
+            min-height: 60px;
         }
-        .love-modal.active { display: flex; }
-        .certificate-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 7000;
-            justify-content: center;
-            align-items: center;
+
+        /* Gift unwrap animation */
+        .gift-box {
+            transition: all 0.4s ease;
         }
-        .certificate-modal.active { display: flex; }
+        .gift-box.unwrapped {
+            background: linear-gradient(135deg, #ffe8f0, #ffdce7);
+            box-shadow: 0 0 35px rgba(235, 122, 158, 0.4);
+        }
+        .gift-box .gift-emoji {
+            font-size: 3rem;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+        .gift-box.unwrapped .gift-emoji {
+            transform: rotate(10deg) scale(1.2);
+        }
 
         footer {
             text-align: center;
@@ -508,10 +505,8 @@
             border-radius: 44px;
             padding: 22px;
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
         }
 
-        /* ---------- MOBILE OPTIMISATIONS ---------- */
         @media (max-width: 700px) {
             .hero h1 { font-size: 1.6rem; }
             .hero { padding: 32px 16px; border-radius: 56px; }
@@ -522,34 +517,16 @@
             .start-card { border-radius: 48px; padding: 30px 18px 26px; }
             .garden-plot { width: 45px; height: 45px; font-size: 1.3rem; }
             .night-toggle { top: 12px; right: 12px; width: 40px; height: 40px; }
-            .hug-message { font-size: 0.85rem; }
-        }
-        @media (max-width: 400px) {
-            .reason-card { width: 110px; font-size: 0.75rem; }
-            .hug-btn { padding: 8px 14px; font-size: 0.78rem; }
-            .hero h1 { font-size: 1.4rem; }
-        }
-        @media print {
-            body > * { visibility: hidden; }
-            .certificate-modal, .certificate-modal * { visibility: visible; }
-            .certificate-modal {
-                position: absolute;
-                left: 0; top: 0;
-                background: white;
-                display: flex;
-                width: 100%; height: 100%;
-            }
+            .typed-letter { font-size: 0.9rem; padding: 18px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- Night mode toggle (moon / sun only) -->
     <button class="night-toggle" id="nightModeToggle" aria-label="Toggle night mode" title="Night mode">
         <i class="fas fa-moon"></i>
     </button>
 
-    <!-- START OVERLAY -->
+    <!-- Start overlay -->
     <div class="start-overlay" id="startOverlay">
         <div class="start-card">
             <span class="heart-icon"><i class="fas fa-heart"></i></span>
@@ -564,11 +541,11 @@
         </div>
     </div>
 
-    <!-- MAIN SITE -->
+    <!-- Main site -->
     <div class="main-site" id="mainSite">
         <div class="floating-teddies" id="floatContainer"></div>
 
-        <!-- HERO (double‑tap reliable) -->
+        <!-- Hero -->
         <div class="hero glass-card" id="heroSection">
             <h1>🎂 Happy Birthday, My Wife Halima 🎂</h1>
             <p style="font-family:'Dancing Script',cursive;font-size:1.15rem;">To the queen of my heart — from your Teddy Bear husband 🧸</p>
@@ -578,10 +555,15 @@
             <p style="margin-top:6px;font-size:0.7rem;opacity:0.7;">💡 Double‑tap this card for a bear hug attack! 🐻</p>
         </div>
 
-        <!-- MUSIC PLAYER -->
+        <!-- Typed letter -->
+        <div class="glass-card typed-letter" id="typedLetterContainer">
+            <p id="typedLetterText"></p>
+        </div>
+
+        <!-- Music player (renamed) -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-music"></i> Our Song</h3>
-            <p style="margin-bottom:10px;">This music sounds like you 🎶</p>
+            <h3><i class="fas fa-music"></i> Let's Play a Song</h3>
+            <p style="margin-bottom:10px;">This is how you sound to me — beautiful and lovely 🎶</p>
             <button id="musicToggleBtn" class="hug-btn" style="background:#b34266;">
                 <i class="fas fa-play"></i> Play
             </button>
@@ -591,14 +573,14 @@
             <p style="font-size:0.7rem;margin-top:6px;opacity:0.7;">🎧 Let our melody fill your heart</p>
         </div>
 
-        <!-- DAYS TOGETHER COUNTER -->
+        <!-- Days together counter (renamed) -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-calendar-alt"></i> Together Since April 1, 2024</h3>
+            <h3><i class="fas fa-comment-dots"></i> 💬 Since We First Talked & Met</h3>
             <div class="countdown" id="daysTogetherCounter">Loading…</div>
-            <p style="font-size:0.85rem;">Every second with you is a gift 💝</p>
+            <p style="font-size:0.85rem;">Every second since that day is a gift 💝</p>
         </div>
 
-        <!-- LOVE METER -->
+        <!-- Love meter -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-chart-line"></i> How much does your husband love you?</h3>
             <input type="range" id="loveMeter" min="0" max="100" value="100" disabled style="width:80%;max-width:380px;margin:10px auto;display:block;accent-color:#e57393;">
@@ -606,7 +588,7 @@
             <p style="font-size:0.75rem;opacity:0.7;">(slider locked — his love has <strong>no limits</strong> 💕)</p>
         </div>
 
-        <!-- HUG ZONE -->
+        <!-- Hug zone -->
         <div class="glass-card" style="text-align:center;">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Teddy Bear Hug Machine 🧸</h3>
             <div class="hug-buttons">
@@ -622,15 +604,15 @@
             </div>
         </div>
 
-        <!-- KISS COUNTER -->
+        <!-- Kiss counter (renamed) -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-kiss"></i> Kiss Counter &amp; Growing Heart 💋</h3>
-            <p>Tap the heart — every kiss makes it grow!</p>
+            <h3><i class="fas fa-kiss"></i> 💋 Kisses & Growing Heartbeat</h3>
+            <p>Tap the heart — every kiss makes it beat faster!</p>
             <div class="growing-heart" id="growingHeart" style="font-size:2.5rem;">❤️</div>
             <p>💋 Kisses: <strong id="kissCountDisplay">0</strong></p>
         </div>
 
-        <!-- BLOW OUT CANDLES -->
+        <!-- Blow out candles -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-cake-candles"></i> Blow Out Your Birthday Candles 🎂</h3>
             <div class="candle-row" id="candleRow">
@@ -639,7 +621,7 @@
             <p id="candleMessage" style="font-style:italic;"></p>
         </div>
 
-        <!-- SECRET PUZZLE -->
+        <!-- Secret puzzle -->
         <div class="glass-card" style="text-align:center;">
             <h3>🔐 A Secret Message from Your Husband</h3>
             <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type nickname…" aria-label="Nickname">
@@ -648,66 +630,67 @@
             <div id="puzzleResult" style="margin-top:12px;font-weight:600;"></div>
         </div>
 
-        <!-- MINI QUIZ -->
+        <!-- Mini quiz (simplified) -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-question-circle"></i> Mini Quiz: You &amp; Me 💑</h3>
-            <p><strong>1. When did we first meet?</strong></p>
-            <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="april-1-2024">April 1, 2024</button>
-            <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="march-1">March 1, 2024</button>
-            <p style="margin-top:12px;"><strong>2. What does he call you most?</strong></p>
-            <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="my-wife">My Wife</button>
-            <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="darling">Darling</button>
+            <p><strong>What do I love to call you?</strong></p>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="my-wife">My Wife</button>
+                <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="darling">Darling</button>
+            </div>
             <div id="quizFeedback" style="margin-top:14px;font-style:italic;"></div>
+            <p style="font-size:0.7rem;margin-top:6px;opacity:0.7;">✨ More questions coming in our future together ✨</p>
         </div>
 
-        <!-- LOVE GARDEN (crisp, visible) -->
+        <!-- Love garden -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-seedling"></i> 🌸 Our Love Garden 🌸</h3>
             <div class="garden-grid" id="gardenGrid"></div>
             <p id="gardenMessage" style="font-style:italic;"></p>
         </div>
 
-        <!-- PROMISE WALL -->
+        <!-- Promise wall -->
         <div class="glass-card" style="text-align:center;">
             <h3>🌟 Promise Wall 🌟</h3>
             <div id="promiseWall" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;"></div>
             <p id="promiseReveal" style="font-style:italic;"></p>
         </div>
 
-        <!-- 10 REASONS -->
+        <!-- 10 Reasons -->
         <div class="glass-card">
             <h3 style="text-align:center;">10 Reasons Why I Love You</h3>
             <div id="reasonsContainer" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;"></div>
         </div>
 
-        <!-- COMPLIMENT BOMB -->
+        <!-- Compliment bomb -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-bomb"></i> Compliment Bomb 💣💖</h3>
             <button id="complimentBombBtn" class="hug-btn"><i class="fas fa-heart"></i> Bomb Love</button>
         </div>
 
-        <!-- DAILY LOVE NOTE -->
+        <!-- Daily love note -->
         <div class="glass-card" style="text-align:center;">
             <h3>📬 Daily Love Note</h3>
             <p id="dailyLoveNote" style="font-style:italic;">"Click for a fresh love note, my wife."</p>
             <button id="generateNoteBtn" class="hug-btn btn-alt">New Note</button>
         </div>
 
-        <!-- VIRTUAL GIFT -->
-        <div class="glass-card" style="text-align:center;" id="giftBoxSection">
-            <h3>🎁 Unwrap Your Birthday Gift</h3>
-            <p id="giftMessage">Tap to open a surprise!</p>
-            <button id="openGiftBtn" class="hug-btn">Open Gift</button>
+        <!-- Gift box (enhanced) -->
+        <div class="glass-card gift-box" style="text-align:center;" id="giftBoxSection">
+            <span class="gift-emoji">🎁</span>
+            <h3>🎁 Unwrap Your Special Gift</h3>
+            <p id="giftMessage">There's something waiting for you… 💝</p>
+            <button id="openGiftBtn" class="hug-btn" style="background:#c75373;">✨ Unwrap Now</button>
         </div>
 
-        <!-- BIRTHDAY COUNTDOWN -->
+        <!-- Birthday countdown -->
         <div class="glass-card" style="text-align:center;">
             <h3>🎂 Countdown to May 3rd</h3>
             <div class="countdown" id="birthdayCountdown">--</div>
             <button id="celebrateTodayBtn" class="hug-btn">Celebrate NOW</button>
         </div>
 
-        <!-- MOOD ADVISOR -->
+        <!-- Mood advisor -->
         <div class="glass-card">
             <h3 style="text-align:center;">🧸 Mood Advice</h3>
             <div class="hug-buttons">
@@ -719,13 +702,13 @@
             <div id="moodResponse" style="margin-top:12px;"></div>
         </div>
 
-        <!-- SECRET LETTER + CERTIFICATE (no confetti rain button) -->
+        <!-- Secret letter + certificate -->
         <div class="glass-card" style="text-align:center;">
             <button id="specialLoveNoteBtn" class="hug-btn">💌 Secret Love Letter</button>
             <button id="certificateBtn" class="hug-btn" style="background:#c75373;">🏆 Best Wife Certificate</button>
         </div>
 
-        <!-- RESET -->
+        <!-- Reset -->
         <div class="glass-card" style="text-align:center;">
             <button id="resetCountersBtn" class="hug-btn" style="background:#aaa;">🔄 Reset All Hugs &amp; Kisses</button>
         </div>
@@ -737,9 +720,9 @@
         </footer>
     </div>
 
-    <!-- LOVE NOTE MODAL -->
+    <!-- Love note modal -->
     <div class="love-modal" id="loveNoteModal">
-        <div class="modal-content" style="background:#fffaf7;max-width:460px;padding:34px;border-radius:56px;text-align:center;box-shadow:0 40px 70px rgba(0,0,0,0.4);position:relative;">
+        <div style="background:#fffaf7;max-width:460px;padding:34px;border-radius:56px;text-align:center;box-shadow:0 40px 70px rgba(0,0,0,0.4);position:relative;">
             <button id="closeModalBtn" style="position:absolute;top:14px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#b34266;">&times;</button>
             <i class="fas fa-heart" style="font-size:2.8rem;color:#e75480;"></i>
             <h2>To my darling wife Halima 💌</h2>
@@ -748,9 +731,9 @@
         </div>
     </div>
 
-    <!-- CERTIFICATE MODAL -->
+    <!-- Certificate modal -->
     <div class="certificate-modal" id="certificateModal">
-        <div class="certificate-content" style="background:#fffef7;padding:40px;border-radius:30px;max-width:600px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.5);border:4px double #e57393;font-family:'Playfair Display',serif;">
+        <div style="background:#fffef7;padding:40px;border-radius:30px;max-width:600px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.5);border:4px double #e57393;font-family:'Playfair Display',serif;">
             <h2>🎀 Certificate of Love 🎀</h2>
             <p>This certifies that</p>
             <div style="font-size:2.8rem;color:#c0395b;font-family:'Dancing Script',cursive;">Halima</div>
@@ -786,6 +769,7 @@
             const generateNoteBtn = document.getElementById('generateNoteBtn');
             const openGiftBtn = document.getElementById('openGiftBtn');
             const giftMsg = document.getElementById('giftMessage');
+            const giftBoxSection = document.getElementById('giftBoxSection');
             const reasonsContainer = document.getElementById('reasonsContainer');
             const celebrateTodayBtn = document.getElementById('celebrateTodayBtn');
             const moodResponse = document.getElementById('moodResponse');
@@ -810,6 +794,7 @@
             const certDateSpan = document.getElementById('certDate');
             const resetCountersBtn = document.getElementById('resetCountersBtn');
             const complimentBombBtn = document.getElementById('complimentBombBtn');
+            const typedLetterText = document.getElementById('typedLetterText');
 
             // Confetti helpers
             function safeConfetti(opts) {
@@ -828,7 +813,7 @@
             }
             function megaConfetti() { burstHeavy(); setTimeout(burstHeavy, 280); }
 
-            // Floating items (gentle, sparse)
+            // Floating items
             function createFloating(emoji = null) {
                 if (!floatContainer) return;
                 const el = document.createElement('div');
@@ -846,7 +831,7 @@
                 for (let i = 0; i < count; i++) setTimeout(createFloating, i * 75);
             }
 
-            // Local Storage
+            // Local storage
             function safeGet(k, fb) { try { return localStorage.getItem(k) || fb; } catch(e) { return fb; } }
             function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
             let totalHugs = parseInt(safeGet('halima_hugs','0'));
@@ -932,7 +917,22 @@
             updateBirthdayCountdown();
             setInterval(updateBirthdayCountdown, 60000);
 
-            // Start overlay
+            // Typing animation for the letter
+            const letter = `✨\n🧸 My beloved Halima, my wife... 🧸\n\nThey call me your Teddy Bear — and it's the sweetest name because I exist to hold you, comfort you, and love you without end. From the moment we first met on April 1, 2024, I didn't know that "just a friend" would turn into the love of my life. But the universe had a plan: friends became best friends, best friends became lovers, and now? Now I proudly call you my wife — not because of a paper, but because my soul chose yours and never looked back.\n\nEvery day since that magical April, I've watched you bloom, and I fell deeper. You are my partner, my laughter, my safe place. As your Teddy Bear, I promise to always wrap you in warmth, dry your tears, and celebrate your every victory. On your birthday, May 3rd, I want you to feel the most cherished woman in the universe — because to me, you truly are. I love you more than all the stars, my wife Halima. Forever your husband, forever your teddy.\n\n— Your loving husband & Teddy Bear`;
+            function typeLetter() {
+                let i = 0;
+                typedLetterText.textContent = '';
+                const interval = setInterval(() => {
+                    if (i < letter.length) {
+                        typedLetterText.textContent += letter.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 18);
+            }
+
+            // Start overlay logic
             let noClicks = 0;
             document.getElementById('yesBtn').addEventListener('click', () => {
                 startOverlay.classList.add('hidden');
@@ -941,7 +941,10 @@
                 updateHugUI(); updateKissUI(); updateBirthdayCountdown(); buildGarden(); buildPromiseWall();
                 spawnFloaters(6);
                 hugMsgDiv.innerHTML = "🧸 Welcome, my queen! Tap a hug button — I'm ready to hold you! 💖";
-                setTimeout(megaConfetti, 300);
+                setTimeout(() => {
+                    typeLetter();
+                    megaConfetti();
+                }, 400);
             });
             document.getElementById('noBtn').addEventListener('click', () => {
                 noClicks++;
@@ -986,7 +989,7 @@
                 kissHeartSize = Math.min(12, kissHeartSize + 0.15);
                 updateKissUI();
                 burstLight();
-                hugMsgDiv.innerHTML = `💋 <strong>${totalKisses} kisses!</strong> My heart grows bigger for you! 💗`;
+                hugMsgDiv.innerHTML = `💋 <strong>${totalKisses} kisses!</strong> My heart beats faster for you! 💗`;
                 createFloating();
             });
 
@@ -1024,20 +1027,17 @@
                 }
             });
 
-            // Quiz
-            let q1ok=false, q2ok=false;
+            // Quiz (simplified)
             document.querySelectorAll('.quiz-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const q = btn.dataset.quiz, ans = btn.dataset.ans;
-                    if (q==='q1') {
-                        q1ok = (ans==='april-1-2024');
-                        quizFeedback.innerHTML = q1ok ? '✅ Yes! April 1, 2024 — magical day! 💖' : '❌ It\'s April 1st, 2024!';
-                    } else {
-                        q2ok = (ans==='my-wife');
-                        quizFeedback.innerHTML = q2ok ? '❤️ Exactly! "My wife" — you are my everything.' : '💞 I call you "my wife" — you\'re my soulmate.';
-                    }
-                    if (q1ok && q2ok) quizFeedback.innerHTML += '<br>🎉 You know me so well!';
-                    if (q1ok || q2ok) burstLight();
+                    const ans = btn.dataset.ans;
+                    const isCorrect = (ans === 'my-wife');
+                    btn.style.background = isCorrect ? '#4caf84' : '#d49595';
+                    quizFeedback.innerHTML = isCorrect ?
+                        '❤️ Exactly! I call you <strong>"my wife"</strong> — you are my everything.' :
+                        '💞 I love calling you <strong>"my wife"</strong> — because you\'re my soulmate.';
+                    if (isCorrect) burstLight();
+                    setTimeout(() => { btn.style.background = ''; }, 600);
                 });
             });
 
@@ -1134,15 +1134,19 @@
                 burstLight(); createFloating();
             });
 
-            // Gift box
+            // Gift box (enhanced unwrap)
             let giftOpened = false;
             openGiftBtn.addEventListener('click', () => {
                 if (!giftOpened) {
-                    giftMsg.innerHTML = '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles for life<br>✨ Lifetime of love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br>I love you, Halima! 🧸❤️';
-                    megaConfetti(); giftOpened = true; openGiftBtn.textContent = 'Open Again for More Love';
+                    giftBoxSection.classList.add('unwrapped');
+                    giftMsg.innerHTML = '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles for life<br>✨ A lifetime of love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br><br>I love you, Halima! 🧸❤️✨';
+                    megaConfetti();
+                    giftOpened = true;
+                    openGiftBtn.textContent = '🎁 Open Again for More Love';
                 } else {
-                    giftMsg.innerHTML = '🎁 Extra surprise: another infinite Teddy Bear hug 🤗🧸💗';
-                    burstHeavy(); addHug('bear');
+                    giftMsg.innerHTML = '🎁 You already opened your gift! But here\'s an <strong>extra</strong> surprise: another infinite Teddy Bear hug 🤗🧸💗';
+                    burstHeavy();
+                    addHug('bear');
                 }
             });
 
