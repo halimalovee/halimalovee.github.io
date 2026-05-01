@@ -11,13 +11,11 @@
     <style>
         :root {
             --pink-light: #ffe8ee;
-            --pink-mid: #ffc4d4;
             --pink-rose: #e57393;
             --pink-deep: #b34266;
             --card-bg: rgba(255, 248, 245, 0.92);
             --shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
             --radius: 48px;
-            --text-dark: #5a3e4b;
         }
         * {
             margin: 0;
@@ -41,7 +39,7 @@
         /* Night mode */
         body.night-mode {
             background: #0b0c1a;
-            color: #eee;
+            color: #f0e0e8;
         }
         body.night-mode::before {
             content: '';
@@ -52,82 +50,80 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            background: transparent;
-            box-shadow: 0 0 150px 40px rgba(255, 255, 255, 0.03);
+            background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.06) 0%, transparent 70%);
             animation: starPulse 4s ease-in-out infinite alternate;
         }
         @keyframes starPulse {
-            0% {
-                opacity: 0.3;
-            }
-            100% {
-                opacity: 0.7;
-            }
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
         }
         body.night-mode .glass-card {
             background: rgba(25, 25, 40, 0.85);
-            border-color: rgba(255, 255, 255, 0.1);
-            color: #f0e6ef;
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #f5e6ef;
         }
         body.night-mode .hero {
             background: linear-gradient(135deg, rgba(40, 30, 50, 0.9), rgba(30, 20, 45, 0.9));
         }
         body.night-mode .hug-message {
             background: rgba(60, 50, 70, 0.7);
+            color: #fce4ec;
         }
         body.night-mode .reason-card {
-            background: rgba(50, 40, 60, 0.8);
+            background: rgba(60, 50, 70, 0.8);
+            color: #f0e0ec;
         }
         body.night-mode .countdown {
             color: #ffb3c6;
         }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background:
-                radial-gradient(ellipse at 18% 22%, rgba(255, 182, 193, 0.22) 0%, transparent 50%),
-                radial-gradient(ellipse at 78% 58%, rgba(255, 160, 180, 0.18) 0%, transparent 50%),
-                radial-gradient(ellipse at 48% 82%, rgba(255, 190, 200, 0.25) 0%, transparent 50%);
-            transition: opacity 0.6s;
+        body.night-mode .section-title,
+        body.night-mode h3 {
+            color: #ffccd5;
         }
-        body.night-mode::before {
-            opacity: 0;
+        body.night-mode .hero h1 {
+            background: linear-gradient(135deg, #ffb3c6, #ff99aa, #ffc0cb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        body.night-mode .night-toggle {
+            background: rgba(255,240,245,0.2);
+            color: #ffe0ec;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        body.night-mode footer {
+            background: rgba(30, 25, 40, 0.7);
+            color: #e0d0d8;
         }
 
-        /* Night mode toggle button */
+        /* Night mode toggle – soft, beautiful */
         .night-toggle {
             position: fixed;
             top: 18px;
             right: 22px;
             z-index: 5000;
-            background: var(--card-bg);
+            background: rgba(255, 248, 245, 0.8);
+            backdrop-filter: blur(10px);
             border: none;
             border-radius: 40px;
             padding: 10px 18px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s;
-            font-family: 'Inter', sans-serif;
             font-weight: 600;
             color: var(--pink-deep);
-        }
-        body.night-mode .night-toggle {
-            background: rgba(40, 40, 60, 0.8);
-            color: #ffb3c6;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.5);
         }
         .night-toggle:hover {
             transform: scale(1.05);
+            background: rgba(255,240,245,0.95);
+        }
+        body.night-mode .night-toggle:hover {
+            background: rgba(255,240,245,0.3);
         }
 
         /* start overlay */
@@ -137,7 +133,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0,0,0,0.9);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             z-index: 9999;
@@ -159,41 +155,22 @@
             padding: 44px 28px 38px;
             border-radius: 64px;
             text-align: center;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.35);
-            position: relative;
-            overflow: hidden;
+            animation: popIn 0.5s ease;
+            box-shadow: 0 35px 60px rgba(0,0,0,0.35);
         }
         @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.85) translateY(25px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.85) translateY(25px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         .start-card .heart-icon {
             font-size: 3rem;
             color: #e96479;
-            animation: pulse 1.2s ease-in-out infinite;
+            animation: pulse 1.2s infinite;
             display: inline-block;
         }
         @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.16);
-            }
-        }
-        .start-card h2 {
-            font-family: 'Playfair Display', serif;
-            color: #b34266;
-            margin: 14px 0 6px;
-            font-size: 1.6rem;
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.16); }
         }
         .question-buttons {
             display: flex;
@@ -211,22 +188,12 @@
             font-size: 1rem;
             color: #fff;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: 'Inter', sans-serif;
-            box-shadow: 0 6px 20px rgba(229, 115, 147, 0.35);
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(229,115,147,0.35);
         }
-        .yes-no:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(229, 115, 147, 0.5);
-            background: #d4627f;
-        }
-        .yes-no.no-btn {
-            background: #c9a9b5;
-            box-shadow: 0 6px 18px rgba(180, 140, 155, 0.3);
-        }
-        .yes-no.no-btn:hover {
-            background: #b8939f;
-        }
+        .yes-no:hover { transform: translateY(-2px); background: #d4627f; }
+        .yes-no.no-btn { background: #c9a9b5; }
+        .yes-no.no-btn:hover { background: #b8939f; }
 
         /* main site */
         .main-site {
@@ -242,14 +209,8 @@
             animation: fadeUp 0.65s ease;
         }
         @keyframes fadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .glass-card {
@@ -260,20 +221,14 @@
             padding: 26px 22px;
             margin-bottom: 28px;
             box-shadow: var(--shadow);
-            transition: all 0.25s ease;
-            border: 1px solid rgba(255, 255, 255, 0.55);
-            position: relative;
-        }
-        .glass-card:hover {
-            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.1);
+            transition: all 0.25s;
+            border: 1px solid rgba(255,255,255,0.55);
         }
         .hero {
             text-align: center;
             background: linear-gradient(135deg, #fff0f5, #ffe3ec, #fff5f7);
             border-radius: 72px;
             padding: 44px 22px;
-            position: relative;
-            overflow: hidden;
             cursor: pointer;
         }
         .hero h1 {
@@ -283,23 +238,6 @@
             background-clip: text;
             color: transparent;
             font-family: 'Playfair Display', serif;
-            position: relative;
-            z-index: 1;
-            line-height: 1.2;
-        }
-        .section-title {
-            font-size: 1.6rem;
-            text-align: center;
-            color: #a13e5c;
-            margin: 6px 0 16px;
-            font-family: 'Playfair Display', serif;
-        }
-        .hug-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 16px 0;
         }
         .hug-btn {
             background: #e57393;
@@ -309,53 +247,22 @@
             color: #fff;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
-            box-shadow: 0 5px 16px rgba(229, 115, 147, 0.3);
+            box-shadow: 0 5px 16px rgba(229,115,147,0.3);
             white-space: nowrap;
         }
-        .hug-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(229, 115, 147, 0.45);
-            background: #d4627f;
-        }
-        .hug-btn:active {
-            transform: scale(0.93);
-        }
-        .hug-btn.btn-alt {
-            background: #b34266;
-        }
-        .hug-btn.btn-alt:hover {
-            background: #9e3857;
-        }
+        .hug-btn:hover { background: #d4627f; transform: translateY(-2px); }
+        .hug-btn.btn-alt { background: #b34266; }
+        .hug-btn.btn-alt:hover { background: #9e3857; }
         .hug-message {
             background: #ffeef3;
             border-radius: 42px;
-            padding: 16px 20px;
+            padding: 16px;
             margin-top: 12px;
-            min-height: 60px;
             font-size: 0.9rem;
-            line-height: 1.5;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 200, 210, 0.45);
+            border: 1px solid rgba(255,200,210,0.45);
             text-align: center;
-        }
-        .puzzle-input {
-            padding: 12px 16px;
-            border-radius: 40px;
-            border: 2px solid #ffb7c5;
-            width: 70%;
-            max-width: 300px;
-            margin: 8px;
-            text-align: center;
-            font-size: 1rem;
-            background: #fff;
-            outline: none;
-        }
-        .puzzle-input:focus {
-            border-color: #e57393;
-            box-shadow: 0 0 0 4px rgba(229, 115, 147, 0.1);
         }
         .reason-card {
             background: #fff2f5;
@@ -363,144 +270,17 @@
             padding: 14px 10px;
             margin: 6px;
             cursor: pointer;
-            transition: all 0.22s ease;
             display: inline-block;
-            width: 165px;
+            width: 150px;
             text-align: center;
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 200, 210, 0.35);
+            border: 1px solid rgba(255,200,210,0.35);
         }
-        .reason-card:hover {
-            transform: translateY(-4px) scale(1.04);
-            background: #ffe8ee;
-        }
+        .reason-card:hover { transform: translateY(-4px); background: #ffe8ee; }
         .countdown {
-            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-size: 1.6rem;
             font-weight: 700;
             color: #b34266;
-            letter-spacing: 1px;
             font-family: 'Playfair Display', serif;
-        }
-        .countdown.celebration {
-            animation: glowText 1s ease-in-out infinite alternate;
-            color: #d4456a;
-        }
-        @keyframes glowText {
-            0% {
-                text-shadow: 0 0 8px rgba(200, 60, 100, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 28px rgba(220, 70, 110, 0.9);
-            }
-        }
-        .candle-row {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 14px 0;
-        }
-        .candle {
-            font-size: 2.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: flicker 0.7s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 10px rgba(255, 170, 50, 0.7));
-        }
-        .candle.blown {
-            animation: none;
-            filter: none;
-            opacity: 0.3;
-            transform: scale(0.8);
-            pointer-events: none;
-        }
-        @keyframes flicker {
-            0% {
-                transform: scale(1) rotate(-2deg);
-            }
-            100% {
-                transform: scale(1.07) rotate(2deg);
-            }
-        }
-        .love-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.82);
-            backdrop-filter: blur(7px);
-            z-index: 6000;
-            justify-content: center;
-            align-items: center;
-        }
-        .love-modal.active {
-            display: flex;
-        }
-        .love-modal .modal-content {
-            background: #fffaf7;
-            max-width: 480px;
-            width: 90%;
-            margin: 20px;
-            padding: 34px 26px;
-            border-radius: 56px;
-            text-align: center;
-            box-shadow: 0 40px 70px rgba(0, 0, 0, 0.4);
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        .modal-content .close-btn {
-            position: absolute;
-            top: 14px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #b34266;
-            opacity: 0.7;
-        }
-        .certificate-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 7000;
-            justify-content: center;
-            align-items: center;
-        }
-        .certificate-modal.active {
-            display: flex;
-        }
-        .certificate-content {
-            background: #fffef7;
-            padding: 40px 30px;
-            border-radius: 30px;
-            max-width: 600px;
-            text-align: center;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
-            border: 4px double #e57393;
-            position: relative;
-            font-family: 'Playfair Display', serif;
-        }
-        .certificate-content h2 {
-            font-size: 2.5rem;
-            color: #b34266;
-            margin-bottom: 10px;
-        }
-        .certificate-content .name {
-            font-size: 2.8rem;
-            color: #c0395b;
-            font-family: 'Dancing Script', cursive;
-            margin: 15px 0;
-        }
-        .certificate-content .seal {
-            font-size: 3rem;
-            margin-top: 20px;
         }
         .floating-teddies {
             position: fixed;
@@ -515,122 +295,29 @@
         .float-item {
             position: absolute;
             bottom: -50px;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             animation: floatUp linear infinite;
             opacity: 0;
         }
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            70% {
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-115vh) rotate(20deg) scale(1.1);
-                opacity: 0;
-            }
-        }
-        .garden-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .garden-plot {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: #fde4ec;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.6rem;
-            border: 2px dashed #ffccd5;
-        }
-        .garden-plot.planted {
-            border: 2px solid #e57393;
-            background: #fff0f4;
-        }
-        .promise-star {
-            display: inline-block;
-            cursor: pointer;
-            padding: 8px 14px;
-            margin: 4px;
-            border-radius: 30px;
-            background: #fff5f7;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            border: 1px solid #ffccd5;
-        }
-        .promise-star.revealed {
-            background: #ffe8ee;
-            border-color: #e57393;
+            0% { transform: translateY(0) scale(0.4); opacity: 0; }
+            10% { opacity: 0.6; }
+            80% { opacity: 0.3; }
+            100% { transform: translateY(-115vh) scale(0.9); opacity: 0; }
         }
         @media (max-width: 700px) {
-            .hero h1 {
-                font-size: 1.6rem;
-            }
-            .section-title {
-                font-size: 1.3rem;
-            }
-            .reason-card {
-                width: 135px;
-                font-size: 0.8rem;
-            }
-            .glass-card {
-                border-radius: 36px;
-                padding: 18px 14px;
-                margin-bottom: 20px;
-            }
-            .hug-btn {
-                padding: 9px 16px;
-                font-size: 0.82rem;
-            }
-            .start-card {
-                border-radius: 46px;
-                padding: 30px 18px 26px;
-            }
-        }
-        /* Print styles for certificate */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .certificate-modal,
-            .certificate-modal * {
-                visibility: visible;
-            }
-            .certificate-modal {
-                position: absolute;
-                left: 0;
-                top: 0;
-                background: white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-            }
-            .certificate-content {
-                box-shadow: none;
-                border: 4px double #b34266;
-                page-break-inside: avoid;
-            }
+            .hero h1 { font-size: 1.6rem; }
+            .glass-card { border-radius: 36px; padding: 18px 14px; }
+            .hug-btn { padding: 9px 16px; font-size: 0.82rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Night mode toggle -->
-    <button class="night-toggle" id="nightModeToggle" title="Toggle starry night mode">🌙 Night Mode</button>
+    <!-- Night mode toggle (soft & beautiful) -->
+    <button class="night-toggle" id="nightModeToggle">
+        <i class="fas fa-moon"></i> Night
+    </button>
 
     <!-- START OVERLAY -->
     <div class="start-overlay" id="startOverlay">
@@ -643,7 +330,7 @@
                 <button class="yes-no" id="yesBtn">✨ Yes, my husband! 🧸</button>
                 <button class="yes-no no-btn" id="noBtn">Not yet… 😄</button>
             </div>
-            <p style="margin-top:16px;font-size:0.75rem;color:#8a6b75;">*spoiler: hugs, puzzles, a love garden &amp; endless magic await*</p>
+            <p style="margin-top:16px;font-size:0.75rem;color:#8a6b75;">*spoiler: hugs, puzzles, a love garden & endless magic*</p>
         </div>
     </div>
 
@@ -651,21 +338,35 @@
     <div class="main-site" id="mainSite">
         <div class="floating-teddies" id="floatContainer"></div>
 
-        <!-- HERO -->
+        <!-- HERO with double‑tap bear attack -->
         <div class="hero glass-card" id="heroSection">
             <h1>🎂 Happy Birthday, My Wife Halima 🎂</h1>
-            <p style="font-size:1.15rem;font-family:'Dancing Script',cursive;color:#7a4a5c;">To the queen of my heart — from your Teddy Bear husband 🧸</p>
+            <p style="font-family:'Dancing Script',cursive;font-size:1.15rem;">To the queen of my heart — from your Teddy Bear husband 🧸</p>
             <div style="background:#fcc4d2;display:inline-block;padding:7px 20px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;">
-                <i class="fas fa-ring"></i> Husband &amp; Wife — best friends, lovers, soulmates <i class="fas fa-heart"></i>
+                <i class="fas fa-ring"></i> Husband &amp; Wife – best friends, lovers, soulmates <i class="fas fa-heart"></i>
             </div>
-            <p style="margin-top:6px;font-size:0.7rem;color:#8a6b75;">💡 Double‑tap this card for a bear hug attack! 🐻</p>
+            <p style="margin-top:6px;font-size:0.7rem;opacity:0.7;">💡 Double‑tap this card for a bear hug attack! 🐻</p>
+        </div>
+
+        <!-- MUSIC BUTTON -->
+        <div class="glass-card" style="text-align:center;">
+            <h3><i class="fas fa-music"></i> Our Song</h3>
+            <p style="margin-bottom:10px;">This music sounds like you 🎶</p>
+            <button id="musicToggleBtn" class="hug-btn" style="background:#b34266;">
+                <i class="fas fa-play"></i> Play
+            </button>
+            <audio id="bgMusic" loop preload="auto" style="display:none;">
+                <source src="music/music.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <p style="font-size:0.7rem;margin-top:6px;opacity:0.7;">🎧 Let our melody fill your heart</p>
         </div>
 
         <!-- DAYS TOGETHER COUNTER -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-calendar-alt"></i> We've Been Together Since April 1, 2024</h3>
-            <div class="countdown" id="daysTogetherCounter" style="font-size:1.6rem;">Loading…</div>
-            <p style="font-size:0.8rem;">Every second with you is a gift 💝</p>
+            <h3><i class="fas fa-calendar-alt"></i> Together Since April 1, 2024</h3>
+            <div class="countdown" id="daysTogetherCounter">Loading…</div>
+            <p>Every second with you is a gift 💝</p>
         </div>
 
         <!-- LOVE METER -->
@@ -673,19 +374,19 @@
             <h3><i class="fas fa-chart-line"></i> How much does your husband love you?</h3>
             <input type="range" id="loveMeter" min="0" max="100" value="100" disabled style="width:80%;max-width:380px;margin:10px auto;display:block;accent-color:#e57393;">
             <p id="loveValueDisplay" style="font-size:1.6rem;font-weight:700;color:#b34266;">∞ INFINITY + BEYOND ∞</p>
-            <p style="font-size:0.75rem;">(slider locked — his love has <strong>no limits</strong> 💕)</p>
+            <p style="font-size:0.75rem;">(slider locked – his love has <strong>no limits</strong> 💕)</p>
         </div>
 
         <!-- HUG ZONE -->
         <div class="glass-card" style="text-align:center;">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Teddy Bear Hug Machine 🧸</h3>
-            <div class="hug-buttons">
+            <div class="hug-buttons" style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:16px 0;">
                 <button class="hug-btn" id="warmHugBtn"><i class="fas fa-heart"></i> Warm Hug</button>
                 <button class="hug-btn" id="cuddleBtn"><i class="fas fa-bed"></i> Cuddle Time</button>
                 <button class="hug-btn" id="bearHugBtn"><i class="fas fa-bear"></i> Teddy Squeeze</button>
                 <button class="hug-btn" id="kissBtn"><i class="fas fa-kiss-wink-heart"></i> Kiss + Hug</button>
             </div>
-            <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting… tap a hug, my love 🤗</div>
+            <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting… tap a hug 🤗</div>
             <div style="margin-top:10px;">
                 ❤️ Total hugs: <strong id="hugCount">0</strong> &nbsp;|&nbsp; 🔥 Streak: <strong id="hugStreak">0</strong>
                 <br><small>(saved with love 💾)</small>
@@ -694,9 +395,9 @@
 
         <!-- KISS COUNTER -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-kiss"></i> Kiss Counter &amp; Growing Heart 💋</h3>
-            <p>Tap the heart — every kiss makes it grow!</p>
-            <div class="growing-heart" id="growingHeart" style="font-size:2.5rem;">❤️</div>
+            <h3><i class="fas fa-kiss"></i> Kiss Counter & Growing Heart 💋</h3>
+            <p>Tap the heart – every kiss makes it grow!</p>
+            <div id="growingHeart" style="font-size:2.5rem;cursor:pointer;display:inline-block;transition:0.3s;">❤️</div>
             <p>💋 Kisses: <strong id="kissCountDisplay">0</strong></p>
         </div>
 
@@ -704,37 +405,48 @@
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-cake-candles"></i> Blow Out Your Birthday Candles 🎂</h3>
             <div class="candle-row" id="candleRow">
-                <span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span><span class="candle" data-lit="true">🕯️</span>
+                <span class="candle" data-lit="true" style="font-size:2.8rem;cursor:pointer;display:inline-block;transition:0.3s;">🕯️</span>
+                <span class="candle" data-lit="true" style="font-size:2.8rem;cursor:pointer;display:inline-block;transition:0.3s;">🕯️</span>
+                <span class="candle" data-lit="true" style="font-size:2.8rem;cursor:pointer;display:inline-block;transition:0.3s;">🕯️</span>
+                <span class="candle" data-lit="true" style="font-size:2.8rem;cursor:pointer;display:inline-block;transition:0.3s;">🕯️</span>
+                <span class="candle" data-lit="true" style="font-size:2.8rem;cursor:pointer;display:inline-block;transition:0.3s;">🕯️</span>
             </div>
             <p id="candleMessage" style="font-style:italic;"></p>
         </div>
 
         <!-- SECRET PUZZLE -->
         <div class="glass-card" style="text-align:center;">
-            <i class="fas fa-lock" style="font-size:2rem;color:#b34266;"></i>
             <h3>🔐 A Secret Message from Your Husband</h3>
-            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type nickname…">
+            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type nickname…" style="padding:12px;border-radius:40px;border:2px solid #ffb7c5;width:70%;max-width:300px;text-align:center;font-size:1rem;">
             <button id="unlockPuzzleBtn" class="hug-btn btn-alt"><i class="fas fa-key"></i> Unlock</button>
             <div id="puzzleResult" style="margin-top:12px;font-weight:600;"></div>
-        </div>
-
-        <!-- MINI QUIZ -->
-        <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-question-circle"></i> Mini Quiz: You &amp; Me 💑</h3>
-            <p><strong>1. First meeting date?</strong></p>
-            <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="april-1-2024">April 1, 2024</button>
-            <button class="hug-btn quiz-opt" data-quiz="q1" data-ans="march-1">March 1, 2024</button>
-            <p style="margin-top:12px;"><strong>2. What does he call you most?</strong></p>
-            <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="my-wife">My Wife</button>
-            <button class="hug-btn quiz-opt" data-quiz="q2" data-ans="darling">Darling</button>
-            <div id="quizFeedback" style="margin-top:14px;font-style:italic;"></div>
         </div>
 
         <!-- LOVE GARDEN -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-seedling"></i> 🌸 Our Love Garden 🌸</h3>
-            <div class="garden-grid" id="gardenGrid"></div>
+            <div id="gardenGrid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;"></div>
             <p id="gardenMessage" style="font-style:italic;"></p>
+        </div>
+
+        <!-- PROMISE WALL -->
+        <div class="glass-card" style="text-align:center;">
+            <h3>🌟 Promise Wall 🌟</h3>
+            <div id="promiseWall" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;"></div>
+            <p id="promiseReveal" style="font-style:italic;"></p>
+        </div>
+
+        <!-- 10 REASONS -->
+        <div class="glass-card">
+            <h3 style="text-align:center;">10 Reasons Why I Love You</h3>
+            <div id="reasonsContainer" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;"></div>
+        </div>
+
+        <!-- COMPLIMENT BOMB -->
+        <div class="glass-card" style="text-align:center;">
+            <h3><i class="fas fa-bomb"></i> Compliment Bomb 💣💖</h3>
+            <p>Tap to release a shower of lovely words!</p>
+            <button id="complimentBombBtn" class="hug-btn" style="background:#e57393;"><i class="fas fa-heart"></i> Bomb Love</button>
         </div>
 
         <!-- DAILY LOVE NOTE -->
@@ -751,64 +463,29 @@
             <button id="openGiftBtn" class="hug-btn">Open Gift</button>
         </div>
 
-        <!-- PROMISE WALL -->
-        <div class="glass-card" style="text-align:center;">
-            <h3>🌟 Promise Wall 🌟</h3>
-            <div id="promiseWall" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;"></div>
-            <p id="promiseReveal" style="font-style:italic;"></p>
-        </div>
-
-        <!-- 10 REASONS -->
-        <div class="glass-card">
-            <h3 style="text-align:center;">10 Reasons Why I Love You</h3>
-            <div id="reasonsContainer" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;"></div>
-        </div>
-
-        <!-- BIRTHDAY COUNTDOWN -->
-        <div class="glass-card" style="text-align:center;">
-            <h3>🎂 Countdown to May 3rd</h3>
-            <div class="countdown" id="birthdayCountdown">--</div>
-            <button id="celebrateTodayBtn" class="hug-btn">Celebrate NOW</button>
-        </div>
-
-        <!-- MOOD ADVISOR -->
-        <div class="glass-card" style="text-align:center;">
-            <h3>🧸 Mood Advice</h3>
-            <div class="hug-buttons">
-                <button class="hug-btn moodBtn" data-mood="happy">😊 Happy</button>
-                <button class="hug-btn moodBtn" data-mood="sad">😢 Sad</button>
-                <button class="hug-btn moodBtn" data-mood="loved">🥰 Loved</button>
-                <button class="hug-btn moodBtn" data-mood="tired">😴 Tired</button>
-            </div>
-            <div id="moodResponse" style="margin-top:12px;"></div>
-        </div>
-
-        <!-- CONFETTI + CERTIFICATE -->
+        <!-- CONFETTI + SECRET LETTER + CERTIFICATE -->
         <div class="glass-card" style="text-align:center;">
             <button id="confettiRainBtn" class="hug-btn btn-alt"><i class="fas fa-candy-cane"></i> Shower Magic Confetti</button>
             <button id="specialLoveNoteBtn" class="hug-btn">💌 Secret Love Letter</button>
             <button id="certificateBtn" class="hug-btn" style="background:#c75373;">🏆 Best Wife Certificate</button>
-            <p style="font-size:0.7rem;margin-top:8px;">📱 Confetti works best after page interaction!</p>
         </div>
 
         <!-- RESET BUTTON -->
         <div class="glass-card" style="text-align:center;">
             <button id="resetCountersBtn" class="hug-btn" style="background:#aaa;">🔄 Reset All Hugs & Kisses</button>
-            <p style="font-size:0.7rem;">(clears counters back to zero)</p>
         </div>
 
         <footer style="text-align:center;margin-top:36px;background:rgba(255,240,235,0.85);border-radius:44px;padding:22px;backdrop-filter:blur(8px);">
             <i class="fas fa-cake-candles"></i> To my wife <strong>Halima</strong> — from your Teddy Bear husband.<br>
-            <span style="font-size:0.9rem;">✨ I love you more than all the stars in the sky ✨</span>
-            <br><br>
-            <span style="font-size:1rem;font-weight:600;">💖 Made with love by <strong>Y</strong> for <strong>Halima</strong> 🧸</span>
+            <span>✨ I love you more than all the stars in the sky ✨</span><br><br>
+            <span style="font-weight:600;">💖 Made with love by <strong>Y</strong> for <strong>Halima</strong> 🧸</span>
         </footer>
     </div>
 
     <!-- LOVE NOTE MODAL -->
-    <div class="love-modal" id="loveNoteModal">
-        <div class="modal-content">
-            <button class="close-btn" id="closeModalBtn">&times;</button>
+    <div class="love-modal" id="loveNoteModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.82);z-index:6000;justify-content:center;align-items:center;">
+        <div style="background:#fffaf7;max-width:460px;padding:34px;border-radius:56px;text-align:center;box-shadow:0 40px 70px rgba(0,0,0,0.4);position:relative;">
+            <button id="closeModalBtn" style="position:absolute;top:14px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#b34266;">&times;</button>
             <i class="fas fa-heart" style="font-size:2.8rem;color:#e75480;"></i>
             <h2>To my darling wife Halima 💌</h2>
             <p id="modalLoveText"></p>
@@ -817,26 +494,23 @@
     </div>
 
     <!-- CERTIFICATE MODAL -->
-    <div class="certificate-modal" id="certificateModal">
-        <div class="certificate-content" id="certificateContent">
+    <div class="certificate-modal" id="certificateModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:7000;justify-content:center;align-items:center;">
+        <div style="background:#fffef7;padding:40px;border-radius:30px;max-width:600px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.5);border:4px double #e57393;font-family:'Playfair Display',serif;">
             <h2>🎀 Certificate of Love 🎀</h2>
-            <p style="font-size:1.3rem;">This certifies that</p>
-            <div class="name">Halima</div>
-            <p style="font-size:1.2rem;">is the <strong>Best Wife in the Universe</strong></p>
-            <p>For bringing endless joy, love, and cuddles to her Teddy Bear husband.</p>
-            <p style="margin-top:15px;">Awarded with all my heart,<br><strong>Your Teddy Bear, Y</strong></p>
-            <div class="seal">🧸💖</div>
-            <p style="font-size:0.7rem;margin-top:15px;">Date: <span id="certDate"></span></p>
-            <div style="margin-top:15px;">
-                <button class="hug-btn btn-alt" id="printCertificateBtn">🖨️ Print / Save as PDF</button>
-                <button class="hug-btn" id="closeCertificateBtn">Close</button>
-            </div>
+            <p>This certifies that</p>
+            <div style="font-size:2.8rem;color:#c0395b;font-family:'Dancing Script',cursive;">Halima</div>
+            <p>is the <strong>Best Wife in the Universe</strong></p>
+            <p>Awarded with all my heart,<br><strong>Your Teddy Bear, Y</strong></p>
+            <div style="font-size:3rem;">🧸💖</div>
+            <p><small>Date: <span id="certDate"></span></small></p>
+            <button id="printCertificateBtn" class="hug-btn btn-alt">🖨️ Print / Save</button>
+            <button id="closeCertificateBtn" class="hug-btn">Close</button>
         </div>
     </div>
 
     <script>
         (function() {
-            // ---------- DOM refs ----------
+            // DOM refs
             const startOverlay = document.getElementById('startOverlay');
             const mainSite = document.getElementById('mainSite');
             const yesBtn = document.getElementById('yesBtn');
@@ -845,29 +519,20 @@
             const hugMsgDiv = document.getElementById('hugMessageDisplay');
             const hugCounterSpan = document.getElementById('hugCount');
             const hugStreakSpan = document.getElementById('hugStreak');
-            const loveDisplay = document.getElementById('loveValueDisplay');
             const loveMeter = document.getElementById('loveMeter');
+            const loveDisplay = document.getElementById('loveValueDisplay');
+            const daysCounter = document.getElementById('daysTogetherCounter');
             const birthdayCountdown = document.getElementById('birthdayCountdown');
-            const daysTogetherCounter = document.getElementById('daysTogetherCounter');
             const candleRow = document.getElementById('candleRow');
             const candleMessage = document.getElementById('candleMessage');
             const puzzleAnswer = document.getElementById('puzzleAnswer');
             const unlockBtn = document.getElementById('unlockPuzzleBtn');
             const puzzleResultDiv = document.getElementById('puzzleResult');
-            const quizFeedback = document.getElementById('quizFeedback');
             const dailyNoteSpan = document.getElementById('dailyLoveNote');
             const generateNoteBtn = document.getElementById('generateNoteBtn');
             const openGiftBtn = document.getElementById('openGiftBtn');
             const giftMsg = document.getElementById('giftMessage');
             const reasonsContainer = document.getElementById('reasonsContainer');
-            const celebrateTodayBtn = document.getElementById('celebrateTodayBtn');
-            const moodResponse = document.getElementById('moodResponse');
-            const confettiRainBtn = document.getElementById('confettiRainBtn');
-            const specialLoveNoteBtn = document.getElementById('specialLoveNoteBtn');
-            const loveNoteModal = document.getElementById('loveNoteModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const closeModalBtn2 = document.getElementById('closeModalBtn2');
-            const modalLoveText = document.getElementById('modalLoveText');
             const growingHeart = document.getElementById('growingHeart');
             const kissCountDisplay = document.getElementById('kissCountDisplay');
             const gardenGrid = document.getElementById('gardenGrid');
@@ -875,77 +540,58 @@
             const promiseWall = document.getElementById('promiseWall');
             const promiseReveal = document.getElementById('promiseReveal');
             const nightModeToggle = document.getElementById('nightModeToggle');
+            const musicToggleBtn = document.getElementById('musicToggleBtn');
+            const bgMusic = document.getElementById('bgMusic');
+            const confettiRainBtn = document.getElementById('confettiRainBtn');
+            const specialLoveNoteBtn = document.getElementById('specialLoveNoteBtn');
+            const loveNoteModal = document.getElementById('loveNoteModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const closeModalBtn2 = document.getElementById('closeModalBtn2');
+            const modalLoveText = document.getElementById('modalLoveText');
             const certificateModal = document.getElementById('certificateModal');
-            const certificateContent = document.getElementById('certificateContent');
-            const printCertificateBtn = document.getElementById('printCertificateBtn');
-            const closeCertificateBtn = document.getElementById('closeCertificateBtn');
             const certificateBtn = document.getElementById('certificateBtn');
+            const closeCertificateBtn = document.getElementById('closeCertificateBtn');
+            const printCertificateBtn = document.getElementById('printCertificateBtn');
             const certDateSpan = document.getElementById('certDate');
             const resetCountersBtn = document.getElementById('resetCountersBtn');
+            const complimentBombBtn = document.getElementById('complimentBombBtn');
 
-            // ---------- Confetti (robust with fallback) ----------
-            function isConfettiAvailable() {
-                return typeof canvasConfetti === 'function';
-            }
-
+            // ---- CONFETTI HELPERS ----
             function safeConfetti(opts) {
-                if (isConfettiAvailable()) {
-                    try { canvasConfetti(opts); } catch (e) { console.warn('Confetti error:', e); }
-                } else {
-                    fallbackConfetti();
-                }
+                try { if (typeof canvasConfetti === 'function') canvasConfetti(opts); } catch(e) {}
+            }
+            function burstLight() { safeConfetti({ particleCount: 30, spread: 40, origin: { y: 0.65 }, colors: ['#ffb7c5','#ff6f91'], startVelocity: 8 }); }
+            function burstHeavy() { safeConfetti({ particleCount: 150, spread: 90, origin: { y: 0.5 }, colors: ['#ffb3c6','#ff6f8f','#fff0f4'], startVelocity: 15 }); }
+            function megaConfetti() { burstHeavy(); setTimeout(burstHeavy, 300); }
+
+            // ---- FLOATING ITEMS (gentle, fewer) ----
+            function createFloating(emoji = null) {
+                if (!floatContainer) return;
+                const el = document.createElement('div');
+                el.className = 'float-item';
+                const icons = ['🧸','🐻','❤️','🌸','💖','🎀','✨'];
+                el.textContent = emoji || icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 93 + '%';
+                const dur = Math.random() * 7 + 6;
+                el.style.animationDuration = dur + 's';
+                el.style.fontSize = (Math.random() * 14 + 14) + 'px';
+                floatContainer.appendChild(el);
+                setTimeout(() => el.remove(), (dur + 1) * 1000);
             }
 
-            function fallbackConfetti(count = 40) {
-                for (let i = 0; i < count; i++) {
-                    setTimeout(() => {
-                        const el = document.createElement('div');
-                        el.className = 'float-item';
-                        el.textContent = ['🎉', '✨', '💖', '🌸', '🧸'][Math.floor(Math.random() * 5)];
-                        el.style.left = Math.random() * 100 + '%';
-                        el.style.bottom = '0px';
-                        el.style.animationDuration = (Math.random() * 4 + 3) + 's';
-                        el.style.fontSize = (Math.random() * 20 + 14) + 'px';
-                        floatContainer.appendChild(el);
-                        setTimeout(() => el.remove(), 5000);
-                    }, i * 20);
-                }
+            function spawnFloaters(count = 10) {
+                for (let i = 0; i < count; i++) setTimeout(createFloating, i * 70);
             }
 
-            function burstLight() { safeConfetti({ particleCount: 55, spread: 48, origin: { y: 0.62 },
-                colors: ['#ffb7c5', '#ff6f91', '#ff9eb5', '#fff'], startVelocity: 9 }); }
-
-            function burstMedium() {
-                safeConfetti({ particleCount: 140, spread: 90, origin: { y: 0.55 }, colors: ['#ff9eb5',
-                        '#ff6f8f', '#ffc4d4', '#fff0f4'
-                    ], startVelocity: 15 });
-                setTimeout(() => safeConfetti({ particleCount: 180, spread: 100, origin: { y: 0.48 },
-                    colors: ['#ffb3c6', '#ff6f91', '#ffe0e8'], startVelocity: 12 }), 120);
-            }
-
-            function burstHeavy() {
-                burstMedium();
-                setTimeout(() => safeConfetti({ particleCount: 250, spread: 120, origin: { y: 0.4 },
-                    colors: ['#fff', '#ffb7c5', '#ff8faa', '#ffc4d4'], startVelocity: 20 }), 250);
-                setTimeout(() => safeConfetti({ particleCount: 160, spread: 70, origin: { y: 0.32 },
-                    colors: ['#ff9eb5', '#fff0f4'], startVelocity: 10 }), 500);
-            }
-
-            function megaConfetti() { burstHeavy();
-                setTimeout(burstHeavy, 350);
-                setTimeout(burstHeavy, 700); }
-
-            // ---------- Storage ----------
-            function safeGet(k, fb) { try { return localStorage.getItem(k) || fb; } catch (e) { return fb; } }
-
-            function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-
-            let totalHugs = parseInt(safeGet('halima_hugs', '0'));
-            let hugStreak = parseInt(safeGet('halima_streak', '0'));
-            let totalKisses = parseInt(safeGet('halima_kisses', '0'));
-            let kissHeartSize = parseFloat(safeGet('halima_heart', '2.5'));
-            let gardenPlanted = JSON.parse(safeGet('halima_garden', '[]'));
-            let revealedPromises = JSON.parse(safeGet('halima_promises', '[]'));
+            // ---- LOCAL STORAGE ----
+            function safeGet(k, fb) { try { return localStorage.getItem(k) || fb; } catch(e) { return fb; } }
+            function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+            let totalHugs = parseInt(safeGet('halima_hugs','0'));
+            let hugStreak = parseInt(safeGet('halima_streak','0'));
+            let totalKisses = parseInt(safeGet('halima_kisses','0'));
+            let kissHeartSize = parseFloat(safeGet('halima_heart','2.5'));
+            let gardenPlanted = JSON.parse(safeGet('halima_garden','[]'));
+            let revealedPromises = JSON.parse(safeGet('halima_promises','[]'));
 
             function saveAll() {
                 safeSet('halima_hugs', totalHugs);
@@ -956,10 +602,7 @@
                 safeSet('halima_promises', JSON.stringify(revealedPromises));
             }
 
-            function updateHugUI() { hugCounterSpan.textContent = totalHugs;
-                hugStreakSpan.textContent = hugStreak;
-                saveAll(); }
-
+            function updateHugUI() { hugCounterSpan.textContent = totalHugs; hugStreakSpan.textContent = hugStreak; saveAll(); }
             function updateKissUI() {
                 kissCountDisplay.textContent = totalKisses;
                 growingHeart.style.fontSize = kissHeartSize + 'rem';
@@ -970,55 +613,48 @@
                 saveAll();
             }
 
-            // ---------- Floating items ----------
-            function createFloating() {
-                if (!floatContainer) return;
-                const el = document.createElement('div');
-                el.classList.add('float-item');
-                const icons = ['🧸', '🐻', '❤️', '🌸', '💖', '🎀', '✨', '💕', '🦋', '💝'];
-                el.textContent = icons[Math.floor(Math.random() * icons.length)];
-                el.style.left = Math.random() * 93 + '%';
-                const dur = Math.random() * 8 + 7;
-                el.style.animationDuration = dur + 's';
-                el.style.fontSize = (Math.random() * 22 + 15) + 'px';
-                floatContainer.appendChild(el);
-                setTimeout(() => el.remove(), (dur + 1) * 1000);
-            }
-
-            function spawnFloaters(n = 20) { for (let i = 0; i < n; i++) setTimeout(createFloating, i * 80); }
-
-            // ---------- Night mode ----------
+            // ---- NIGHT MODE ----
             nightModeToggle.addEventListener('click', () => {
                 document.body.classList.toggle('night-mode');
                 nightModeToggle.innerHTML = document.body.classList.contains('night-mode') ?
-                    '☀️ Day Mode' : '🌙 Night Mode';
+                    '<i class="fas fa-sun"></i> Day' : '<i class="fas fa-moon"></i> Night';
             });
 
-            // ---------- Days together counter ----------
+            // ---- MUSIC BUTTON ----
+            let musicPlaying = false;
+            musicToggleBtn.addEventListener('click', () => {
+                if (musicPlaying) {
+                    bgMusic.pause();
+                    musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                } else {
+                    bgMusic.play().catch(e => console.log('Autoplay prevented, user tap required'));
+                    musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                }
+                musicPlaying = !musicPlaying;
+            });
+
+            // ---- DAYS TOGETHER ----
             function updateDaysTogether() {
-                const start = new Date(2024, 3, 1); // April 1, 2024 (month is 0-indexed)
+                const start = new Date(2024, 3, 1); // April 1
                 const now = new Date();
                 const diff = now - start;
                 const days = Math.floor(diff / 86400000);
                 const hours = Math.floor((diff % 86400000) / 3600000);
                 const mins = Math.floor((diff % 3600000) / 60000);
                 const secs = Math.floor((diff % 60000) / 1000);
-                daysTogetherCounter.textContent =
-                    `${days} days ${hours}h ${mins}m ${secs}s`;
+                daysCounter.textContent = `${days} days ${hours}h ${mins}m ${secs}s`;
             }
             updateDaysTogether();
             setInterval(updateDaysTogether, 1000);
 
-            // ---------- Countdown to birthday ----------
+            // ---- BIRTHDAY COUNTDOWN ----
             function updateBirthdayCountdown() {
                 if (!birthdayCountdown) return;
                 const now = new Date();
                 if (now.getMonth() === 4 && now.getDate() === 3) {
-                    birthdayCountdown.classList.add('celebration');
                     birthdayCountdown.textContent = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
                     return;
                 }
-                birthdayCountdown.classList.remove('celebration');
                 let bday = new Date(now.getFullYear(), 4, 3);
                 if (now > bday) bday.setFullYear(now.getFullYear() + 1);
                 const diff = bday - now;
@@ -1030,124 +666,64 @@
             updateBirthdayCountdown();
             setInterval(updateBirthdayCountdown, 60000);
 
-            // ---------- Certificate ----------
-            function openCertificate() {
-                certDateSpan.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric',
-                    month: 'long', day: 'numeric' });
-                certificateModal.classList.add('active');
-            }
-            certificateBtn.addEventListener('click', openCertificate);
-            closeCertificateBtn.addEventListener('click', () => certificateModal.classList.remove(
-            'active'));
-            printCertificateBtn.addEventListener('click', () => {
-                window.print();
-            });
-            certificateModal.addEventListener('click', (e) => {
-                if (e.target === certificateModal) certificateModal.classList.remove('active');
-            });
-
-            // ---------- Reset counters ----------
-            resetCountersBtn.addEventListener('click', () => {
-                if (confirm(
-                        'Are you sure you want to reset all hugs, kisses, garden and promises back to zero? This cannot be undone.'
-                        )) {
-                    totalHugs = 0;
-                    hugStreak = 0;
-                    totalKisses = 0;
-                    kissHeartSize = 2.5;
-                    gardenPlanted = [];
-                    revealedPromises = [];
-                    updateHugUI();
-                    updateKissUI();
-                    buildGarden();
-                    buildPromiseWall();
-                    saveAll();
-                    hugMsgDiv.innerHTML = '🔄 Counters reset! But my love for you is eternal, Halima. 💖';
-                }
-            });
-
-            // ---------- Start overlay logic ----------
+            // ---- START OVERLAY ----
             let noClicks = 0;
-            const noMsgs = [
-                "Oh come on, my love! Just tap Yes — your Teddy Bear worked so hard! 🧸💕",
-                "Still no? 🥺 I promise it's full of cuddles! Pretty please? 💖",
-                "You're teasing your husband! 😄 Tap Yes and let me shower you with hugs! 🧸✨",
-                "Alright… I'll give you EXTRA teddy snuggles if you tap Yes! 🤗💗",
-                "You're adorable. Now please tap Yes so I can celebrate my beautiful wife! 🎂🧸",
-            ];
+            const noMsgs = ["Oh come on, my love! Tap Yes 🧸💕", "Still no? I promise endless cuddles! 💖", "You're teasing! Tap Yes for hugs! 🧸✨"];
             yesBtn.addEventListener('click', () => {
                 startOverlay.classList.add('hidden');
                 mainSite.classList.add('visible');
                 mainSite.style.display = 'block';
-                updateHugUI();
-                updateKissUI();
-                updateBirthdayCountdown();
-                spawnFloaters(28);
-                buildGarden();
-                buildPromiseWall();
-                hugMsgDiv.innerHTML =
-                    "🧸 <strong>Welcome, my queen!</strong> I'm so happy you're here. Tap any hug button — I'm ready to hold you! 💖";
+                updateHugUI(); updateKissUI(); buildGarden(); buildPromiseWall();
+                spawnFloaters(8);
+                hugMsgDiv.innerHTML = "🧸 Welcome, my queen! Tap a hug button — I'm ready to hold you! 💖";
                 setTimeout(megaConfetti, 300);
             });
             noBtn.addEventListener('click', () => {
                 noClicks++;
-                const msg = noMsgs[Math.min(noClicks - 1, noMsgs.length - 1)];
+                const msg = noMsgs[Math.min(noClicks-1, noMsgs.length-1)];
                 const card = document.querySelector('.start-card');
                 const old = card.querySelector('.playful-msg');
                 if (old) old.remove();
                 const p = document.createElement('p');
                 p.className = 'playful-msg';
-                p.style.cssText =
-                    'color:#c75373;font-weight:600;margin-top:10px;font-size:0.85rem;';
+                p.style.cssText = 'color:#c75373;font-weight:600;margin-top:10px;';
                 p.textContent = msg;
                 card.appendChild(p);
-                safeConfetti({ particleCount: 25, spread: 30, origin: { y: 0.7 }, colors: ['#ffb7c5'],
-                    startVelocity: 5 });
             });
 
-            // ---------- Hug system ----------
+            // ---- HUG SYSTEM ----
             function showHug(msg, emoji) {
                 hugMsgDiv.innerHTML = `<i class="fas fa-heart"></i> ${msg} ${emoji} <i class="fas fa-heart"></i>`;
                 burstLight();
-                const milestones = { 5: '🎉 5 hugs! You\'re my everything!', 10: '💗 10 HUGS! Holding you forever!',
-                    20: '✨ 20 Hugs! Infinity & beyond!', 30: '🎂 30 HUGS! You deserve the universe!' };
-                if (milestones[totalHugs]) {
-                    hugMsgDiv.innerHTML += `<br>${milestones[totalHugs]} 🧸💕`;
-                    if (totalHugs >= 10) burstHeavy();
-                }
-                hugStreak++;
-                updateHugUI();
+                hugStreak++; updateHugUI();
                 createFloating();
             }
-
             function addHug(type) {
                 totalHugs++;
                 const map = {
-                    warm: ['Your husband wraps you in a warm, cozy hug.', '🤗🧸'],
-                    cuddle: ['Teddy Bear cuddle time! Curl up together.', '🛌💤'],
-                    bear: ['A GIANT Teddy Bear squeeze!', '🐻❤️'],
-                    kiss: ['A sweet kiss + the warmest hug.', '💋🧸'],
+                    warm: ['Warm, cozy hug. Feel my arms around you.','🤗🧸'],
+                    cuddle: ['Cuddle time! Curl up together.','🛌💤'],
+                    bear: ['GIANT Teddy Bear squeeze!','🐻❤️'],
+                    kiss: ['Forehead kiss + warmest hug.','💋🧸']
                 };
                 showHug(...map[type]);
             }
-            document.getElementById('warmHugBtn')?.addEventListener('click', () => addHug('warm'));
-            document.getElementById('cuddleBtn')?.addEventListener('click', () => addHug('cuddle'));
-            document.getElementById('bearHugBtn')?.addEventListener('click', () => addHug('bear'));
-            document.getElementById('kissBtn')?.addEventListener('click', () => addHug('kiss'));
+            document.getElementById('warmHugBtn').addEventListener('click', ()=>addHug('warm'));
+            document.getElementById('cuddleBtn').addEventListener('click', ()=>addHug('cuddle'));
+            document.getElementById('bearHugBtn').addEventListener('click', ()=>addHug('bear'));
+            document.getElementById('kissBtn').addEventListener('click', ()=>addHug('kiss'));
 
-            // ---------- Kiss counter ----------
+            // ---- KISS COUNTER ----
             growingHeart.addEventListener('click', () => {
                 totalKisses++;
                 kissHeartSize = Math.min(12, kissHeartSize + 0.15);
                 updateKissUI();
                 burstLight();
-                hugMsgDiv.innerHTML =
-                    `💋 <strong>${totalKisses} kisses!</strong> My heart grows bigger for you, my wife! 💗`;
+                hugMsgDiv.innerHTML = `💋 <strong>${totalKisses} kisses!</strong> My heart grows bigger for you! 💗`;
                 createFloating();
-                if (totalKisses % 10 === 0) burstMedium();
             });
 
-            // ---------- Love meter animation ----------
+            // ---- LOVE METER ANIMATION ----
             setInterval(() => {
                 if (mainSite.classList.contains('visible') && loveMeter.disabled) {
                     loveMeter.value = 97 + Math.floor(Math.random() * 7);
@@ -1155,260 +731,252 @@
                 }
             }, 2200);
 
-            // ---------- Puzzle ----------
+            // ---- PUZZLE ----
             unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
-                const correct = ['teddy bear', 'teddybear', 'my teddy bear', 'teddy', 'my teddy'];
-                if (correct.includes(ans)) {
-                    puzzleResultDiv.innerHTML =
-                        '🔓✨ <strong>Unlocked!</strong><br><em>"My beautiful wife, I will be your Teddy Bear forever. I love you more than every star. Happy Birthday, Halima! 🧸💖"</em>';
+                if (['teddy bear','teddybear','my teddy bear','teddy'].includes(ans)) {
+                    puzzleResultDiv.innerHTML = '🔓✨ <strong>Unlocked!</strong><br><em>"My beautiful wife, I will be your Teddy Bear forever. I love you more than every star. Happy Birthday, Halima! 🧸💖"</em>';
                     megaConfetti();
                 } else {
-                    puzzleResultDiv.innerHTML =
-                        '❌ Hint: the fluffy nickname you call me… 🧸 <strong>(Teddy Bear)</strong>';
+                    puzzleResultDiv.innerHTML = '❌ Hint: the fluffy nickname you call me… 🧸 <strong>(Teddy Bear)</strong>';
                 }
             });
             puzzleAnswer.addEventListener('keydown', e => { if (e.key === 'Enter') unlockBtn.click(); });
 
-            // ---------- Quiz ----------
-            let q1ok = false,
-                q2ok = false;
-            document.querySelectorAll('.quiz-opt').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const q = btn.dataset.quiz;
-                    const ans = btn.dataset.ans;
-                    if (q === 'q1') {
-                        q1ok = (ans === 'april-1-2024');
-                        quizFeedback.innerHTML = q1ok ?
-                            '✅ Yes! April 1, 2024 — magical day! 💖' :
-                            '❌ It\'s April 1st, 2024!';
-                    } else {
-                        q2ok = (ans === 'my-wife');
-                        quizFeedback.innerHTML = q2ok ?
-                            '❤️ Exactly! "My wife" — you are my everything.' :
-                            '💞 I call you "my wife" because you\'re my soulmate.';
-                    }
-                    if (q1ok && q2ok) quizFeedback.innerHTML +=
-                        '<br>🎉 You know me so well, my love!';
-                    if (q1ok || q2ok) burstLight();
-                });
-            });
-
-            // ---------- Love garden ----------
-            const gardenMemories = [
-                '🌸 Our first meeting', '🌷 Our first laugh', '🌼 The day I knew you were the one',
-                '🌻 Our first cuddle', '🌹 You called me Teddy Bear', '🪷 Our first "I love you"',
-                '🌺 Every sunset together', '💐 The day we became husband & wife', '🌾 Morning beside you',
-                '🍀 Our inside jokes', '🌿 The way you look at me', '🪻 Your beautiful smile',
-                '🌴 Our dreams', '🌵 Conquering hard times', '🌸 Forever & always',
-            ];
-
+            // ---- LOVE GARDEN ----
+            const gardenMemories = ['🌸 Our first meeting','🌷 Our first laugh','🌼 The day I knew you were the one','🌻 Our first cuddle','🌹 You called me Teddy Bear','🪷 Our first "I love you"','🌺 Every sunset together','💐 The day we became husband & wife','🌾 Morning beside you','🍀 Our inside jokes','🌿 The way you look at me','🪻 Your beautiful smile','🌴 Our dreams','🌵 Conquering hard times','🌸 Forever & always'];
             function buildGarden() {
-                if (!gardenGrid) return;
                 gardenGrid.innerHTML = '';
-                gardenMemories.forEach((mem, i) => {
+                gardenMemories.forEach((mem,i) => {
                     const plot = document.createElement('div');
-                    plot.className = 'garden-plot' + (gardenPlanted.includes(i) ? ' planted' : '');
+                    plot.className = 'garden-plot';
+                    plot.style.cssText = 'width:55px;height:55px;border-radius:50%;background:#fde4ec;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.6rem;border:2px dashed #ffccd5;';
                     plot.textContent = gardenPlanted.includes(i) ? '🌸' : '🕳️';
                     plot.addEventListener('click', () => {
                         if (!gardenPlanted.includes(i)) {
                             gardenPlanted.push(i);
-                            plot.classList.add('planted');
                             plot.textContent = '🌸';
+                            plot.style.border = '2px solid #e57393';
                             safeSet('halima_garden', JSON.stringify(gardenPlanted));
-                            gardenMessage.innerHTML =
-                                `🌸 <strong>${mem}!</strong> Our love garden grows richer. 💕`;
-                            burstLight();
-                            createFloating();
-                            if (gardenPlanted.length === gardenMemories.length) {
-                                gardenMessage.innerHTML +=
-                                    '<br>🌷 Garden COMPLETE! Every memory blooms forever!';
-                                megaConfetti();
-                            }
-                        } else {
-                            gardenMessage.innerHTML =
-                            `💖 <strong>${mem}</strong> — a beautiful memory forever!`;
-                        }
+                            gardenMessage.innerHTML = `🌸 <strong>${mem}!</strong> Our love garden grows richer. 💕`;
+                            burstLight(); createFloating();
+                            if (gardenPlanted.length === gardenMemories.length) megaConfetti();
+                        } else gardenMessage.innerHTML = `💖 <strong>${mem}</strong> – a beautiful memory!`;
                     });
                     gardenGrid.appendChild(plot);
                 });
             }
 
-            // ---------- Promise wall ----------
-            const promises = [
-                '🤍 Always be your Teddy Bear', '💛 Make you laugh every day',
-                '🧡 Hold you when you\'re sad', '❤️ Love you more each sunrise',
-                '💚 Be your best friend forever', '💙 Listen with my whole heart',
-                '💜 Grow old with you', '🩷 Never stop courting you', '🩵 Cherish every moment',
-            ];
-
+            // ---- PROMISE WALL ----
+            const promises = ['🤍 Always be your Teddy Bear','💛 Make you laugh every day','🧡 Hold you when sad','❤️ Love you more each sunrise','💚 Be your best friend','💙 Listen with my whole heart','💜 Grow old with you','🩷 Never stop courting you','🩵 Cherish every moment'];
             function buildPromiseWall() {
-                if (!promiseWall) return;
                 promiseWall.innerHTML = '';
-                promises.forEach((p, i) => {
+                promises.forEach((p,i) => {
                     const star = document.createElement('span');
-                    star.className = 'promise-star' + (revealedPromises.includes(i) ? ' revealed' :
-                        '');
+                    star.className = 'promise-star';
+                    star.style.cssText = 'display:inline-block;cursor:pointer;padding:8px 14px;margin:4px;border-radius:30px;background:#fff5f7;font-weight:500;border:1px solid #ffccd5;';
                     star.textContent = revealedPromises.includes(i) ? p : '⭐';
                     star.addEventListener('click', () => {
                         if (!revealedPromises.includes(i)) {
                             revealedPromises.push(i);
-                            star.classList.add('revealed');
                             star.textContent = p;
+                            star.style.background = '#ffe8ee';
                             safeSet('halima_promises', JSON.stringify(revealedPromises));
-                            promiseReveal.innerHTML =
-                                `🌟 <strong>Promise:</strong> "${p}" — and I mean every word. 🧸`;
-                            burstLight();
-                            createFloating();
-                            if (revealedPromises.length === promises.length) {
-                                promiseReveal.innerHTML +=
-                                    '<br>✨ ALL promises revealed! My heart is yours.';
-                                megaConfetti();
-                            }
-                        } else {
-                            promiseReveal.innerHTML =
-                            `💫 <strong>"${p}"</strong> — eternal promise.`;
-                        }
+                            promiseReveal.innerHTML = `🌟 <strong>Promise:</strong> "${p}" – I mean every word. 🧸`;
+                            burstLight(); createFloating();
+                            if (revealedPromises.length === promises.length) megaConfetti();
+                        } else promiseReveal.innerHTML = `💫 <strong>"${p}"</strong> – eternal promise.`;
                     });
                     promiseWall.appendChild(star);
                 });
             }
 
-            // ---------- Love notes ----------
-            const loveNotes = [
-                "Every day I wake up grateful that you're my wife. 🧸",
-                "You're the sunshine that breaks my darkest clouds. I love you infinitely.",
-                "Being your husband is the greatest honor. Happy birthday, my love!",
-                "You make my heart smile in ways I never knew possible. Forever yours.",
-                "Whenever I see you, I fall in love all over again. 💖",
-                "My love for you grows stronger with each sunrise.",
-                "You are the melody of my soul. Happy Birthday, Halima! 🎂",
-                "With you, every moment is a treasure. I'm the luckiest husband.",
+            // ---- COMPLIMENT BOMB ----
+            const compliments = [
+                "You're stunning 💖", "My Queen 👑", "So beautiful", "My soulmate", "Incredible wife",
+                "My sunshine ☀️", "Absolutely perfect", "Teddy's favorite", "Irresistible", "My everything",
+                "Heart of gold", "Dream come true", "Wonderful", "Gorgeous", "Precious", "Angel",
+                "Love of my life", "Halima the Great", "Cuddle champion", "My forever 💍"
             ];
-            generateNoteBtn.addEventListener('click', () => {
-                dailyNoteSpan.innerHTML = `"${loveNotes[Math.floor(Math.random() * loveNotes.length)]}" ❤️`;
+            complimentBombBtn.addEventListener('click', () => {
                 burstLight();
-                createFloating();
-            });
-
-            // ---------- Gift box ----------
-            let giftOpened = false;
-            openGiftBtn.addEventListener('click', () => {
-                if (!giftOpened) {
-                    giftMsg.innerHTML =
-                        '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles for life<br>✨ Lifetime of love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br>I love you, Halima! 🧸❤️';
-                    megaConfetti();
-                    giftOpened = true;
-                    openGiftBtn.textContent = 'Open Again for More Love';
-                } else {
-                    giftMsg.innerHTML =
-                        '🎁 Extra surprise: another infinite Teddy Bear hug coming your way 🤗🧸💗';
-                    burstHeavy();
-                    addHug('bear');
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.className = 'float-item';
+                        el.textContent = compliments[Math.floor(Math.random() * compliments.length)];
+                        el.style.left = Math.random() * 90 + '%';
+                        el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                        el.style.fontSize = (Math.random() * 14 + 14) + 'px';
+                        el.style.opacity = 0.9;
+                        floatContainer.appendChild(el);
+                        setTimeout(() => el.remove(), 7000);
+                    }, i * 100);
                 }
             });
 
-            // ---------- Reasons ----------
-            const reasonsList = [
-                'Your beautiful smile', 'The way you laugh', 'Your kind heart', 'You call me Teddy Bear',
-                'Your intelligence', 'You make me a better man', 'Your gentle hugs', 'You\'re my best friend',
-                'You chose me as your husband', 'Your endless strength & grace',
-            ];
+            // ---- DAILY LOVE NOTE ----
+            const loveNotes = ["Every day I wake up grateful you're my wife. 🧸","You're the sunshine that breaks my clouds.","Being your husband is my greatest honor.","You make my heart smile forever.","I fall in love with you all over again. 💖"];
+            generateNoteBtn.addEventListener('click', () => {
+                dailyNoteSpan.innerHTML = `"${loveNotes[Math.floor(Math.random() * loveNotes.length)]}" ❤️`;
+                burstLight(); createFloating();
+            });
+
+            // ---- GIFT BOX ----
+            let giftOpened = false;
+            openGiftBtn.addEventListener('click', () => {
+                if (!giftOpened) {
+                    giftMsg.innerHTML = '🎁✨ <strong <strong>SUR>SURPRISE!</strong><brPRISE!</strong>✨><br>✨ Unlimited cuddles Unlimited cuddles for life for life<br><br>✨ Lifetime✨ Lifetime of love of love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br>I love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br>I love you, Hal you, Halima! 🧸❤️';
+                    megaConfetti(); giftOpened = true; openGiftBtn.textContent = 'Open Again for More Love';
+                } else {
+                    giftMsg.innerHTML = '🎁 Extra surprise: another infinite Teddy Bear hug 🤗🧸💗';
+                    burstHeavy(); addHug('bear');
+                }
+            });
+
+            // ---- REima! 🧸❤️';
+                    megaConfetti(); giftOpened = true; openGiftBtn.textContent = 'Open Again for More Love';
+                } else {
+                    giftMsg.innerHTML = '🎁 Extra surprise: another infinite Teddy Bear hug 🤗🧸💗';
+                    burstHeavy(); addHug('bear');
+                }
+            });
+
+            // ---- REASASONSONS ----
+            ----
+            const reasons const reasonsList = ['List = ['Your beautiful smileYour beautiful smile','The','The way you way you laugh',' laugh','Your kindYour kind heart',' heart','You callYou call me Teddy me Teddy Bear',' Bear','Your intelligenceYour intelligence','You','You make me a better make me a better man',' man','Your gentle hugs','You\'re my best friend','You chose me as my wife','Your endless strength'];
             reasonsList.forEach(r => {
                 const card = document.createElement('div');
                 card.className = 'reason-card';
-                card.innerHTML =
-                    `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;">tap to send love</p>`;
+                card.innerHTML = `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;">tap to send love</p>`;
                 card.addEventListener('click', () => {
                     burstLight();
-                    hugMsgDiv.innerHTML =
-                        `💖 I love your <strong>${r.toLowerCase()}</strong>, my beautiful wife! Forever yours. 💖`;
+                    hugMsgDiv.innerHTML = `💖 I love your <strong>${r.toLowerCase()}</strong>, my beautiful wife! Forever yours. 💖`;
                     createFloating();
-                    totalHugs++;
-                    hugStreak++;
-                    updateHugUI();
+                    totalHugs++; hugStreak++; updateHugUI();
                 });
                 reasonsContainer.appendChild(card);
             });
 
-            // ---------- Mood advisor ----------
-            document.querySelectorAll('.moodBtn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const m = btn.dataset.mood;
-                    const resp = {
-                        happy: '🧸 So glad you\'re happy! Let me hug you tighter. ❤️',
-                        sad: '🧸 Oh sweet wife, come here. Your Teddy Bear holds you close. I love you. 🤗💗',
-                        loved: '🥰 You ARE loved beyond words. Every day I thank God for you. 🧸',
-                        tired: '😴 Rest now, my queen. Teddy Bear watches over you. 🌙🧸',
-                    };
-                    moodResponse.innerHTML =
-                        `<i class="fas fa-comment-dots" style="color:#e57393;"></i> ${resp[m] || resp['happy']}`;
+            // ---- CONFETTI RAIN ----
+            confettiYour gentle hugs','You\'re my best friend','You chose me as my wife','Your endless strength'];
+            reasonsList.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'reason-card';
+                card.innerHTML = `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;">tap to send love</p>`;
+                card.addEventListener('click', () => {
                     burstLight();
+                    hugMsgDiv.innerHTML = `💖 I love your <strong>${r.toLowerCase()}</strong>, my beautiful wife! Forever yours. 💖`;
                     createFloating();
+                    totalHugs++; hugStreak++; updateHugUI();
                 });
+                reasonsContainer.appendChild(card);
             });
 
-            // ---------- Confetti rain button (fix) ----------
-            confettiRainBtn.addEventListener('click', () => {
-                // visual feedback
-                confettiRainBtn.style.transform = 'scale(0.9)';
-                setTimeout(() => confettiRainBtn.style.transform = '', 150);
-                if (isConfettiAvailable()) {
-                    megaConfetti();
-                    setTimeout(() => safeConfetti({ particleCount: 400, spread: 140, origin: { y: 0.3 },
-                        startVelocity: 22, colors: ['#ffb3c6', '#ff6f91', '#ff9eb5', '#fff',
-                            '#ffe0e8'
-                        ] }), 180);
-                    hugMsgDiv.innerHTML =
-                        '✨🎉 <strong>BIRTHDAY MAGIC!</strong> Every sparkle is a kiss from your Teddy Bear! 🎉✨';
-                } else {
-                    fallbackConfetti(80);
-                    hugMsgDiv.innerHTML =
-                        '✨🎉 <strong>Magic shower!</strong> (offline confetti mode) I love you, Halima! 🧸💗';
-                }
+            // ---- CONFETTI RAIN ----
+            confettiRainBtn.addEventListener('click',RainBtn.addEventListener('click', () => () => {
+                {
+                megaConf megaConfetti();
+                hugetti();
+                hugMsgDivMsgDiv.innerHTML = '✨.innerHTML = '✨🎉 <strong>B🎉 <strong>BIRTHDAY MAGIC!</strong> Every sparkle is a kiss from your Teddy BearIRTHDAY MAGIC!</strong> Every sparkle is a kiss from your Teddy Bear!! 🎉 🎉✨';
             });
 
-            // ---------- Secret love letter modal ----------
-            const secretMsgs = [
-                'My darling Halima, you are the greatest gift of my life. As your husband and Teddy Bear, I promise to adore you every single day. Happy birthday, my wife! 🧸💖',
-                'Every love story is beautiful, but ours is my favorite. From friends to lovers to husband & wife — it\'s magical. I love you infinitely. 🎂',
-                'You make my world brighter just by existing. Thank you for being mine. Your Teddy Bear will always hold you tight. I cannot wait for forever with you.',
-                'If I had to relive every moment, I\'d still choose you. You are my soulmate, Halima. May 3rd is yours, but my heart is yours every day. 🧸💗',
-            ];
+            //✨';
+            });
+
+            ---- SEC // ---- SECRET LOVE LETTER MODRET LOVE LETTER MODALAL - ----
+           ---
+            const secret const secretMsgsMsgs = [' = ['My darlingMy darling Halima Halima, you, you are are the greatest gift the greatest gift of of my life my life.. As your husband As your husband and Teddy Bear, and Teddy Bear, I promise to I promise adore you every single day to adore you every. single day. Happy Happy birthday, birthday, my wife! 🧸💖','Every love story my wife! 🧸💖','Every love story is beautiful is beautiful, but ours is, but ours is my favorite my favorite. I. I love you love you infinitely. infinitely. 🎂','You make my world brighter just by existing. Thank you for being mine.','If I had to relive every moment, I\'d still choose 🎂','You make my world brighter just by existing. Thank you for being mine.','If I had to relive every moment, I\'d still choose you. You are my soulmate, Halima. 🧸💗'];
+            specialLoveNoteBtn.addEventListener('click', () => {
+                modalLoveText.textContent = secretMsgs[Math.floor(Math.random() * secretMs you. You are my soulmate, Halima. 🧸💗'];
             specialLoveNoteBtn.addEventListener('click', () => {
                 modalLoveText.textContent = secretMsgs[Math.floor(Math.random() * secretMsgs.length)];
-                loveNoteModal.classList.add('active');
-                burstHeavy();
+               gs.length)];
+                loveNoteModal.style.display = 'flex loveNoteModal.style.display = 'flex';
+                burst';
+                burstHeavyHeavy();
             });
-            closeModalBtn.addEventListener('click', () => loveNoteModal.classList.remove('active'));
-            closeModalBtn2.addEventListener('click', () => loveNoteModal.classList.remove('active'));
-            loveNoteModal.addEventListener('click', e => { if (e.target === loveNoteModal) loveNoteModal
-                    .classList.remove('active'); });
-
-            // ---------- Hero double-tap bear attack ----------
-            document.getElementById('heroSection').addEventListener('dblclick', () => {
-                megaConfetti();
-                hugMsgDiv.innerHTML =
-                    '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear husband showers you with EXTRA love! 💗💗💗';
-                totalHugs += 2;
-                hugStreak += 2;
-                updateHugUI();
-                spawnFloaters(14);
+           ();
             });
+            closeModalBtn.addEventListener closeModalBtn.addEventListener('click('click', ()', () => loveNoteModal => love.style.displayNoteModal.style.display = ' = 'nonenone');
+            closeModalBtn');
+            closeModalBtn2.addEventListener2.addEventListener('click('click', ()', () => love => loveNoteModal.style.displayNoteModal = '.style.displaynone = '');
 
-            // ---------- Initial setup ----------
-            updateHugUI();
-            updateKissUI();
-            buildGarden();
-            buildPromiseWall();
-            if (mainSite.classList.contains('visible')) {
-                spawnFloaters(16);
+            // ---- CERTnone');
+
+            //IFICATE ---- CERT -IFICATE ----
+            certificateBtn.addEventListener---
+            certificateBtn.addEventListener('click('click', () =>', () => {
+                cert {
+                certDateSpanDateSpan.textContent.textContent = new = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric:'numeric'' });
+                certificate });
+                certificateModal.styleModal.style.display =.display = 'flex';
+            'flex';
+            });
+            closeCertificate });
+            closeCertificateBtn.addEventListener('clickBtn.addEventListener('click', ()', () => certificate => certificateModal.style.display =Modal.style.display = 'none 'none');
+            printCertificate');
+            printCertificateBtn.addEventListener('clickBtn.addEventListener('click', ()', () => window => window.print.print());
+
+());
+
+            // ---- RES            // ---- RESET ----
+            resetET ----
+            resetCountCountersBtn.addEventListener('ersBtn.addEventListener('click', () =>click', {
+                () => {
+                if ( if (confirm('confirm('Reset allReset all hugs, hugs, kisses, kisses, garden and garden and promises back to zero promises back to zero?'))?')) {
+                    totalH {
+                    totalHugs = 0ugs =; hug 0Streak =; hugStreak  = 0;0; totalK totalKisses = 0isses = 0; kiss; kissHeartSizeHeartSize =  = 2.52.5;
+                    gardenPlanted = []; revealedPromises;
+                    gardenPlanted = []; revealedPromises = [];
+                    updateHugUI(); updateKissUI(); buildGarden(); buildPromiseWall(); = [];
+                    updateHugUI(); updateKissUI(); buildGarden(); buildPromiseWall(); saveAll saveAll();
+                   ();
+                    hugMsg hugMsgDiv.innerHTMLDiv.innerHTML = ' = '🔄🔄 Counters Counters reset! reset! But my But my love for love for you is you is eternal, eternal, Hal Halima.ima. 💖 💖';
+               ';
+                }
             }
-            setInterval(() => {
-                if (mainSite.classList.contains('visible') && floatContainer.children.length < 20)
-                    createFloating();
-            }, 1700);
+            });
+
+            // ---- H });
+
+            // ----ERO DOUBLE HERO DOUBLE‑T‑TAP BEARAP BEAR ATTACK ATTACK ( (FIXEDFIXED) ----
+           ) - document.getElementById('hero---
+            document.getElementByIdSection').addEventListener('heroSection').('daddEventListenerblclick('dblclick', (', (ee)) => => {
+                e {
+                e.preventDefault();
+                megaConf.preventDefault();
+               etti megaConfetti();
+                hugMsgDiv.innerHTML =();
+                hugMsgDiv '🐻.innerHTML = '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear showers you with EXTRA love! 💗💗💗🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear showers you with EXTRA love! 💗💗💗';
+                totalHugs';
+                totalHugs += 2 += 2;; hugStreak +=  hugStreak += 2; updateH2; updateHugUI();
+                spawnugUIFlo();
+                spawnFloaters(aters(1010);
+           );
+            });
+
+            // });
+
+            // ---- INIT ---- INIT - ----
+           ---
+            updateH updateHugUIugUI(); update(); updateKissKissUI(); buildGarden();UI(); buildGarden(); buildPromise buildPromiseWallWall();
+            if();
+            if (main (mainSite.classListSite.classList.contains('.contains('visible')) spawnFvisible')) spawnFloatersloaters(6(6);
+           );
+            // gentle // gentle periodic floating periodic floating (very light)
+            (very light)
+            setInterval setInterval(() =>(() => {
+                {
+                if ( if (mainSite.classList.contains('visible') && floatContainer.children.length < 8) createFloating();
+            }, 2000);
+        })();
+    </scriptmainSite.classList.contains('visible') && floatContainer.children.length < 8) createFloating();
+            }, 2000);
         })();
     </script>
+</body>
+</html>
+```>
 </body>
 </html>
