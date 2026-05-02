@@ -35,7 +35,7 @@
             overflow-x: hidden;
             user-select: none;
             position: relative;
-            transition: background 0.6s ease, color 0.6s ease;
+            transition: background 0.8s ease, color 0.6s ease;
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
         }
@@ -112,6 +112,31 @@
         body.night-mode .letter-wrapper {
             background: rgba(35, 30, 45, 0.8);
             border-color: rgba(255,220,220,0.4);
+        }
+
+        /* ---------- TWINKLING STARS ---------- */
+        #starsContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            display: none;
+        }
+        body.night-mode #starsContainer {
+            display: block;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
         }
 
         /* ---------- NIGHT TOGGLE ---------- */
@@ -445,7 +470,7 @@
             100% { transform: translateY(-115vh) scale(0.85); opacity: 0; }
         }
 
-        /* ---------- LETTER (inside hero now) ---------- */
+        /* ---------- LETTER ---------- */
         .letter-wrapper {
             position: relative;
             background: #fffaf5;
@@ -459,6 +484,8 @@
             white-space: pre-wrap;
             line-height: 1.7;
             max-width: 700px;
+            overflow-y: auto;
+            max-height: 400px;
         }
         .letter-start-btn {
             background: #b34266;
@@ -475,9 +502,6 @@
         .letter-start-btn:hover { background: #9e3857; }
 
         /* ---------- GIFT BOX ---------- */
-        .gift-box {
-            transition: all 0.4s ease;
-        }
         .gift-box.unwrapped {
             background: linear-gradient(135deg, #ffe8f0, #ffdce7);
             box-shadow: 0 0 35px rgba(235,122,158,0.4);
@@ -533,7 +557,7 @@
             .garden-plot { width: 45px; height: 45px; font-size: 1.3rem; }
             .night-toggle { top: 12px; right: 12px; width: 40px; height: 40px; }
             .hug-message { font-size: 0.85rem; }
-            .letter-wrapper { padding: 18px 14px; }
+            .letter-wrapper { padding: 18px 14px; max-height: 300px; }
         }
         @media print {
             body > * { visibility: hidden; }
@@ -549,6 +573,9 @@
     </style>
 </head>
 <body>
+    <!-- Twinkling stars container (visible only in night mode) -->
+    <div id="starsContainer"></div>
+
     <button class="night-toggle" id="nightModeToggle" aria-label="Toggle night mode" title="Night mode">
         <i class="fas fa-moon"></i>
     </button>
@@ -614,14 +641,14 @@
             </div>
             <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting… tap a hug, my love 🤗</div>
             <div style="margin-top:10px;">
-                ❤️ Total hugs: <strong id="hugCount">0</strong> &nbsp;|&nbsp; 🔥 Streak: <strong id="hugStreak">0</strong>
+                ❤️ Total hugs: <strong id="hugCount">0</strong> &nbsp;|&nbsp; 🔥 Streak: <strong id="hugStreak">0</strong> days
                 <br><small>(Come anytime... hugs are available here 24/7 :D)</small>
             </div>
         </div>
 
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-kiss"></i> Your kisses make my heart grow</h3>
-            <p>Tap the heart to give akiss, every kiss makes it beat faster!</p>
+            <p>Tap the heart to give a kiss, every kiss makes it beat faster!</p>
             <div class="growing-heart" id="growingHeart" style="font-size:2.5rem;">❤️</div>
             <p>💋 Kisses: <strong id="kissCountDisplay">0</strong></p>
         </div>
@@ -720,6 +747,7 @@
         </footer>
     </div>
 
+    <!-- Secret Love Note Modal -->
     <div class="love-modal" id="loveNoteModal">
         <div style="background:#fffaf7;max-width:460px;padding:34px;border-radius:56px;text-align:center;position:relative;box-shadow:0 40px 70px rgba(0,0,0,0.4);">
             <button id="closeModalBtn" style="position:absolute;top:14px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#b34266;">&times;</button>
@@ -730,6 +758,7 @@
         </div>
     </div>
 
+    <!-- Certificate Modal -->
     <div class="certificate-modal" id="certificateModal">
         <div style="background:#fffef7;padding:40px;border-radius:30px;max-width:600px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.5);border:4px double #e57393;font-family:'Playfair Display',serif;">
             <h2>🎀 Certificate of Love 🎀</h2>
@@ -794,6 +823,7 @@
             const complimentBombBtn = document.getElementById('complimentBombBtn');
             const typedLetterText = document.getElementById('typedLetterText');
             const startLetterBtn = document.getElementById('startLetterBtn');
+            const starsContainer = document.getElementById('starsContainer');
 
             // ────────────── CONFETTI ──────────────
             function safeConfetti(opts) { if (typeof canvasConfetti === 'function') try { canvasConfetti(opts); } catch(e) {} }
@@ -830,6 +860,7 @@
             function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
             let totalHugs = parseInt(safeGet('halima_hugs','0'));
             let hugStreak = parseInt(safeGet('halima_streak','0'));
+            let lastHugDate = safeGet('halima_lastHugDate', '');
             let totalKisses = parseInt(safeGet('halima_kisses','0'));
             let kissHeartSize = parseFloat(safeGet('halima_heart','2.5'));
             let gardenPlanted = JSON.parse(safeGet('halima_garden','[]'));
@@ -838,6 +869,7 @@
             function saveAll() {
                 safeSet('halima_hugs', totalHugs);
                 safeSet('halima_streak', hugStreak);
+                safeSet('halima_lastHugDate', lastHugDate);
                 safeSet('halima_kisses', totalKisses);
                 safeSet('halima_heart', kissHeartSize);
                 safeSet('halima_garden', JSON.stringify(gardenPlanted));
@@ -854,130 +886,32 @@
                 saveAll();
             }
 
-            // ────────────── NIGHT MODE ──────────────
-            nightModeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('night-mode');
-                const icon = nightModeToggle.querySelector('i');
-                icon.className = document.body.classList.contains('night-mode') ? 'fas fa-sun' : 'fas fa-moon';
-            });
-
-            // ────────────── MUSIC ──────────────
-            let musicPlaying = false;
-            musicToggleBtn.addEventListener('click', () => {
-                if (musicPlaying) {
-                    bgMusic.pause();
-                    musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+            // ────────────── DAILY STREAK LOGIC ──────────────
+            function updateStreakOnHug() {
+                const today = new Date().toISOString().slice(0,10);
+                const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+                if (!lastHugDate) {
+                    hugStreak = 1;
+                } else if (lastHugDate === today) {
+                    // same day, don't change streak
+                } else if (lastHugDate === yesterday) {
+                    hugStreak += 1;
                 } else {
-                    bgMusic.play().catch(() => {});
-                    musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    hugStreak = 1;
                 }
-                musicPlaying = !musicPlaying;
-            });
-
-            // ────────────── DAYS COUNTER ──────────────
-            function updateDaysTogether() {
-                const start = new Date(2024, 3, 1);
-                const now = new Date();
-                const diff = now - start;
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                const s = Math.floor((diff % 60000) / 1000);
-                daysCounter.textContent = `${d} days ${h}h ${m}m ${s}s`;
+                lastHugDate = today;
             }
-            updateDaysTogether();
-            setInterval(updateDaysTogether, 1000);
-
-            // ────────────── BIRTHDAY COUNTDOWN ──────────────
-            function updateBirthdayCountdown() {
-                if (!birthdayCountdown) return;
-                const now = new Date();
-                if (now.getMonth() === 4 && now.getDate() === 3) {
-                    birthdayCountdown.textContent = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
-                    return;
-                }
-                let bday = new Date(now.getFullYear(), 4, 3);
-                if (now > bday) bday.setFullYear(now.getFullYear() + 1);
-                const diff = bday - now;
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                birthdayCountdown.textContent = `${d}d ${h}h ${m}m until YOUR day 🎂`;
-            }
-            updateBirthdayCountdown();
-            setInterval(updateBirthdayCountdown, 60000);
-
-            // ────────────── LETTER TYPING (new text) ──────────────
-            const letter = `My beloved Halima,
-
-I don't really know how to begin this, except with love. From the moment we met, I never imagined that what started as just a random encounter with a random girl (random Barelvi girl) would turn into something so deep… into you becoming the love of my life.
-
-You have become such a strong pillar in my life. The way you support me, stand by me, and care for me means more than I can ever fully express. Every single day, I find myself falling in love with you even more. It is in the little things you do, the way you speak, the way you understand me even when I don't say anything, the way you listen to me... all of it just pulls me closer to you.
-
-You came into my life so unexpectedly, yet you feel like the most natural, most beautiful part of it. You have seen me at my weakest, my most stressed, and still chose to stay, to uplift me, to remind me of who I am. That is something I will never take for granted.
-
-On this special day of yours, I just want you to feel like the most cherished woman in the world because to me, you truly are. You deserve happiness that never fades, love that never weakens, and a life filled with peace and barakah. I pray that Allah keeps you smiling, protects your heart, and keeps us together in goodness.
-
-I want you to know that you are not just someone I love, you are someone I deeply respect, admire, and am grateful for every single day. You have become a part of my duas, a part of my dreams, and a part of everything I look forward to.
-
-I love you more than all the stars in the sky… more than words can hold, more than I can ever fully explain. And no matter how much time passes, that love will only grow.
-
-— Your Teddy Bear 🧸`;
-            let letterTyping;
-            function typeLetter() {
-                let i = 0;
-                typedLetterText.textContent = '';
-                clearInterval(letterTyping);
-                letterTyping = setInterval(() => {
-                    if (i < letter.length) {
-                        typedLetterText.textContent += letter.charAt(i);
-                        i++;
-                    } else {
-                        clearInterval(letterTyping);
-                    }
-                }, 18);
-            }
-            startLetterBtn.addEventListener('click', () => {
-                startLetterBtn.style.display = 'none';
-                typeLetter();
-                burstLight();
-            });
-
-            // ────────────── START OVERLAY ──────────────
-            let noClicks = 0;
-            document.getElementById('yesBtn').addEventListener('click', () => {
-                startOverlay.classList.add('hidden');
-                mainSite.classList.add('visible');
-                mainSite.style.display = 'block';
-                updateHugUI(); updateKissUI(); updateBirthdayCountdown(); buildGarden(); buildPromiseWall();
-                spawnFloaters(8);
-                hugMsgDiv.innerHTML = "🧸 Welcome, my queen! Tap a hug button — I'm ready to hold you! 💖";
-                setTimeout(() => { megaConfetti(); }, 300);
-            });
-            document.getElementById('noBtn').addEventListener('click', () => {
-                noClicks++;
-                const msgs = ["Oh come on, my love! Tap Yes 🧸💕", "Still no? I promise cuddles! 💖", "You're teasing! Tap Yes for hugs! 🧸✨"];
-                const msg = msgs[Math.min(noClicks-1, msgs.length-1)];
-                const card = document.querySelector('.start-card');
-                const old = card.querySelector('.playful-msg');
-                if (old) old.remove();
-                const p = document.createElement('p');
-                p.className = 'playful-msg';
-                p.style.cssText = 'color:#c75373;font-weight:600;margin-top:10px;font-size:0.85rem;';
-                p.textContent = msg;
-                card.appendChild(p);
-                safeConfetti({ particleCount: 15, spread: 25, origin: { y: 0.7 }, colors: ['#ffb7c5'] });
-            });
 
             // ────────────── HUG SYSTEM ──────────────
             function showHug(msg, emoji) {
                 hugMsgDiv.innerHTML = `<i class="fas fa-heart"></i> ${msg} ${emoji} <i class="fas fa-heart"></i>`;
                 burstLight();
-                hugStreak++; updateHugUI();
+                updateHugUI();
                 createFloating();
             }
             function addHug(type) {
                 totalHugs++;
+                updateStreakOnHug();
                 const map = {
                     warm: ['Warm, cozy hug. Feel my arms.','🤗🧸'],
                     cuddle: ['Cuddle time! Curl up together.','🛌💤'],
@@ -986,6 +920,7 @@ I love you more than all the stars in the sky… more than words can hold, more 
                 };
                 showHug(...map[type]);
             }
+
             document.getElementById('warmHugBtn').addEventListener('click', ()=>addHug('warm'));
             document.getElementById('cuddleBtn').addEventListener('click', ()=>addHug('cuddle'));
             document.getElementById('bearHugBtn').addEventListener('click', ()=>addHug('bear'));
@@ -1024,7 +959,7 @@ I love you more than all the stars in the sky… more than words can hold, more 
                 }
             });
 
-            // ────────────── PUZZLE (naughty message + no hint) ──────────────
+            // ────────────── PUZZLE ──────────────
             unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
                 if (['teddy bear','teddybear','my teddy bear','teddy'].includes(ans)) {
@@ -1039,7 +974,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 }
             });
 
-            // ────────────── QUIZ (simplified) ──────────────
+            // ────────────── QUIZ ──────────────
             document.querySelectorAll('.quiz-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const isCorrect = btn.dataset.ans === 'my-wife';
@@ -1048,7 +983,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 });
             });
 
-            // ────────────── LOVE GARDEN (more practical memories) ──────────────
+            // ────────────── LOVE GARDEN ──────────────
             const gardenMemories = [
                 '🌸 Our first chat',
                 '🌷 Our first face reveal',
@@ -1114,9 +1049,16 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 });
             }
 
-            // ────────────── COMPLIMENT BOMB (bigger text) ──────────────
+            // ────────────── COMPLIMENT BOMB (with background flash) ──────────────
             const compliments = ["You're stunning 💖","My Queen 👑","So beautiful","My soulmate","Incredible wife","My sunshine ☀️","Absolutely perfect","Teddy's favorite","Irresistible","My everything"];
             complimentBombBtn.addEventListener('click', () => {
+                // Flash background
+                const origBg = document.body.style.background;
+                document.body.style.background = 'linear-gradient(165deg, #ff6f91 0%, #ff3d6f 28%, #ff1a4d 55%, #ff6f91 100%)';
+                setTimeout(() => {
+                    document.body.style.background = origBg;
+                }, 1200);
+
                 for (let i = 0; i < 15; i++) {
                     setTimeout(() => {
                         const el = document.createElement('div');
@@ -1124,7 +1066,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                         el.textContent = compliments[Math.floor(Math.random() * compliments.length)];
                         el.style.left = Math.random()*90+'%';
                         el.style.animationDuration = (Math.random()*4 + 4)+'s';
-                        el.style.fontSize = (Math.random() * 24 + 30) + 'px'; // bigger compliments (30-54px)
+                        el.style.fontSize = (Math.random() * 24 + 30) + 'px';
                         el.style.opacity = '0.9';
                         floatContainer.appendChild(el);
                         setTimeout(() => el.remove(), 6000);
@@ -1140,23 +1082,43 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 burstLight(); createFloating();
             });
 
-            // ────────────── GIFT BOX ──────────────
-            let giftOpened = false;
+            // ────────────── GIFT BOX WITH HIDDEN SURPRISE ──────────────
+            let giftClickCount = 0;
+            const secretGiftNotes = [
+                "Psst… there’s more love hidden here! 💌 I have a secret letter just for you, my queen.",
+                "Another surprise? Of course. I wrote you a tiny poem: Roses are red, violets are blue, every day I'm more grateful I have you. 🧸💖",
+                "You found my secret stash of love! I'll never stop cherishing you, Halima. 💕",
+                "If love were a galaxy, you'd be the brightest star. Thank you for being my everything. ✨"
+            ];
+
+            function showLoveNoteModal(text) {
+                modalLoveText.textContent = text;
+                loveNoteModal.classList.add('active');
+            }
+
             openGiftBtn.addEventListener('click', () => {
-                if (!giftOpened) {
+                if (giftClickCount === 0) {
                     giftBoxSection.classList.add('unwrapped');
                     giftMsg.innerHTML = '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles<br>✨ A lots of kisses<br>✨ Teddy Bear hugs on demand<br>✨ and, twins ofc.... hehe <br><br>I love you, Halima! 🧸❤️';
                     megaConfetti();
-                    giftOpened = true;
-                    openGiftBtn.textContent = '🎁 Open Again for More Love';
+                    openGiftBtn.textContent = '🎁 There\'s more? 💖';
+                    giftClickCount++;
                 } else {
-                    giftMsg.innerHTML = 'bas karo yaar aur kya kya du? 😭😭😭';
-                    burstHeavy();
-                    addHug('bear');
+                    // Second (and further) clicks: reveal a hidden love note via modal
+                    const note = secretGiftNotes[(giftClickCount - 1) % secretGiftNotes.length];
+                    showLoveNoteModal(note);
+                    // Also flash background briefly
+                    const origBg = document.body.style.background;
+                    document.body.style.background = 'linear-gradient(165deg, #ffb7c5 0%, #ff85a2 28%, #ff6f91 55%, #ffb7c5 100%)';
+                    setTimeout(() => {
+                        document.body.style.background = origBg;
+                    }, 1000);
+                    megaConfetti();
+                    giftClickCount++;
                 }
             });
 
-            // ────────────── 10 REASONS (without "tap to send love") ──────────────
+            // ────────────── 10 REASONS ──────────────
             const reasonsList = [
                 'You came into my life unexpectedly and became my peace.',
                 'Your smile can fix my worst days without even trying.',
@@ -1177,7 +1139,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                     burstLight();
                     hugMsgDiv.innerHTML = `💖 I love that: <strong>${r.toLowerCase()}</strong> Forever yours. 💖`;
                     createFloating();
-                    totalHugs++; hugStreak++; updateHugUI();
+                    totalHugs++; updateStreakOnHug(); updateHugUI();
                 });
                 reasonsContainer.appendChild(card);
             });
@@ -1194,8 +1156,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             // ────────────── SECRET LOVE LETTER ──────────────
             const secretMsgs = ['My darling Halima, you are the greatest gift of my life. As your husband and Teddy Bear, I promise to adore you every single day. Happy birthday, my wife! 🧸💖','Every love story is beautiful, but ours is my favorite. I love you infinitely. 🎂','You make my world brighter just by existing. Thank you for being mine.','If I had to relive every moment, I\'d still choose you. You are my soulmate, Halima. 🧸💗'];
             specialLoveNoteBtn.addEventListener('click', () => {
-                modalLoveText.textContent = secretMsgs[Math.floor(Math.random()*secretMsgs.length)];
-                loveNoteModal.classList.add('active');
+                showLoveNoteModal(secretMsgs[Math.floor(Math.random()*secretMsgs.length)]);
                 burstHeavy();
             });
             closeModalBtn.addEventListener('click', () => loveNoteModal.classList.remove('active'));
@@ -1209,10 +1170,21 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             closeCertificateBtn.addEventListener('click', () => certificateModal.classList.remove('active'));
             printCertificateBtn.addEventListener('click', () => window.print());
 
+            // ────────────── CELEBRATE TODAY ──────────────
+            celebrateTodayBtn.addEventListener('click', () => {
+                birthdayCountdown.textContent = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
+                megaConfetti();
+                // optional background flash
+                const origBg = document.body.style.background;
+                document.body.style.background = 'linear-gradient(165deg, #ffb3c6 0%, #ff8faa 28%, #ff6f91 55%, #ffb3c6 100%)';
+                setTimeout(() => { document.body.style.background = origBg; }, 1500);
+                hugMsgDiv.innerHTML = '🎉🧸 <strong>Every day is your birthday in my heart, Halima!</strong> Love you! 💖';
+            });
+
             // ────────────── RESET ──────────────
             resetCountersBtn.addEventListener('click', () => {
                 if (confirm('Reset all hugs, kisses, garden and promises back to zero?')) {
-                    totalHugs = 0; hugStreak = 0; totalKisses = 0; kissHeartSize = 2.5;
+                    totalHugs = 0; hugStreak = 0; lastHugDate = ''; totalKisses = 0; kissHeartSize = 2.5;
                     gardenPlanted = []; revealedPromises = [];
                     updateHugUI(); updateKissUI(); buildGarden(); buildPromiseWall(); saveAll();
                     hugMsgDiv.innerHTML = '🔄 Counters reset! But my love for you is eternal, Halima. 💖';
@@ -1224,8 +1196,141 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 e.preventDefault();
                 megaConfetti();
                 hugMsgDiv.innerHTML = '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear showers you with EXTRA love! 💗💗💗';
-                totalHugs += 2; hugStreak += 2; updateHugUI();
+                totalHugs += 2; updateStreakOnHug(); updateHugUI();
                 spawnFloaters(12);
+            });
+
+            // ────────────── NIGHT MODE + STARS ──────────────
+            function generateStars(count = 80) {
+                starsContainer.innerHTML = '';
+                for (let i = 0; i < count; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    const size = Math.random() * 2.5 + 1;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    star.style.animationDuration = Math.random() * 1.5 + 1 + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
+            generateStars(); // prepare stars; they will be visible only when night-mode is active
+
+            nightModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('night-mode');
+                const icon = nightModeToggle.querySelector('i');
+                icon.className = document.body.classList.contains('night-mode') ? 'fas fa-sun' : 'fas fa-moon';
+                // stars visibility is handled purely by CSS (display block when night-mode)
+            });
+
+            // ────────────── MUSIC ──────────────
+            let musicPlaying = false;
+            musicToggleBtn.addEventListener('click', () => {
+                if (musicPlaying) {
+                    bgMusic.pause();
+                    musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                } else {
+                    bgMusic.play().catch(() => {});
+                    musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                }
+                musicPlaying = !musicPlaying;
+            });
+
+            // ────────────── DAYS COUNTER ──────────────
+            function updateDaysTogether() {
+                const start = new Date(2024, 3, 1);
+                const now = new Date();
+                const diff = now - start;
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                daysCounter.textContent = `${d} days ${h}h ${m}m ${s}s`;
+            }
+            updateDaysTogether();
+            setInterval(updateDaysTogether, 1000);
+
+            // ────────────── BIRTHDAY COUNTDOWN ──────────────
+            function updateBirthdayCountdown() {
+                if (!birthdayCountdown) return;
+                const now = new Date();
+                if (now.getMonth() === 4 && now.getDate() === 3) {
+                    birthdayCountdown.textContent = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
+                    return;
+                }
+                let bday = new Date(now.getFullYear(), 4, 3);
+                if (now > bday) bday.setFullYear(now.getFullYear() + 1);
+                const diff = bday - now;
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                birthdayCountdown.textContent = `${d}d ${h}h ${m}m until YOUR day 🎂`;
+            }
+            updateBirthdayCountdown();
+            setInterval(updateBirthdayCountdown, 60000);
+
+            // ────────────── LETTER TYPING ──────────────
+            const letter = `My beloved Halima,
+
+I don't really know how to begin this, except with love. From the moment we met, I never imagined that what started as just a random encounter with a random girl (random Barelvi girl) would turn into something so deep… into you becoming the love of my life.
+
+You have become such a strong pillar in my life. The way you support me, stand by me, and care for me means more than I can ever fully express. Every single day, I find myself falling in love with you even more. It is in the little things you do, the way you speak, the way you understand me even when I don't say anything, the way you listen to me... all of it just pulls me closer to you.
+
+You came into my life so unexpectedly, yet you feel like the most natural, most beautiful part of it. You have seen me at my weakest, my most stressed, and still chose to stay, to uplift me, to remind me of who I am. That is something I will never take for granted.
+
+On this special day of yours, I just want you to feel like the most cherished woman in the world because to me, you truly are. You deserve happiness that never fades, love that never weakens, and a life filled with peace and barakah. I pray that Allah keeps you smiling, protects your heart, and keeps us together in goodness.
+
+I want you to know that you are not just someone I love, you are someone I deeply respect, admire, and am grateful for every single day. You have become a part of my duas, a part of my dreams, and a part of everything I look forward to.
+
+I love you more than all the stars in the sky… more than words can hold, more than I can ever fully explain. And no matter how much time passes, that love will only grow.
+
+— Your Teddy Bear 🧸`;
+            let letterTyping;
+            function typeLetter() {
+                let i = 0;
+                typedLetterText.textContent = '';
+                clearInterval(letterTyping);
+                letterTyping = setInterval(() => {
+                    if (i < letter.length) {
+                        typedLetterText.textContent += letter.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(letterTyping);
+                    }
+                }, 18);
+            }
+            startLetterBtn.addEventListener('click', () => {
+                startLetterBtn.style.display = 'none';
+                typeLetter();
+                burstLight();
+            });
+
+            // ────────────── START OVERLAY ──────────────
+            let noClicks = 0;
+            document.getElementById('yesBtn').addEventListener('click', () => {
+                startOverlay.classList.add('hidden');
+                mainSite.classList.add('visible');
+                mainSite.style.display = 'block';
+                updateHugUI(); updateKissUI(); updateBirthdayCountdown(); buildGarden(); buildPromiseWall();
+                spawnFloaters(8);
+                hugMsgDiv.innerHTML = "🧸 Welcome, my queen! Tap a hug button — I'm ready to hold you! 💖";
+                setTimeout(() => { megaConfetti(); }, 300);
+            });
+            document.getElementById('noBtn').addEventListener('click', () => {
+                noClicks++;
+                const msgs = ["Oh come on, my love! Tap Yes 🧸💕", "Still no? I promise cuddles! 💖", "You're teasing! Tap Yes for hugs! 🧸✨"];
+                const msg = msgs[Math.min(noClicks-1, msgs.length-1)];
+                const card = document.querySelector('.start-card');
+                const old = card.querySelector('.playful-msg');
+                if (old) old.remove();
+                const p = document.createElement('p');
+                p.className = 'playful-msg';
+                p.style.cssText = 'color:#c75373;font-weight:600;margin-top:10px;font-size:0.85rem;';
+                p.textContent = msg;
+                card.appendChild(p);
+                safeConfetti({ particleCount: 15, spread: 25, origin: { y: 0.7 }, colors: ['#ffb7c5'] });
             });
 
             // ────────────── INIT ──────────────
