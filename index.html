@@ -575,7 +575,7 @@
             <h1>🎂 Happy Birthday, My Queen 🎂</h1>
             <p style="font-family:'Dancing Script',cursive;font-size:1.15rem;">To the queen of my heart 🧸</p>
             <div style="background:#fcc4d2;display:inline-block;padding:7px 20px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;">
-                <i class="fas fa-heart"></i> My Soulmate, My Forever Love, My Teddy Bear 🧸💖 <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i> My Favorite Human Being 🧸💖 <i class="fas fa-heart"></i>
             </div>
             <!-- Letter moved here -->
             <div class="letter-wrapper" id="letterCard">
@@ -903,8 +903,22 @@
             updateBirthdayCountdown();
             setInterval(updateBirthdayCountdown, 60000);
 
-            // ────────────── LETTER TYPING ──────────────
-            const letter = `✨\n🧸 My beloved Halima, my wife... 🧸\n\nThey call me your Teddy Bear — and it's the sweetest name because I exist to hold you, comfort you, and love you without end. From the moment we first met on April 1, 2024, I didn't know that "just a friend" would turn into the love of my life. But the universe had a plan: friends became best friends, best friends became lovers, and now? Now I proudly call you my wife — not because of a paper, but because my soul chose yours and never looked back.\n\nEvery day since that magical April, I've watched you bloom, and I fell deeper. You are my partner, my laughter, my safe place. As your Teddy Bear, I promise to always wrap you in warmth, dry your tears, and celebrate your every victory. On your birthday, May 3rd, I want you to feel the most cherished woman in the universe — because to me, you truly are. I love you more than all the stars, my wife Halima. Forever your husband, forever your teddy.\n\n— Your loving husband & Teddy Bear`;
+            // ────────────── LETTER TYPING (new text) ──────────────
+            const letter = `My beloved Halima,
+
+I don't really know how to begin this, except with love. From the moment we met, I never imagined that what started as just a random encounter with a random girl (random Barelvi girl) would turn into something so deep… into you becoming the love of my life.
+
+You have become such a strong pillar in my life. The way you support me, stand by me, and care for me means more than I can ever fully express. Every single day, I find myself falling in love with you even more. It is in the little things you do, the way you speak, the way you understand me even when I don't say anything, the way you listen to me... all of it just pulls me closer to you.
+
+You came into my life so unexpectedly, yet you feel like the most natural, most beautiful part of it. You have seen me at my weakest, my most stressed, and still chose to stay, to uplift me, to remind me of who I am. That is something I will never take for granted.
+
+On this special day of yours, I just want you to feel like the most cherished woman in the world because to me, you truly are. You deserve happiness that never fades, love that never weakens, and a life filled with peace and barakah. I pray that Allah keeps you smiling, protects your heart, and keeps us together in goodness.
+
+I want you to know that you are not just someone I love, you are someone I deeply respect, admire, and am grateful for every single day. You have become a part of my duas, a part of my dreams, and a part of everything I look forward to.
+
+I love you more than all the stars in the sky… more than words can hold, more than I can ever fully explain. And no matter how much time passes, that love will only grow.
+
+— Your Teddy Bear 🧸`;
             let letterTyping;
             function typeLetter() {
                 let i = 0;
@@ -1001,19 +1015,23 @@
                 candlesBlown++;
                 safeConfetti({ particleCount: 15, spread: 25, origin: { y: 0.6 }, colors: ['#ffe0a0','#fff'] });
                 if (candlesBlown === 5) {
-                    candleMessage.innerHTML = '🎉✨ All candles blown! Your wish is sealed with a kiss 💋🧸';
+                    candleMessage.innerHTML = '🎉✨ All candles blown hehe! 🧸💋';
                     megaConfetti();
                 }
             });
 
-            // ────────────── PUZZLE (now with a naughty twist) ──────────────
+            // ────────────── PUZZLE (naughty message + softer hint) ──────────────
             unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
                 if (['teddy bear','teddybear','my teddy bear','teddy'].includes(ans)) {
-                    puzzleResultDiv.innerHTML = `🔓✨ <strong>Unlocked!</strong><br><em>"Mmm, my naughty wife... tonight I'm going to kiss you everywhere — your sweet lips, your perfect boobs, and every little spot that drives you wild. Your Teddy Bear is going to make you feel so good, darling. 🧸💋🔥"</em>`;
+                    puzzleResultDiv.innerHTML = `🔓✨ <strong>Unlocked!</strong><br><em>"My dearest wife, I love you more than words can ever say. You are my heart, my soul, and my greatest joy.  
+
+Tonight, my love, I want you to surrender yourself fully to me with all the trust and love in your heart. Let me cherish you as I kiss every beautiful part of you, your gentle forehead, your adorable cheeks, your soft and inviting lips, your graceful neck, your lovely boobs, your sensitive nipples, your smooth belly, your inner thighs, and your sweet pussy. I'll cover you with slow, tender, passionate kisses filled with all my love.  
+
+Just melt into my arms, relax, and give yourself completely to me. I want to make you feel so loved, so desired, and so adored that nothing else exists but us. You are my everything, tonight. I can't wait to hold and kiss you all night long, my beautiful wife. 💕"</em>`;
                     megaConfetti();
                 } else {
-                    puzzleResultDiv.innerHTML = '❌ Hint: the fluffy nickname you call me… 🧸 <strong>(Teddy Bear)</strong>';
+                    puzzleResultDiv.innerHTML = '❌ Hint: what you called me as a nickname initially... 🤔';
                 }
             });
 
@@ -1117,15 +1135,26 @@
                 }
             });
 
-            // ────────────── 10 REASONS ──────────────
-            const reasonsList = ['Your beautiful smile','The way you laugh','Your kind heart','You call me Teddy Bear','Your intelligence','You make me a better man','Your gentle hugs','You\'re my best friend','You chose me as your wife','Your endless strength'];
+            // ────────────── 10 REASONS (replaced with your list) ──────────────
+            const reasonsList = [
+                'You came into my life unexpectedly and became my peace.',
+                'Your smile can fix my worst days without even trying.',
+                'You understand me in ways no one else ever did.',
+                'You support me even when I doubt myself.',
+                'With you, I don\'t have to pretend to be someone else.',
+                'Your presence feels like home to me.',
+                'You make even the smallest moments feel special.',
+                'You stay, even when things are not easy.',
+                'You make me want to become a better person every day.',
+                'It\'s you. And that alone is enough for me.'
+            ];
             reasonsList.forEach(r => {
                 const card = document.createElement('div');
                 card.className = 'reason-card';
                 card.innerHTML = `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;">tap to send love</p>`;
                 card.addEventListener('click', () => {
                     burstLight();
-                    hugMsgDiv.innerHTML = `💖 I love your <strong>${r.toLowerCase()}</strong>, my beautiful wife! Forever yours. 💖`;
+                    hugMsgDiv.innerHTML = `💖 I love that: <strong>${r.toLowerCase()}</strong> Forever yours. 💖`;
                     createFloating();
                     totalHugs++; hugStreak++; updateHugUI();
                 });
@@ -1169,7 +1198,7 @@
                 }
             });
 
-            // ────────────── HERO DOUBLE‑TAP (still works, just no hint) ──────────────
+            // ────────────── HERO DOUBLE‑TAP ──────────────
             document.getElementById('heroSection').addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 megaConfetti();
