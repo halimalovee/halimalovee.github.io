@@ -563,7 +563,7 @@
                 <button class="yes-no" id="yesBtn">✨ Yes, my husband! 🧸</button>
                 <button class="yes-no no-btn" id="noBtn">No, I don't. BLEH</button>
             </div>
-            <p style="margin-top:16px;font-size:0.75rem;color:#8a6b75;">*spoiler: hugs, puzzles, a love garden & lots of love :)</p>
+            <p style="margin-top:16px;font-size:0.75rem;color:#8a6b75;">spoiler: hugs, puzzles, a love garden & lots of love :)</p>
         </div>
     </div>
 
@@ -575,7 +575,7 @@
             <h1>🎂 Happy Birthday, My Queen 🎂</h1>
             <p style="font-family:'Dancing Script',cursive;font-size:1.15rem;">To the queen of my heart 🧸</p>
             <div style="background:#fcc4d2;display:inline-block;padding:7px 20px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;">
-                <i class="fas fa-heart"></i> My Favorite Human Being 🧸💖 <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i> 💖 My Favorite Human Being 💖 <i class="fas fa-heart"></i>
             </div>
             <!-- Letter moved here -->
             <div class="letter-wrapper" id="letterCard">
@@ -586,13 +586,13 @@
 
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-music"></i> Let's Play a Song</h3>
-            <p style="margin-bottom:10px;">This song is how you sound to me so let's play it 🎶</p>
+            <p style="margin-bottom:10px;">You sound like this song to me. So let's play it 🎶</p>
             <button id="musicToggleBtn" class="hug-btn" style="background:#b34266;"><i class="fas fa-play"></i> Play</button>
             <audio id="bgMusic" loop preload="auto" style="display:none;"><source src="music/music.mp3" type="audio/mpeg"></audio>
         </div>
 
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-comment-dots"></i> 💬 Since We First Talked & Met</h3>
+            <h3><i class="fas fa-comment-dots"></i>From our very first conversation</h3>
             <div class="countdown" id="daysTogetherCounter">Loading…</div>
             <p style="font-size:0.85rem;">Every second since that day is a gift 💝</p>
         </div>
@@ -615,13 +615,13 @@
             <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting… tap a hug, my love 🤗</div>
             <div style="margin-top:10px;">
                 ❤️ Total hugs: <strong id="hugCount">0</strong> &nbsp;|&nbsp; 🔥 Streak: <strong id="hugStreak">0</strong>
-                <br><small>(saved with love 💾 — refresh and they stay!)</small>
+                <br><small>(Come anytime... hugs are available here 24/7 :D)</small>
             </div>
         </div>
 
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-kiss"></i> 💋 Kisses & Growing Heartbeat</h3>
-            <p>Tap the heart — every kiss makes it beat faster!</p>
+            <h3><i class="fas fa-kiss"></i> Your kisses make my heart grow</h3>
+            <p>Tap the heart to give akiss, every kiss makes it beat faster!</p>
             <div class="growing-heart" id="growingHeart" style="font-size:2.5rem;">❤️</div>
             <p>💋 Kisses: <strong id="kissCountDisplay">0</strong></p>
         </div>
@@ -653,7 +653,7 @@
         </div>
 
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-seedling"></i> 🌸 Our Love Garden 🌸</h3>
+            <h3><i class="fas fa-seedling"></i> Our Love Garden 🌸</h3>
             <div class="garden-grid" id="gardenGrid"></div>
             <p id="gardenMessage" style="font-style:italic;"></p>
         </div>
@@ -670,7 +670,7 @@
         </div>
 
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-bomb"></i> Compliment Bomb 💣💖</h3>
+            <h3><i class="fas fa-bomb"></i> Compliment Bomb 💣</h3>
             <button id="complimentBombBtn" class="hug-btn"><i class="fas fa-heart"></i> Bomb Love</button>
         </div>
 
@@ -705,7 +705,7 @@
         </div>
 
         <div class="glass-card" style="text-align:center;">
-            <button id="specialLoveNoteBtn" class="hug-btn">💌 Secret Love Letter</button>
+            <button id="specialLoveNoteBtn" class="hug-btn">💌 Secret Love Letters</button>
             <button id="certificateBtn" class="hug-btn" style="background:#c75373;">🏆 Best Wife Certificate</button>
         </div>
 
@@ -714,7 +714,7 @@
         </div>
 
         <footer>
-            <i class="fas fa-cake-candles"></i> To my wife <strong>Halima</strong> — from your Teddy Bear husband.<br>
+            <i class="fas fa-cake-candles"></i> To my wife <strong>Halima</strong> — from your husband.<br>
             <span>✨ I love you more than all the stars in the sky ✨</span><br><br>
             <span style="font-weight:600;">💖 Made with love by <strong>Y</strong> for <strong>Halima</strong> 🧸</span>
         </footer>
@@ -1035,7 +1035,7 @@ Tonight, my love, I want you to surrender yourself fully to me with all the trus
 Just melt into my arms, relax, and give yourself completely to me. I want to make you feel so loved, so desired, and so adored that nothing else exists but us. You are my everything, tonight. I can't wait to hold and kiss you all night long, my beautiful wife. 💕"</em>`;
                     megaConfetti();
                 } else {
-                    puzzleResultDiv.innerHTML = '❌ Wrong pass.';
+                    puzzleResultDiv.innerHTML = '❌ Wrong password.';
                 }
             });
 
@@ -1050,21 +1050,21 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
 
             // ────────────── LOVE GARDEN (more practical memories) ──────────────
             const gardenMemories = [
-                '🌸 Our first coffee date',
-                '🌷 Our first movie night',
-                '🌼 The day we cooked together',
-                '🌻 Our first walk in the park',
+                '🌸 Our first chat',
+                '🌷 Our first face reveal',
+                '🌼 The day we said said I love you',
+                '🌻 Our first kiss? (virtually ofc)',
                 '🌹 The first time you called me Teddy Bear',
-                '🪷 Our first "I love you"',
+                '🪷 Our first "I love you" (once again, ik)',
                 '🌺 Watching sunset together',
-                '💐 The day we got married',
+                '💐 The day we got married (in my head)',
                 '🌾 Morning cuddles',
                 '🍀 Our inside jokes',
                 '🌿 The way you look at me',
                 '🪻 Your beautiful smile',
                 '🌴 Our dreams',
                 '🌵 Getting through tough times',
-                '🌸 Forever & always'
+                '🌸 Love you'
             ];
             function buildGarden() {
                 gardenGrid.innerHTML = '';
@@ -1090,7 +1090,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             }
 
             // ────────────── PROMISE WALL ──────────────
-            const promises = ['🤍 Always be your Teddy Bear','💛 Make you laugh every day','🧡 Hold you when sad','❤️ Love you more each sunrise','💚 Be your best friend','💙 Listen with whole heart','💜 Grow old with you','🩷 Never stop courting you','🩵 Cherish every moment'];
+            const promises = ['🤍 Always be your Teddy Bear','💛 Make you laugh when you ask me','🧡 Hold you when sad','❤️ Love you more each sunrise','💚 Be your best friend','💙 Listen with whole heart','💜 Annoy you more','🩷 Never stop courting you','🩵 Cherish every moment'];
             function buildPromiseWall() {
                 promiseWall.innerHTML = '';
                 promises.forEach((p, i) => {
@@ -1145,12 +1145,12 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             openGiftBtn.addEventListener('click', () => {
                 if (!giftOpened) {
                     giftBoxSection.classList.add('unwrapped');
-                    giftMsg.innerHTML = '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles for life<br>✨ A lifetime of love letters<br>✨ Teddy Bear hugs on demand<br>✨ A star named after your smile<br><br>I love you, Halima! 🧸❤️';
+                    giftMsg.innerHTML = '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles<br>✨ A lots of kisses<br>✨ Teddy Bear hugs on demand<br>✨ and, twins ofc.... hehe <br><br>I love you, Halima! 🧸❤️';
                     megaConfetti();
                     giftOpened = true;
                     openGiftBtn.textContent = '🎁 Open Again for More Love';
                 } else {
-                    giftMsg.innerHTML = '🎁 Extra surprise: another infinite Teddy Bear hug 🤗🧸💗';
+                    giftMsg.innerHTML = 'bas karo yaar aur kya kya du? 😭😭😭';
                     burstHeavy();
                     addHug('bear');
                 }
@@ -1160,7 +1160,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             const reasonsList = [
                 'You came into my life unexpectedly and became my peace.',
                 'Your smile can fix my worst days without even trying.',
-                'You understand me in ways no one else ever did.',
+                'You understand me in ways no one else does.',
                 'You support me even when I doubt myself.',
                 'With you, I don\'t have to pretend to be someone else.',
                 'Your presence feels like home to me.',
