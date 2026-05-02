@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#ffe8ee">
     <title>🎀 Happy Birthday My Baby </title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -465,8 +466,8 @@
         }
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.4); opacity: 0; }
-            8% { opacity: 0.5; }
-            60% { opacity: 0.25; }
+            8% { opacity: 0.9; }
+            60% { opacity: 0.4; }
             100% { transform: translateY(-115vh) scale(0.85); opacity: 0; }
         }
 
@@ -865,6 +866,7 @@
             let kissHeartSize = parseFloat(safeGet('halima_heart','2.5'));
             let gardenPlanted = JSON.parse(safeGet('halima_garden','[]'));
             let revealedPromises = JSON.parse(safeGet('halima_promises','[]'));
+            let nightModeState = safeGet('halima_nightMode','false') === 'true';
 
             function saveAll() {
                 safeSet('halima_hugs', totalHugs);
@@ -1218,11 +1220,23 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             }
             generateStars(); // prepare stars; they will be visible only when night-mode is active
 
+            // Apply saved night mode
+            function applyNightMode(state) {
+                if (state) {
+                    document.body.classList.add('night-mode');
+                    nightModeToggle.querySelector('i').className = 'fas fa-sun';
+                } else {
+                    document.body.classList.remove('night-mode');
+                    nightModeToggle.querySelector('i').className = 'fas fa-moon';
+                }
+            }
+            applyNightMode(nightModeState);
+
             nightModeToggle.addEventListener('click', () => {
                 document.body.classList.toggle('night-mode');
-                const icon = nightModeToggle.querySelector('i');
-                icon.className = document.body.classList.contains('night-mode') ? 'fas fa-sun' : 'fas fa-moon';
-                // stars visibility is handled purely by CSS (display block when night-mode)
+                const isNight = document.body.classList.contains('night-mode');
+                nightModeToggle.querySelector('i').className = isNight ? 'fas fa-sun' : 'fas fa-moon';
+                safeSet('halima_nightMode', isNight);
             });
 
             // ────────────── MUSIC ──────────────
@@ -1231,11 +1245,24 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 if (musicPlaying) {
                     bgMusic.pause();
                     musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                    musicPlaying = false;
                 } else {
-                    bgMusic.play().catch(() => {});
-                    musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    const playPromise = bgMusic.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            musicPlaying = true;
+                            musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                        }).catch(() => {
+                            // Autoplay blocked, keep button as Play
+                            musicPlaying = false;
+                            musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                        });
+                    } else {
+                        // Older browser fallback
+                        musicPlaying = true;
+                        musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    }
                 }
-                musicPlaying = !musicPlaying;
             });
 
             // ────────────── DAYS COUNTER ──────────────
