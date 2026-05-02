@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <meta name="theme-color" content="#ffe8ee">
-    <title>🎀 Happy Birthday My Baby </title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>🎀 Happy Birthday My Baby - World's Best Birthday</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,600&family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1">
     </script>
@@ -14,10 +14,13 @@
             --pink-light: #ffe8ee;
             --pink-rose: #e57393;
             --pink-deep: #b34266;
-            --card-bg: rgba(255, 248, 245, 0.92);
-            --shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
-            --radius: 48px;
+            --card-bg: rgba(255, 248, 245, 0.94);
+            --shadow: 0 20px 48px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 32px 64px rgba(0, 0, 0, 0.10);
+            --radius: 44px;
+            --radius-sm: 28px;
             --text-dark: #4a2c3a;
+            --transition-smooth: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         * {
             margin: 0;
@@ -27,41 +30,64 @@
         html {
             scroll-behavior: smooth;
             -webkit-tap-highlight-color: transparent;
+            scroll-padding-top: 20px;
         }
         body {
-            background: linear-gradient(165deg, #ffe8ee 0%, #ffd0dc 28%, #ffc8d6 55%, #ffe0e8 100%);
+            background: linear-gradient(170deg, #ffe8ee 0%, #ffd4de 22%, #ffcad6 48%, #ffdce6 72%, #ffeef3 100%);
             background-attachment: fixed;
             font-family: 'Inter', -apple-system, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
             user-select: none;
             position: relative;
-            transition: background 0.8s ease, color 0.6s ease;
+            transition: background 0.9s ease, color 0.7s ease;
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
+            cursor: default;
         }
-        /* ---------- NIGHT MODE ---------- */
+
+        /* ── Sparkle cursor trail ── */
+        .sparkle-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            font-size: 1.1rem;
+            animation: sparkleFade 0.9s ease-out forwards;
+            will-change: transform, opacity;
+        }
+        @keyframes sparkleFade {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--sx), var(--sy)) scale(0.15) rotate(var(--sr));
+            }
+        }
+
+        /* ── Night Mode ── */
         body.night-mode {
-            background: #0b0c1a;
+            background: #0a0b1e;
             color: #f0e0e8;
         }
         body.night-mode .glass-card {
-            background: rgba(25, 25, 40, 0.85);
-            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(22, 22, 42, 0.88);
+            border-color: rgba(255, 255, 255, 0.10);
             color: #f5e6ef;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.30);
         }
         body.night-mode .hero {
-            background: linear-gradient(135deg, rgba(40, 30, 50, 0.9), rgba(30, 20, 45, 0.9));
+            background: linear-gradient(135deg, rgba(35, 25, 48, 0.92), rgba(26, 18, 40, 0.92));
         }
         body.night-mode .hug-message {
-            background: rgba(60, 50, 70, 0.7);
+            background: rgba(50, 42, 62, 0.75);
             color: #fce4ec;
         }
         body.night-mode .reason-card {
-            background: rgba(60, 50, 70, 0.75);
+            background: rgba(50, 42, 62, 0.78);
             color: #f0e0ec;
-            border-color: rgba(255, 200, 210, 0.25);
+            border-color: rgba(255, 200, 210, 0.22);
         }
         body.night-mode .countdown {
             color: #ffb3c6;
@@ -71,51 +97,55 @@
             color: #ffccd5;
         }
         body.night-mode .hero h1 {
-            background: linear-gradient(135deg, #ffb3c6, #ff99aa, #ffc0cb);
+            background: linear-gradient(135deg, #ffb8cc, #ff99ae, #ffc5d5);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         body.night-mode .promise-star {
-            background: rgba(60, 50, 70, 0.7);
+            background: rgba(50, 42, 62, 0.75);
             color: #f0e0ec;
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.18);
         }
         body.night-mode .promise-star.revealed {
-            background: rgba(80, 60, 90, 0.8);
+            background: rgba(70, 52, 82, 0.85);
             border-color: #e57393;
         }
         body.night-mode .garden-plot {
-            background: rgba(50, 40, 60, 0.7);
-            border-color: rgba(255, 200, 210, 0.3);
+            background: rgba(42, 34, 54, 0.75);
+            border-color: rgba(255, 200, 210, 0.28);
         }
         body.night-mode .garden-plot.planted {
-            background: rgba(80, 60, 90, 0.8);
+            background: rgba(70, 52, 82, 0.85);
             border-color: #e57393;
         }
         body.night-mode footer {
-            background: rgba(30, 25, 40, 0.75);
+            background: rgba(26, 20, 36, 0.80);
             color: #e0d0d8;
         }
         body.night-mode .night-toggle {
-            background: rgba(255, 240, 245, 0.2);
+            background: rgba(255, 240, 245, 0.18);
             color: #ffe0ec;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.22);
         }
         body.night-mode .night-toggle:hover {
-            background: rgba(255, 240, 245, 0.32);
+            background: rgba(255, 240, 245, 0.30);
         }
         body.night-mode .puzzle-input {
-            background: rgba(40, 35, 50, 0.8);
+            background: rgba(35, 28, 45, 0.85);
             color: #fce4ec;
             border-color: #b34266;
         }
         body.night-mode .letter-wrapper {
-            background: rgba(35, 30, 45, 0.8);
-            border-color: rgba(255,220,220,0.4);
+            background: rgba(30, 25, 40, 0.85);
+            border-color: rgba(255, 220, 220, 0.35);
+        }
+        body.night-mode .love-jar-inner {
+            background: rgba(30, 25, 40, 0.7);
+            border-color: rgba(255, 200, 210, 0.35);
         }
 
-        /* ---------- TWINKLING STARS ---------- */
+        /* ── Stars & Shooting Stars ── */
         #starsContainer {
             position: fixed;
             top: 0;
@@ -129,60 +159,107 @@
         body.night-mode #starsContainer {
             display: block;
         }
-        .star {
+        .star-dot {
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: twinkle 2s infinite alternate;
+            animation: twinkleStar 2.4s infinite alternate;
         }
-        @keyframes twinkle {
-            from { opacity: 0.2; }
-            to { opacity: 1; }
+        @keyframes twinkleStar {
+            0% {
+                opacity: 0.18;
+                transform: scale(0.7);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.25);
+            }
+        }
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.9), 0 0 25px 8px rgba(255, 200, 220, 0.6);
+            animation: shootAcross 2.8s linear infinite;
+            opacity: 0;
+        }
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 1.5px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent);
+            border-radius: 50%;
+        }
+        @keyframes shootAcross {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) rotate(-28deg);
+            }
+            6% {
+                opacity: 1;
+            }
+            18% {
+                opacity: 1;
+                transform: translate(380px, 180px) rotate(-28deg);
+            }
+            20% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(420px, 200px) rotate(-28deg);
+            }
         }
 
-        /* ---------- NIGHT TOGGLE ---------- */
+        /* ── Night Toggle ── */
         .night-toggle {
             position: fixed;
             top: 18px;
             right: 22px;
             z-index: 5000;
             background: rgba(255, 248, 245, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.55);
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
             color: var(--pink-deep);
-            transition: all 0.3s;
+            transition: all var(--transition-smooth);
             padding: 0;
         }
         .night-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.12);
             background: rgba(255, 240, 245, 0.95);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
         }
 
-        /* ---------- START OVERLAY ---------- */
+        /* ── Start Overlay ── */
         .start-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.55s ease, visibility 0.55s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         .start-overlay.hidden {
             opacity: 0;
@@ -191,97 +268,214 @@
         }
         .start-card {
             background: #fffaf7;
-            max-width: 520px;
-            width: 92%;
+            max-width: 540px;
+            width: 93%;
             margin: 20px;
-            padding: 44px 28px 38px;
-            border-radius: 64px;
+            padding: 48px 30px 40px;
+            border-radius: 68px;
             text-align: center;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.35);
+            animation: popIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 40px 70px rgba(0, 0, 0, 0.38);
         }
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.85) translateY(25px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            0% {
+                opacity: 0;
+                transform: scale(0.82) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
         .yes-no {
             background: #e57393;
             border: none;
-            padding: 14px 30px;
+            padding: 15px 34px;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             color: #fff;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 6px 20px rgba(229, 115, 147, 0.35);
+            transition: all 0.22s ease;
+            box-shadow: 0 8px 24px rgba(229, 115, 147, 0.38);
             touch-action: manipulation;
+            letter-spacing: 0.3px;
         }
         .yes-no:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(229, 115, 147, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 34px rgba(229, 115, 147, 0.55);
             background: #d4627f;
+        }
+        .yes-no:active {
+            transform: scale(0.94);
         }
         .yes-no.no-btn {
             background: #c9a9b5;
-            box-shadow: 0 6px 18px rgba(180, 140, 155, 0.3);
+            box-shadow: 0 8px 22px rgba(180, 140, 155, 0.32);
         }
         .yes-no.no-btn:hover {
             background: #b8939f;
         }
 
-        /* ---------- MAIN SITE ---------- */
+        /* ── Main Site ── */
         .main-site {
             display: none;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 16px 20px 80px;
+            padding: 14px 18px 90px;
             position: relative;
             z-index: 10;
         }
         .main-site.visible {
             display: block;
-            animation: fadeUp 0.65s ease;
+            animation: fadeUp 0.7s ease;
         }
         @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(36px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .glass-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-radius: var(--radius);
-            padding: 26px 22px;
-            margin-bottom: 28px;
+            padding: 28px 24px;
+            margin-bottom: 26px;
             box-shadow: var(--shadow);
-            transition: all 0.25s ease;
-            border: 1px solid rgba(255, 255, 255, 0.55);
+            transition: all var(--transition-smooth);
+            border: 1px solid rgba(255, 255, 255, 0.50);
             position: relative;
+            animation: cardReveal 0.6s ease both;
         }
+        @keyframes cardReveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .glass-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .glass-card:nth-child(2) {
+            animation-delay: 0.06s;
+        }
+        .glass-card:nth-child(3) {
+            animation-delay: 0.12s;
+        }
+        .glass-card:nth-child(4) {
+            animation-delay: 0.18s;
+        }
+        .glass-card:nth-child(5) {
+            animation-delay: 0.24s;
+        }
+        .glass-card:nth-child(6) {
+            animation-delay: 0.30s;
+        }
+        .glass-card:nth-child(7) {
+            animation-delay: 0.36s;
+        }
+        .glass-card:nth-child(8) {
+            animation-delay: 0.42s;
+        }
+        .glass-card:nth-child(9) {
+            animation-delay: 0.48s;
+        }
+        .glass-card:nth-child(10) {
+            animation-delay: 0.54s;
+        }
+        .glass-card:nth-child(11) {
+            animation-delay: 0.60s;
+        }
+        .glass-card:nth-child(12) {
+            animation-delay: 0.66s;
+        }
+        .glass-card:nth-child(13) {
+            animation-delay: 0.72s;
+        }
+        .glass-card:nth-child(14) {
+            animation-delay: 0.78s;
+        }
+        .glass-card:nth-child(15) {
+            animation-delay: 0.84s;
+        }
+        .glass-card:nth-child(16) {
+            animation-delay: 0.90s;
+        }
+        .glass-card:nth-child(17) {
+            animation-delay: 0.96s;
+        }
+        .glass-card:nth-child(18) {
+            animation-delay: 1.02s;
+        }
+        .glass-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
         .hero {
             text-align: center;
-            background: linear-gradient(135deg, #fff0f5, #ffe3ec, #fff5f7);
-            border-radius: 72px;
-            padding: 44px 22px;
+            background: linear-gradient(135deg, #fff0f5, #ffe3ec, #fff6f8);
+            border-radius: 68px;
+            padding: 48px 24px;
             cursor: pointer;
             touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -40%;
+            width: 180%;
+            height: 180%;
+            background: radial-gradient(ellipse, rgba(255, 180, 200, 0.25) 0%, transparent 70%);
+            animation: heroGlow 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes heroGlow {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(2%, -1%) scale(1.08);
+            }
         }
         .hero h1 {
-            font-size: clamp(1.8rem, 4.5vw, 3rem);
+            font-size: clamp(1.9rem, 5vw, 3.2rem);
             background: linear-gradient(135deg, #c0395b, #8e2d4f, #b34266);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-family: 'Playfair Display', serif;
             line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+        .hero .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
         }
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.65rem;
             text-align: center;
             color: #a13e5c;
             margin: 6px 0 16px;
             font-family: 'Playfair Display', serif;
+            font-weight: 600;
         }
         .hug-buttons {
             display: flex;
@@ -293,25 +487,27 @@
         .hug-btn {
             background: #e57393;
             border: none;
-            padding: 11px 20px;
+            padding: 12px 22px;
             border-radius: 50px;
             color: #fff;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.22s ease;
             font-size: 0.9rem;
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 5px 16px rgba(229, 115, 147, 0.3);
+            box-shadow: 0 6px 18px rgba(229, 115, 147, 0.32);
             white-space: nowrap;
             touch-action: manipulation;
+            letter-spacing: 0.2px;
         }
         .hug-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(229, 115, 147, 0.45);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(229, 115, 147, 0.50);
             background: #d4627f;
         }
         .hug-btn:active {
-            transform: scale(0.93);
+            transform: scale(0.92);
+            transition: all 0.08s ease;
         }
         .hug-btn.btn-alt {
             background: #b34266;
@@ -321,130 +517,225 @@
         }
         .hug-message {
             background: #ffeef3;
-            border-radius: 42px;
-            padding: 16px 20px;
+            border-radius: 40px;
+            padding: 18px 22px;
             margin-top: 12px;
-            min-height: 60px;
+            min-height: 62px;
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.55;
             border: 1px solid rgba(255, 200, 210, 0.45);
             text-align: center;
+            transition: all 0.3s ease;
         }
         .puzzle-input {
-            padding: 12px 16px;
+            padding: 13px 18px;
             border-radius: 40px;
             border: 2px solid #ffb7c5;
-            width: 70%;
-            max-width: 300px;
+            width: 72%;
+            max-width: 320px;
             margin: 8px;
             text-align: center;
             font-size: 1rem;
             background: #fff;
             outline: none;
             font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .puzzle-input:focus {
+            border-color: #e57393;
+            box-shadow: 0 0 0 6px rgba(229, 115, 147, 0.10);
         }
         .reason-card {
             background: #fff2f5;
-            border-radius: 32px;
-            padding: 14px 10px;
+            border-radius: 28px;
+            padding: 15px 10px;
             margin: 6px;
             cursor: pointer;
-            transition: all 0.22s ease;
+            transition: all 0.25s ease;
             display: inline-block;
-            width: 150px;
+            width: 155px;
             text-align: center;
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 200, 210, 0.35);
             touch-action: manipulation;
         }
         .reason-card:hover {
-            transform: translateY(-4px) scale(1.04);
+            transform: translateY(-5px) scale(1.05);
             background: #ffe8ee;
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
         }
         .countdown {
-            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             font-weight: 700;
             color: #b34266;
             letter-spacing: 1px;
             font-family: 'Playfair Display', serif;
         }
         .candle {
-            font-size: 2.8rem;
+            font-size: 3rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            animation: flicker 0.7s ease-in-out infinite alternate;
+            transition: all 0.35s ease;
+            animation: flickerCandle 0.65s ease-in-out infinite alternate;
             display: inline-block;
-            filter: drop-shadow(0 0 10px rgba(255, 170, 50, 0.7));
+            filter: drop-shadow(0 0 12px rgba(255, 170, 50, 0.75));
             touch-action: manipulation;
         }
         .candle.blown {
             animation: none;
             filter: none;
-            opacity: 0.3;
-            transform: scale(0.8);
+            opacity: 0.28;
+            transform: scale(0.75);
             pointer-events: none;
         }
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-2deg); }
-            100% { transform: scale(1.07) rotate(2deg); }
+        @keyframes flickerCandle {
+            0% {
+                transform: scale(1) rotate(-3deg);
+            }
+            100% {
+                transform: scale(1.09) rotate(3deg);
+            }
         }
         .garden-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
+            gap: 13px;
             margin: 12px 0;
         }
         .garden-plot {
-            width: 55px;
-            height: 55px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: #ffeef2;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.6rem;
+            transition: all 0.35s ease;
+            font-size: 1.7rem;
             border: 2px dashed #ffb3c1;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.03);
             touch-action: manipulation;
+        }
+        .garden-plot:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
         .garden-plot.planted {
             border: 2px solid #e57393;
             background: #fff0f4;
-            animation: plantedPop 0.4s ease;
+            animation: plantedPop 0.45s ease;
         }
         @keyframes plantedPop {
-            0% { transform: scale(0.5); }
-            50% { transform: scale(1.25); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(0.4);
+            }
+            50% {
+                transform: scale(1.30);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
         .promise-star {
             display: inline-block;
             cursor: pointer;
-            padding: 8px 14px;
+            padding: 9px 15px;
             margin: 4px;
             border-radius: 30px;
             background: #fff5f7;
             font-weight: 500;
             border: 1px solid #ffccd5;
+            transition: all 0.25s ease;
             touch-action: manipulation;
+        }
+        .promise-star:hover {
+            transform: scale(1.07);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+        }
+        .promise-star.revealed {
+            background: #fff0f4;
+            border-color: #e57393;
         }
         .growing-heart {
             display: inline-block;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s ease;
             animation: gentlePulse 2s ease-in-out infinite;
             touch-action: manipulation;
+            font-size: 2.5rem;
         }
         @keyframes gentlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.12); }
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.14);
+            }
+        }
+        .growing-heart:active {
+            animation: heartBurst 0.35s ease;
+        }
+        @keyframes heartBurst {
+            0% {
+                transform: scale(1);
+            }
+            35% {
+                transform: scale(1.6);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
-        /* ---------- FLOATING ITEMS ---------- */
+        /* ── Love Jar ── */
+        .love-jar-outer {
+            position: relative;
+            width: 80px;
+            height: 120px;
+            margin: 10px auto;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .love-jar-inner {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 64px;
+            height: 90px;
+            background: rgba(255, 240, 245, 0.85);
+            border: 2px solid #ffccd5;
+            border-radius: 18px 18px 26px 26px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+        }
+        .love-jar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(0deg, #ff6f91, #ff99b4, #ffb8cc);
+            border-radius: 0 0 24px 24px;
+            transition: height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            height: 0%;
+        }
+        .love-jar-lid {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 56px;
+            height: 14px;
+            background: #e57393;
+            border-radius: 8px;
+            z-index: 2;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+        }
+
+        /* ── Floating Items ── */
         .floating-teddies {
             position: fixed;
             top: 0;
@@ -465,64 +756,80 @@
             pointer-events: none;
         }
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.4); opacity: 0; }
-            8% { opacity: 0.9; }
-            60% { opacity: 0.4; }
-            100% { transform: translateY(-115vh) scale(0.85); opacity: 0; }
+            0% {
+                transform: translateY(0) scale(0.35);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.92;
+            }
+            55% {
+                opacity: 0.35;
+            }
+            100% {
+                transform: translateY(-115vh) scale(0.8);
+                opacity: 0;
+            }
         }
 
-        /* ---------- LETTER ---------- */
+        /* ── Letter ── */
         .letter-wrapper {
             position: relative;
             background: #fffaf5;
-            border-radius: 36px;
-            padding: 24px 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-            border: 1px solid rgba(255,220,220,0.6);
+            border-radius: 34px;
+            padding: 26px 22px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 220, 220, 0.55);
             margin: 18px auto 0;
             min-height: 60px;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', 'Playfair Display', serif;
             white-space: pre-wrap;
-            line-height: 1.7;
-            max-width: 700px;
+            line-height: 1.75;
+            max-width: 720px;
             overflow-y: auto;
-            max-height: 400px;
+            max-height: 420px;
+            font-size: 1.05rem;
         }
         .letter-start-btn {
             background: #b34266;
             border: none;
             color: white;
-            padding: 12px 24px;
+            padding: 13px 28px;
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.22s;
             display: block;
             margin: 16px auto 6px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
         }
-        .letter-start-btn:hover { background: #9e3857; }
+        .letter-start-btn:hover {
+            background: #9e3857;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(179, 66, 102, 0.35);
+        }
 
-        /* ---------- GIFT BOX ---------- */
+        /* ── Gift Box ── */
         .gift-box.unwrapped {
             background: linear-gradient(135deg, #ffe8f0, #ffdce7);
-            box-shadow: 0 0 35px rgba(235,122,158,0.4);
+            box-shadow: 0 0 45px rgba(235, 122, 158, 0.45);
+            animation: giftGlow 0.6s ease;
+        }
+        @keyframes giftGlow {
+            0% {
+                box-shadow: 0 0 0 rgba(235, 122, 158, 0);
+            }
+            60% {
+                box-shadow: 0 0 60px rgba(235, 122, 158, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 45px rgba(235, 122, 158, 0.45);
+            }
         }
 
-        /* ---------- MODALS ---------- */
-        .love-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.82);
-            backdrop-filter: blur(7px);
-            z-index: 6000;
-            justify-content: center;
-            align-items: center;
-        }
-        .love-modal.active { display: flex; }
+        /* ── Modals ── */
+        .love-modal,
         .certificate-modal {
             display: none;
             position: fixed;
@@ -530,64 +837,141 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.84);
+            backdrop-filter: blur(8px);
             z-index: 7000;
             justify-content: center;
             align-items: center;
+            animation: modalFadeIn 0.3s ease;
         }
-        .certificate-modal.active { display: flex; }
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .love-modal.active,
+        .certificate-modal.active {
+            display: flex;
+        }
 
+        /* ── Footer ── */
         footer {
             text-align: center;
             margin-top: 36px;
-            background: rgba(255, 240, 235, 0.85);
+            background: rgba(255, 240, 235, 0.88);
             border-radius: 44px;
-            padding: 22px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            line-height: 1.7;
         }
 
+        /* ── Responsive ── */
         @media (max-width: 700px) {
-            .hero h1 { font-size: 1.6rem; }
-            .hero { padding: 32px 16px 28px; border-radius: 56px; }
-            .section-title { font-size: 1.3rem; }
-            .reason-card { width: 130px; font-size: 0.8rem; padding: 10px 6px; }
-            .glass-card { border-radius: 32px; padding: 18px 14px; margin-bottom: 20px; }
-            .hug-btn { padding: 10px 16px; font-size: 0.85rem; }
-            .start-card { border-radius: 48px; padding: 30px 18px 26px; }
-            .garden-plot { width: 45px; height: 45px; font-size: 1.3rem; }
-            .night-toggle { top: 12px; right: 12px; width: 40px; height: 40px; }
-            .hug-message { font-size: 0.85rem; }
-            .letter-wrapper { padding: 18px 14px; max-height: 300px; }
+            .hero h1 {
+                font-size: 1.55rem;
+            }
+            .hero {
+                padding: 34px 14px 28px;
+                border-radius: 52px;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .reason-card {
+                width: 130px;
+                font-size: 0.78rem;
+                padding: 11px 6px;
+            }
+            .glass-card {
+                border-radius: 30px;
+                padding: 18px 13px;
+                margin-bottom: 18px;
+            }
+            .hug-btn {
+                padding: 10px 15px;
+                font-size: 0.82rem;
+            }
+            .start-card {
+                border-radius: 44px;
+                padding: 30px 16px 26px;
+            }
+            .garden-plot {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem;
+            }
+            .night-toggle {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            .hug-message {
+                font-size: 0.84rem;
+                padding: 14px 16px;
+            }
+            .letter-wrapper {
+                padding: 18px 14px;
+                max-height: 280px;
+                font-size: 0.95rem;
+            }
+            .love-jar-outer {
+                width: 64px;
+                height: 100px;
+            }
+            .love-jar-inner {
+                width: 50px;
+                height: 72px;
+                border-radius: 14px 14px 20px 20px;
+            }
+            .love-jar-lid {
+                width: 44px;
+                height: 11px;
+                top: -6px;
+            }
         }
         @media print {
-            body > * { visibility: hidden; }
-            .certificate-modal, .certificate-modal * { visibility: visible; }
+            body>* {
+                visibility: hidden;
+            }
+            .certificate-modal,
+            .certificate-modal * {
+                visibility: visible;
+            }
             .certificate-modal {
                 position: absolute;
-                left: 0; top: 0;
+                left: 0;
+                top: 0;
                 background: white;
                 display: flex;
-                width: 100%; height: 100%;
+                width: 100%;
+                height: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Twinkling stars container (visible only in night mode) -->
+    <!-- Stars + Shooting stars -->
     <div id="starsContainer"></div>
 
-    <button class="night-toggle" id="nightModeToggle" aria-label="Toggle night mode" title="Night mode">
+    <!-- Night Mode Toggle -->
+    <button class="night-toggle" id="nightModeToggle" aria-label="Toggle night mode" title="Toggle Night Magic ✨">
         <i class="fas fa-moon"></i>
     </button>
 
+    <!-- Start Overlay -->
     <div class="start-overlay" id="startOverlay">
         <div class="start-card">
-            <span style="font-size:3rem;color:#e96479;">🧸</span>
-            <h2>My Dearest Wife, Halima ❤️</h2>
+            <span style="font-size:3.4rem;color:#e96479;display:block;animation:gentlePulse 2s ease-in-out infinite;">🧸</span>
+            <h2 style="font-family:'Playfair Display',serif;">My Dearest Wife, Halima ❤️</h2>
             <p style="font-size:1rem;color:#5a3e4b;margin:8px 0;">Your Teddy Bear has prepared something <em>very</em> special for your birthday…</p>
             <p style="font-weight:600;color:#5c2d3e;">Do you want to see what I made for you, my love?</p>
-            <div class="question-buttons" style="display:flex;gap:16px;justify-content:center;margin-top:26px;flex-wrap:wrap;">
+            <div class="question-buttons" style="display:flex;gap:16px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
                 <button class="yes-no" id="yesBtn">✨ Yes, my husband! 🧸</button>
                 <button class="yes-no no-btn" id="noBtn">No, I don't. BLEH</button>
             </div>
@@ -595,43 +979,60 @@
         </div>
     </div>
 
+    <!-- Main Site -->
     <div class="main-site" id="mainSite">
         <div class="floating-teddies" id="floatContainer"></div>
 
-        <!-- HERO + LETTER MERGED -->
+        <!-- HERO + LETTER -->
         <div class="hero glass-card" id="heroSection">
             <h1>🎂 Happy Birthday, My Queen 🎂</h1>
-            <p style="font-family:'Dancing Script',cursive;font-size:1.15rem;">To the queen of my heart 🧸</p>
-            <div style="background:#fcc4d2;display:inline-block;padding:7px 20px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;">
+            <p class="subtitle">To the queen of my heart 🧸</p>
+            <div style="background:#fcc4d2;display:inline-block;padding:8px 22px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;position:relative;z-index:1;">
                 <i class="fas fa-heart"></i> 💖 My Favorite Human Being 💖 <i class="fas fa-heart"></i>
             </div>
-            <!-- Letter moved here -->
             <div class="letter-wrapper" id="letterCard">
                 <p id="typedLetterText" style="min-height:40px;"></p>
-                <button class="letter-start-btn" id="startLetterBtn">Tap here please</button>
+                <button class="letter-start-btn" id="startLetterBtn">💌 Tap here to read your letter, my love</button>
             </div>
         </div>
 
+        <!-- Music -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-music"></i> Let's Play a Song</h3>
-            <p style="margin-bottom:10px;">You sound like this song to me. So let's play it 🎶</p>
+            <h3><i class="fas fa-music"></i> Our Song 🎶</h3>
+            <p style="margin-bottom:10px;">You sound like this song to me. Let's play it.</p>
             <button id="musicToggleBtn" class="hug-btn" style="background:#b34266;"><i class="fas fa-play"></i> Play</button>
             <audio id="bgMusic" loop preload="auto" style="display:none;"><source src="music/music.mp3" type="audio/mpeg"></audio>
         </div>
 
+        <!-- Days Together -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-comment-dots"></i>From our very first conversation</h3>
+            <h3><i class="fas fa-comment-dots"></i> From Our Very First Conversation</h3>
             <div class="countdown" id="daysTogetherCounter">Loading…</div>
             <p style="font-size:0.85rem;">Every second since that day is a gift 💝</p>
         </div>
 
+        <!-- Love Meter -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-chart-line"></i> How much does your husband love you?</h3>
+            <h3><i class="fas fa-chart-line"></i> How Much Does Your Husband Love You?</h3>
             <input type="range" id="loveMeter" min="0" max="100" value="100" disabled style="width:80%;max-width:380px;margin:10px auto;display:block;accent-color:#e57393;">
-            <p id="loveValueDisplay" style="font-size:1.6rem;font-weight:700;color:#b34266;">∞ INFINITY + BEYOND ∞</p>
+            <p id="loveValueDisplay" style="font-size:1.7rem;font-weight:700;color:#b34266;">∞ INFINITY + BEYOND ∞</p>
             <p style="font-size:0.75rem;opacity:0.7;">(slider locked — his love has <strong>no limits</strong> 💕)</p>
         </div>
 
+        <!-- Love Jar -->
+        <div class="glass-card" style="text-align:center;">
+            <h3><i class="fas fa-jar"></i> Our Love Jar 🫙</h3>
+            <p style="font-size:0.85rem;">Every hug & kiss fills our jar with love!</p>
+            <div class="love-jar-outer" id="loveJarOuter">
+                <div class="love-jar-lid"></div>
+                <div class="love-jar-inner">
+                    <div class="love-jar-fill" id="loveJarFill"></div>
+                </div>
+            </div>
+            <p style="font-size:0.8rem;margin-top:6px;">💖 Jar Level: <strong id="jarLevelText">0%</strong></p>
+        </div>
+
+        <!-- Hug Machine -->
         <div class="glass-card" style="text-align:center;">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Teddy Bear Hug Machine 🧸</h3>
             <div class="hug-buttons">
@@ -643,17 +1044,19 @@
             <div class="hug-message" id="hugMessageDisplay">💬 Your Teddy Bear is waiting… tap a hug, my love 🤗</div>
             <div style="margin-top:10px;">
                 ❤️ Total hugs: <strong id="hugCount">0</strong> &nbsp;|&nbsp; 🔥 Streak: <strong id="hugStreak">0</strong> days
-                <br><small>(Come anytime... hugs are available here 24/7 :D)</small>
+                <br><small>(Come anytime... hugs available 24/7 :D)</small>
             </div>
         </div>
 
+        <!-- Growing Heart Kisses -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-kiss"></i> Your kisses make my heart grow</h3>
-            <p>Tap the heart to give a kiss, every kiss makes it beat faster!</p>
+            <h3><i class="fas fa-kiss"></i> Your Kisses Make My Heart Grow</h3>
+            <p>Tap the heart to give a kiss — every kiss makes it beat faster!</p>
             <div class="growing-heart" id="growingHeart" style="font-size:2.5rem;">❤️</div>
             <p>💋 Kisses: <strong id="kissCountDisplay">0</strong></p>
         </div>
 
+        <!-- Candles -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-cake-candles"></i> Blow Out Your Birthday Candles 🎂</h3>
             <div class="candle-row" id="candleRow">
@@ -662,16 +1065,18 @@
             <p id="candleMessage" style="font-style:italic;"></p>
         </div>
 
+        <!-- Secret Puzzle -->
         <div class="glass-card" style="text-align:center;">
             <h3>🔐 A Secret Message from Your Husband</h3>
-            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="type pass" aria-label="Password">
+            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="type password" aria-label="Password">
             <br>
             <button id="unlockPuzzleBtn" class="hug-btn btn-alt"><i class="fas fa-key"></i> Unlock Surprise</button>
             <div id="puzzleResult" style="margin-top:12px;font-weight:600;"></div>
         </div>
 
+        <!-- Quiz -->
         <div class="glass-card" style="text-align:center;">
-            <h3><i class="fas fa-question-circle"></i> What do I love to call you?</h3>
+            <h3><i class="fas fa-question-circle"></i> What Do I Love to Call You?</h3>
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                 <button class="hug-btn quiz-opt" data-ans="my-wife">My Wife</button>
                 <button class="hug-btn quiz-opt" data-ans="darling">Darling</button>
@@ -680,47 +1085,55 @@
             <p style="font-size:0.7rem;margin-top:6px;opacity:0.7;">✨ More questions coming in our future together ✨</p>
         </div>
 
+        <!-- Love Garden -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-seedling"></i> Our Love Garden 🌸</h3>
             <div class="garden-grid" id="gardenGrid"></div>
             <p id="gardenMessage" style="font-style:italic;"></p>
         </div>
 
+        <!-- Promise Wall -->
         <div class="glass-card" style="text-align:center;">
             <h3>🌟 Promise Wall 🌟</h3>
             <div id="promiseWall" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;"></div>
             <p id="promiseReveal" style="font-style:italic;"></p>
         </div>
 
+        <!-- 10 Reasons -->
         <div class="glass-card">
             <h3 style="text-align:center;">10 Reasons Why I Love You</h3>
             <div id="reasonsContainer" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;"></div>
         </div>
 
+        <!-- Compliment Bomb -->
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-bomb"></i> Compliment Bomb 💣</h3>
             <button id="complimentBombBtn" class="hug-btn"><i class="fas fa-heart"></i> Bomb Love</button>
         </div>
 
+        <!-- Daily Love Note -->
         <div class="glass-card" style="text-align:center;">
             <h3>📬 Daily Love Note</h3>
             <p id="dailyLoveNote" style="font-style:italic;">"Click for a fresh love note, my wife."</p>
             <button id="generateNoteBtn" class="hug-btn btn-alt">New Note</button>
         </div>
 
+        <!-- Gift Box -->
         <div class="glass-card gift-box" style="text-align:center;" id="giftBoxSection">
-            <span style="font-size:3rem;">🎁</span>
+            <span style="font-size:3.2rem;">🎁</span>
             <h3>🎁 Unwrap Your Special Gift</h3>
             <p id="giftMessage">There's something waiting for you… 💝</p>
             <button id="openGiftBtn" class="hug-btn" style="background:#c75373;">✨ Unwrap Now</button>
         </div>
 
+        <!-- Birthday Countdown -->
         <div class="glass-card" style="text-align:center;">
             <h3>🎂 Countdown to May 3rd</h3>
             <div class="countdown" id="birthdayCountdown">--</div>
             <button id="celebrateTodayBtn" class="hug-btn">Celebrate NOW</button>
         </div>
 
+        <!-- Mood Advice -->
         <div class="glass-card">
             <h3 style="text-align:center;">🧸 Mood Advice</h3>
             <div class="hug-buttons">
@@ -732,15 +1145,18 @@
             <div id="moodResponse" style="margin-top:12px;"></div>
         </div>
 
+        <!-- Special Buttons -->
         <div class="glass-card" style="text-align:center;">
             <button id="specialLoveNoteBtn" class="hug-btn">💌 Secret Love Letters</button>
             <button id="certificateBtn" class="hug-btn" style="background:#c75373;">🏆 Best Wife Certificate</button>
         </div>
 
+        <!-- Reset -->
         <div class="glass-card" style="text-align:center;">
             <button id="resetCountersBtn" class="hug-btn" style="background:#aaa;">🔄 Reset All Hugs &amp; Kisses</button>
         </div>
 
+        <!-- Footer -->
         <footer>
             <i class="fas fa-cake-candles"></i> To my wife <strong>Halima</strong> — from your husband.<br>
             <span>✨ I love you more than all the stars in the sky ✨</span><br><br>
@@ -750,24 +1166,24 @@
 
     <!-- Secret Love Note Modal -->
     <div class="love-modal" id="loveNoteModal">
-        <div style="background:#fffaf7;max-width:460px;padding:34px;border-radius:56px;text-align:center;position:relative;box-shadow:0 40px 70px rgba(0,0,0,0.4);">
-            <button id="closeModalBtn" style="position:absolute;top:14px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#b34266;">&times;</button>
+        <div style="background:#fffaf7;max-width:480px;padding:36px;border-radius:56px;text-align:center;position:relative;box-shadow:0 45px 80px rgba(0,0,0,0.45);">
+            <button id="closeModalBtn" style="position:absolute;top:14px;right:20px;background:none;border:none;font-size:1.6rem;cursor:pointer;color:#b34266;">&times;</button>
             <i class="fas fa-heart" style="font-size:2.8rem;color:#e75480;"></i>
             <h2>To my darling wife Halima 💌</h2>
-            <p id="modalLoveText"></p>
+            <p id="modalLoveText" style="line-height:1.7;"></p>
             <button id="closeModalBtn2" class="hug-btn btn-alt">I love you, hubby 🧸</button>
         </div>
     </div>
 
     <!-- Certificate Modal -->
     <div class="certificate-modal" id="certificateModal">
-        <div style="background:#fffef7;padding:40px;border-radius:30px;max-width:600px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.5);border:4px double #e57393;font-family:'Playfair Display',serif;">
+        <div style="background:#fffef7;padding:44px;border-radius:30px;max-width:620px;text-align:center;box-shadow:0 45px 90px rgba(0,0,0,0.55);border:4px double #e57393;font-family:'Playfair Display',serif;">
             <h2>🎀 Certificate of Love 🎀</h2>
             <p>This certifies that</p>
-            <div style="font-size:2.8rem;color:#c0395b;font-family:'Dancing Script',cursive;">Halima</div>
+            <div style="font-size:3rem;color:#c0395b;font-family:'Dancing Script',cursive;">Halima</div>
             <p>is the <strong>Best Wife in the Universe</strong></p>
             <p>Awarded with all my heart,<br><strong>Your Teddy Bear, Y</strong></p>
-            <div style="font-size:3rem;">🧸💖</div>
+            <div style="font-size:3.2rem;">🧸💖</div>
             <p><small>Date: <span id="certDate"></span></small></p>
             <button id="printCertificateBtn" class="hug-btn btn-alt">🖨️ Print / Save</button>
             <button id="closeCertificateBtn" class="hug-btn">Close</button>
@@ -776,7 +1192,7 @@
 
     <script>
         (function() {
-            // ────────────── DOM REFS ──────────────
+            // ── DOM REFS ──
             const startOverlay = document.getElementById('startOverlay');
             const mainSite = document.getElementById('mainSite');
             const floatContainer = document.getElementById('floatContainer');
@@ -825,48 +1241,97 @@
             const typedLetterText = document.getElementById('typedLetterText');
             const startLetterBtn = document.getElementById('startLetterBtn');
             const starsContainer = document.getElementById('starsContainer');
+            const loveJarFill = document.getElementById('loveJarFill');
+            const jarLevelText = document.getElementById('jarLevelText');
+            const loveJarOuter = document.getElementById('loveJarOuter');
 
-            // ────────────── CONFETTI ──────────────
-            function safeConfetti(opts) { if (typeof canvasConfetti === 'function') try { canvasConfetti(opts); } catch(e) {} }
-            function burstLight() { safeConfetti({ particleCount: 30, spread: 40, origin: { y: 0.62 }, colors: ['#ffb7c5','#ff6f91'], startVelocity: 8 }); }
-            function burstMedium() { 
-                safeConfetti({ particleCount: 100, spread: 70, origin: { y: 0.55 }, colors: ['#ff9eb5','#ff6f8f','#fff0f4'], startVelocity: 12 });
-                setTimeout(() => safeConfetti({ particleCount: 110, spread: 80, origin: { y: 0.48 }, colors: ['#ffb3c6','#ff6f91'], startVelocity: 10 }), 100);
+            // ── CONFETTI HELPERS ──
+            function safeConfetti(opts) { if (typeof canvasConfetti === 'function')
+                    try { canvasConfetti(opts); } catch (e) {} }
+
+            function burstLight() { safeConfetti({ particleCount: 35, spread: 45, origin: { y: 0.6 }, colors: ['#ffb7c5',
+                        '#ff6f91', '#ffe0ec'
+                    ], startVelocity: 9 }); }
+
+            function burstMedium() {
+                safeConfetti({ particleCount: 110, spread: 75, origin: { y: 0.52 }, colors: ['#ff9eb5', '#ff6f8f', '#fff0f4',
+                        '#ffd1dc'
+                    ], startVelocity: 14 });
+                setTimeout(() => safeConfetti({ particleCount: 120, spread: 85, origin: { y: 0.46 }, colors: ['#ffb3c6',
+                        '#ff6f91', '#ffe4ec'
+                    ], startVelocity: 11 }), 120);
             }
-            function burstHeavy() { burstMedium(); setTimeout(() => safeConfetti({ particleCount: 180, spread: 100, origin: { y: 0.4 }, colors: ['#fff','#ffb7c5','#ff8faa'], startVelocity: 15 }), 220); }
-            function megaConfetti() { burstHeavy(); setTimeout(burstHeavy, 300); setTimeout(burstHeavy, 600); }
 
-            // ────────────── FLOATING ──────────────
+            function burstHeavy() { burstMedium();
+                setTimeout(() => safeConfetti({ particleCount: 200, spread: 110, origin: { y: 0.38 }, colors: ['#fff',
+                        '#ffb7c5', '#ff8faa', '#ffd6e0', '#ffe0ec'
+                    ], startVelocity: 17 }), 240); }
+
+            function megaConfetti() { burstHeavy();
+                setTimeout(burstHeavy, 350);
+                setTimeout(burstHeavy, 700); }
+
+            // ── SPARKLE CURSOR TRAIL ──
+            const sparkleEmojis = ['✨', '💖', '💕', '🌟', '💗', '🩷', '🌸', '💫', '🧸', '❤️'];
+            document.addEventListener('mousemove', (e) => {
+                if (Math.random() > 0.55) return;
+                const sparkle = document.createElement('span');
+                sparkle.className = 'sparkle-trail';
+                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.setProperty('--sx', (Math.random() * 40 - 20) + 'px');
+                sparkle.style.setProperty('--sy', (Math.random() * -30 - 10) + 'px');
+                sparkle.style.setProperty('--sr', (Math.random() * 60 - 30) + 'deg');
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 950);
+            });
+            // Touch sparkles
+            document.addEventListener('touchmove', (e) => {
+                if (Math.random() > 0.6) return;
+                const t = e.touches[0];
+                const sparkle = document.createElement('span');
+                sparkle.className = 'sparkle-trail';
+                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                sparkle.style.left = t.clientX + 'px';
+                sparkle.style.top = t.clientY + 'px';
+                sparkle.style.setProperty('--sx', (Math.random() * 30 - 15) + 'px');
+                sparkle.style.setProperty('--sy', (Math.random() * -24 - 8) + 'px');
+                sparkle.style.setProperty('--sr', (Math.random() * 50 - 25) + 'deg');
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 900);
+            }, { passive: true });
+
+            // ── FLOATING ITEMS ──
             function createFloating(emoji = null, customFontSize = null) {
                 if (!floatContainer) return;
                 const el = document.createElement('div');
                 el.className = 'float-item';
-                const icons = ['🧸','🐻','❤️','🌸','💖','🎀','✨'];
+                const icons = ['🧸', '🐻', '❤️', '🌸', '💖', '🎀', '✨', '💗', '🌷', '🩷', '💝', '🧸'];
                 el.textContent = emoji || icons[Math.floor(Math.random() * icons.length)];
                 el.style.left = Math.random() * 93 + '%';
-                const dur = Math.random() * 6 + 5;
+                const dur = Math.random() * 7 + 5;
                 el.style.animationDuration = dur + 's';
-                if (customFontSize) {
-                    el.style.fontSize = customFontSize + 'px';
-                } else {
-                    el.style.fontSize = (Math.random() * 12 + 14) + 'px';
-                }
+                el.style.fontSize = customFontSize ? customFontSize + 'px' : (Math.random() * 14 + 15) + 'px';
                 floatContainer.appendChild(el);
                 setTimeout(() => { if (el.parentNode) el.remove(); }, (dur + 0.5) * 1000);
             }
-            function spawnFloaters(count = 8) { for (let i = 0; i < count; i++) setTimeout(createFloating, i * 75); }
 
-            // ────────────── STORAGE ──────────────
-            function safeGet(k, fb) { try { return localStorage.getItem(k) || fb; } catch(e) { return fb; } }
-            function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
-            let totalHugs = parseInt(safeGet('halima_hugs','0'));
-            let hugStreak = parseInt(safeGet('halima_streak','0'));
+            function spawnFloaters(count = 10) { for (let i = 0; i < count; i++) setTimeout(createFloating, i * 70); }
+
+            // ── STORAGE ──
+            function safeGet(k, fb) { try { return localStorage.getItem(k) || fb; } catch (e) { return fb; } }
+
+            function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+            let totalHugs = parseInt(safeGet('halima_hugs', '0'));
+            let hugStreak = parseInt(safeGet('halima_streak', '0'));
             let lastHugDate = safeGet('halima_lastHugDate', '');
-            let totalKisses = parseInt(safeGet('halima_kisses','0'));
-            let kissHeartSize = parseFloat(safeGet('halima_heart','2.5'));
-            let gardenPlanted = JSON.parse(safeGet('halima_garden','[]'));
-            let revealedPromises = JSON.parse(safeGet('halima_promises','[]'));
-            let nightModeState = safeGet('halima_nightMode','false') === 'true';
+            let totalKisses = parseInt(safeGet('halima_kisses', '0'));
+            let kissHeartSize = parseFloat(safeGet('halima_heart', '2.5'));
+            let gardenPlanted = JSON.parse(safeGet('halima_garden', '[]'));
+            let revealedPromises = JSON.parse(safeGet('halima_promises', '[]'));
+            let nightModeState = safeGet('halima_nightMode', 'false') === 'true';
+            let jarFillPercent = parseInt(safeGet('halima_jar', '0'));
 
             function saveAll() {
                 safeSet('halima_hugs', totalHugs);
@@ -876,8 +1341,14 @@
                 safeSet('halima_heart', kissHeartSize);
                 safeSet('halima_garden', JSON.stringify(gardenPlanted));
                 safeSet('halima_promises', JSON.stringify(revealedPromises));
+                safeSet('halima_jar', jarFillPercent);
             }
-            function updateHugUI() { hugCounterSpan.textContent = totalHugs; hugStreakSpan.textContent = hugStreak; saveAll(); }
+
+            function updateHugUI() { hugCounterSpan.textContent = totalHugs;
+                hugStreakSpan.textContent = hugStreak;
+                updateJarLevel();
+                saveAll(); }
+
             function updateKissUI() {
                 kissCountDisplay.textContent = totalKisses;
                 growingHeart.style.fontSize = kissHeartSize + 'rem';
@@ -885,68 +1356,95 @@
                 else if (kissHeartSize >= 5) growingHeart.textContent = '💗';
                 else if (kissHeartSize >= 3.5) growingHeart.textContent = '💖';
                 else growingHeart.textContent = '❤️';
+                updateJarLevel();
                 saveAll();
             }
 
-            // ────────────── DAILY STREAK LOGIC ──────────────
-            function updateStreakOnHug() {
-                const today = new Date().toISOString().slice(0,10);
-                const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
-                if (!lastHugDate) {
-                    hugStreak = 1;
-                } else if (lastHugDate === today) {
-                    // same day, don't change streak
-                } else if (lastHugDate === yesterday) {
-                    hugStreak += 1;
-                } else {
-                    hugStreak = 1;
+            function updateJarLevel() {
+                const combined = totalHugs + totalKisses;
+                jarFillPercent = Math.min(100, Math.floor(combined * 2.5));
+                if (jarFillPercent > 100) jarFillPercent = 100;
+                loveJarFill.style.height = jarFillPercent + '%';
+                jarLevelText.textContent = jarFillPercent + '%';
+                if (jarFillPercent >= 100) {
+                    jarLevelText.textContent = '100% — OVERFLOWING! 💖';
+                    loveJarFill.style.background = 'linear-gradient(0deg, #ff3d6f, #ff6f91, #ffb3c6, #ffe0ec)';
                 }
+                safeSet('halima_jar', jarFillPercent);
+            }
+
+            function fillJarBy(amount) {
+                jarFillPercent = Math.min(100, jarFillPercent + amount);
+                updateJarLevel();
+                if (jarFillPercent >= 100 && loveJarFill.style.background !==
+                    'linear-gradient(0deg, #ff3d6f, #ff6f91, #ffb3c6, #ffe0ec)') {
+                    loveJarFill.style.background = 'linear-gradient(0deg, #ff3d6f, #ff6f91, #ffb3c6, #ffe0ec)';
+                    megaConfetti();
+                    hugMsgDiv.innerHTML = '🫙💖 <strong>THE LOVE JAR IS OVERFLOWING!</strong> Our love knows no bounds, Halima! 💖🫙';
+                }
+            }
+
+            // ── STREAK LOGIC ──
+            function updateStreakOnHug() {
+                const today = new Date().toISOString().slice(0, 10);
+                const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+                if (!lastHugDate) { hugStreak = 1; } else if (lastHugDate === today) {} else if (lastHugDate ===
+                    yesterday) { hugStreak += 1; } else { hugStreak = 1; }
                 lastHugDate = today;
             }
 
-            // ────────────── HUG SYSTEM ──────────────
+            // ── HUG SYSTEM ──
             function showHug(msg, emoji) {
                 hugMsgDiv.innerHTML = `<i class="fas fa-heart"></i> ${msg} ${emoji} <i class="fas fa-heart"></i>`;
                 burstLight();
                 updateHugUI();
                 createFloating();
+                fillJarBy(3);
             }
+
             function addHug(type) {
                 totalHugs++;
                 updateStreakOnHug();
-                const map = {
-                    warm: ['Warm, cozy hug. Feel my arms.','🤗🧸'],
-                    cuddle: ['Cuddle time! Curl up together.','🛌💤'],
-                    bear: ['GIANT Teddy Bear squeeze!','🐻❤️'],
-                    kiss: ['Forehead kiss + warmest hug.','💋🧸']
-                };
+                const map = { warm: ['Warm, cozy hug. Feel my arms around you.', '🤗🧸'], cuddle: [
+                        'Cuddle time! Curl up together in our cozy nook.', '🛌💤'
+                    ], bear: ['GIANT Teddy Bear squeeze — the tightest, warmest hug!', '🐻❤️'], kiss: [
+                        'Forehead kiss + the warmest hug imaginable.', '💋🧸'
+                    ] };
                 showHug(...map[type]);
             }
+            document.getElementById('warmHugBtn').addEventListener('click', () => addHug('warm'));
+            document.getElementById('cuddleBtn').addEventListener('click', () => addHug('cuddle'));
+            document.getElementById('bearHugBtn').addEventListener('click', () => addHug('bear'));
+            document.getElementById('kissBtn').addEventListener('click', () => addHug('kiss'));
 
-            document.getElementById('warmHugBtn').addEventListener('click', ()=>addHug('warm'));
-            document.getElementById('cuddleBtn').addEventListener('click', ()=>addHug('cuddle'));
-            document.getElementById('bearHugBtn').addEventListener('click', ()=>addHug('bear'));
-            document.getElementById('kissBtn').addEventListener('click', ()=>addHug('kiss'));
-
-            // ────────────── KISS COUNTER ──────────────
+            // ── KISS COUNTER ──
             growingHeart.addEventListener('click', () => {
                 totalKisses++;
-                kissHeartSize = Math.min(12, kissHeartSize + 0.15);
+                kissHeartSize = Math.min(12, kissHeartSize + 0.18);
                 updateKissUI();
                 burstLight();
-                hugMsgDiv.innerHTML = `💋 <strong>${totalKisses} kisses!</strong> My heart beats faster for you! 💗`;
-                createFloating();
+                fillJarBy(2);
+                hugMsgDiv.innerHTML = `💋 <strong>${totalKisses} kisses!</strong> My heart beats faster for you, my queen! 💗`;
+                createFloating('💋');
             });
 
-            // ────────────── LOVE METER ──────────────
+            // ── LOVE JAR CLICK ──
+            loveJarOuter.addEventListener('click', () => {
+                fillJarBy(5);
+                burstLight();
+                createFloating('💖');
+                hugMsgDiv.innerHTML = '🫙✨ You added extra love to our jar! It\'s filling up beautifully! 💕';
+            });
+
+            // ── LOVE METER ──
             setInterval(() => {
                 if (mainSite.classList.contains('visible') && loveMeter.disabled) {
-                    loveMeter.value = 97 + Math.floor(Math.random() * 7);
+                    loveMeter.value = 96 + Math.floor(Math.random() * 8);
                     loveDisplay.innerHTML = `∞ INFINITY + ${loveMeter.value}% more ∞`;
                 }
-            }, 2200);
+            }, 2000);
 
-            // ────────────── CANDLES ──────────────
+            // ── CANDLES ──
             let candlesBlown = 0;
             candleRow.addEventListener('click', (e) => {
                 const c = e.target.closest('.candle');
@@ -954,55 +1452,44 @@
                 c.classList.add('blown');
                 c.dataset.lit = 'false';
                 candlesBlown++;
-                safeConfetti({ particleCount: 15, spread: 25, origin: { y: 0.6 }, colors: ['#ffe0a0','#fff'] });
+                safeConfetti({ particleCount: 20, spread: 30, origin: { y: 0.58 }, colors: ['#ffe0a0', '#fff',
+                        '#ffcc80'
+                    ] });
                 if (candlesBlown === 5) {
-                    candleMessage.innerHTML = '🎉✨ All candles blown hehe! 🧸💋';
+                    candleMessage.innerHTML = '🎉✨ All candles blown! Your wish is sealed with love, Halima! 🧸💋';
                     megaConfetti();
                 }
             });
 
-            // ────────────── PUZZLE ──────────────
+            // ── PUZZLE ──
             unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
-                if (['teddy bear','teddybear','my teddy bear','teddy'].includes(ans)) {
-                    puzzleResultDiv.innerHTML = `🔓✨ <strong>Unlocked!</strong><br><em>"My dearest wife, I love you more than words can ever say. You are my heart, my soul, and my greatest joy.  
-
-Tonight, my love, I want you to surrender yourself fully to me with all the trust and love in your heart. Let me cherish you as I kiss every beautiful part of you, your gentle forehead, your adorable cheeks, your soft and inviting lips, your graceful neck, your lovely boobs, your sensitive nipples, your smooth belly, your inner thighs, and your sweet pussy. I'll cover you with slow, tender, passionate kisses filled with all my love.  
-
-Just melt into my arms, relax, and give yourself completely to me. I want to make you feel so loved, so desired, and so adored that nothing else exists but us. You are my everything, tonight. I can't wait to hold and kiss you all night long, my beautiful wife. 💕"</em>`;
+                if (['teddy bear', 'teddybear', 'my teddy bear', 'teddy'].includes(ans)) {
+                    puzzleResultDiv.innerHTML =
+                        `🔓✨ <strong>Unlocked!</strong><br><em>"My dearest wife, I love you more than words can ever say. You are my heart, my soul, and my greatest joy. Tonight, my love, I want you to surrender yourself fully to me with all the trust and love in your heart. Let me cherish you as I kiss every beautiful part of you — your gentle forehead, your adorable cheeks, your soft lips, your graceful neck, your lovely body, your smooth belly, your inner thighs, and your sweetest self. I'll cover you with slow, tender, passionate kisses filled with all my love. Just melt into my arms, relax, and give yourself completely to me. I want to make you feel so loved, so desired, and so adored that nothing else exists but us. You are my everything, tonight. I can't wait to hold and kiss you all night long, my beautiful wife. 💕"</em>`;
                     megaConfetti();
-                } else {
-                    puzzleResultDiv.innerHTML = '❌ Wrong password.';
-                }
+                } else { puzzleResultDiv.innerHTML = '❌ Wrong password. Hint: What do you lovingly call your husband? 🧸'; }
             });
 
-            // ────────────── QUIZ ──────────────
+            // ── QUIZ ──
             document.querySelectorAll('.quiz-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const isCorrect = btn.dataset.ans === 'my-wife';
-                    quizFeedback.innerHTML = isCorrect ? '❤️ Exactly! I call you <strong>"my wife"</strong> — you are my everything.' : '💞 I love calling you <strong>"my wife"</strong> — because you\'re my soulmate.';
+                    quizFeedback.innerHTML = isCorrect ?
+                        '❤️ Exactly! I call you <strong>"my wife"</strong> — you are my everything.' :
+                        '💞 I love calling you <strong>"my wife"</strong> — because you\'re my soulmate.';
                     if (isCorrect) burstLight();
                 });
             });
 
-            // ────────────── LOVE GARDEN ──────────────
-            const gardenMemories = [
-                '🌸 Our first chat',
-                '🌷 Our first face reveal',
-                '🌼 The day we said said I love you',
-                '🌻 Our first kiss? (virtually ofc)',
-                '🌹 The first time you called me Teddy Bear',
-                '🪷 Our first "I love you" (once again, ik)',
-                '🌺 Watching sunset together',
-                '💐 The day we got married (in my head)',
-                '🌾 Morning cuddles',
-                '🍀 Our inside jokes',
-                '🌿 The way you look at me',
-                '🪻 Your beautiful smile',
-                '🌴 Our dreams',
-                '🌵 Getting through tough times',
-                '🌸 Love you'
+            // ── LOVE GARDEN ──
+            const gardenMemories = ['🌸 Our first chat', '🌷 Our first face reveal', '🌼 The day we said "I love you"',
+                '🌻 Our first virtual kiss', '🌹 The first time you called me Teddy Bear', '🪷 Our first "I love you" (again, ik)',
+                '🌺 Watching sunset together', '💐 The day we got married (in my head)', '🌾 Morning cuddles',
+                '🍀 Our inside jokes', '🌿 The way you look at me', '🪻 Your beautiful smile', '🌴 Our shared dreams',
+                '🌵 Getting through tough times together', '🌸 I love you endlessly'
             ];
+
             function buildGarden() {
                 gardenGrid.innerHTML = '';
                 gardenMemories.forEach((mem, i) => {
@@ -1016,18 +1503,23 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                             plot.textContent = '🌸';
                             safeSet('halima_garden', JSON.stringify(gardenPlanted));
                             gardenMessage.innerHTML = `🌸 <strong>${mem}!</strong> Our love garden grows richer. 💕`;
-                            burstLight(); createFloating();
+                            burstLight();
+                            createFloating('🌷');
+                            fillJarBy(4);
                             if (gardenPlanted.length === gardenMemories.length) megaConfetti();
-                        } else {
-                            gardenMessage.innerHTML = `💖 <strong>${mem}</strong> — a beautiful memory!`;
-                        }
+                        } else { gardenMessage.innerHTML = `💖 <strong>${mem}</strong> — a beautiful memory!`; }
                     });
                     gardenGrid.appendChild(plot);
                 });
             }
 
-            // ────────────── PROMISE WALL ──────────────
-            const promises = ['🤍 Always be your Teddy Bear','💛 Make you laugh when you ask me','🧡 Hold you when sad','❤️ Love you more each sunrise','💚 Be your best friend','💙 Listen with whole heart','💜 Annoy you more','🩷 Never stop courting you','🩵 Cherish every moment'];
+            // ── PROMISE WALL ──
+            const promises = ['🤍 Always be your Teddy Bear', '💛 Make you laugh whenever you need it',
+                '🧡 Hold you close when you\'re sad', '❤️ Love you more with every sunrise', '💚 Be your best friend forever',
+                '💙 Listen with my whole heart', '💜 Annoy you lovingly', '🩷 Never stop courting you',
+                '🩵 Cherish every single moment'
+            ];
+
             function buildPromiseWall() {
                 promiseWall.innerHTML = '';
                 promises.forEach((p, i) => {
@@ -1041,86 +1533,89 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                             star.textContent = p;
                             safeSet('halima_promises', JSON.stringify(revealedPromises));
                             promiseReveal.innerHTML = `🌟 <strong>Promise:</strong> "${p}" — I mean every word. 🧸`;
-                            burstLight(); createFloating();
+                            burstLight();
+                            createFloating('🌟');
+                            fillJarBy(3);
                             if (revealedPromises.length === promises.length) megaConfetti();
-                        } else {
-                            promiseReveal.innerHTML = `💫 <strong>"${p}"</strong> — eternal promise.`;
-                        }
+                        } else { promiseReveal.innerHTML = `💫 <strong>"${p}"</strong> — eternal promise.`; }
                     });
                     promiseWall.appendChild(star);
                 });
             }
 
-            // ────────────── COMPLIMENT BOMB (with background flash) ──────────────
-            const compliments = ["You're stunning 💖","My Queen 👑","So beautiful","My soulmate","Incredible wife","My sunshine ☀️","Absolutely perfect","Teddy's favorite","Irresistible","My everything"];
+            // ── COMPLIMENT BOMB ──
+            const compliments = ["You're stunning 💖", "My Queen 👑", "So beautiful", "My soulmate", "Incredible wife",
+                "My sunshine ☀️", "Absolutely perfect", "Teddy's favorite", "Irresistible", "My everything",
+                "The love of my life", "My reason to smile"
+            ];
             complimentBombBtn.addEventListener('click', () => {
-                // Flash background
                 const origBg = document.body.style.background;
-                document.body.style.background = 'linear-gradient(165deg, #ff6f91 0%, #ff3d6f 28%, #ff1a4d 55%, #ff6f91 100%)';
-                setTimeout(() => {
-                    document.body.style.background = origBg;
-                }, 1200);
-
-                for (let i = 0; i < 15; i++) {
+                document.body.style.background =
+                    'linear-gradient(165deg, #ff6f91 0%, #ff3d6f 28%, #ff1a4d 55%, #ff6f91 100%)';
+                setTimeout(() => { document.body.style.background = origBg; }, 1300);
+                for (let i = 0; i < 18; i++) {
                     setTimeout(() => {
                         const el = document.createElement('div');
                         el.className = 'float-item';
                         el.textContent = compliments[Math.floor(Math.random() * compliments.length)];
-                        el.style.left = Math.random()*90+'%';
-                        el.style.animationDuration = (Math.random()*4 + 4)+'s';
-                        el.style.fontSize = (Math.random() * 24 + 30) + 'px';
+                        el.style.left = Math.random() * 90 + '%';
+                        el.style.animationDuration = (Math.random() * 5 + 4) + 's';
+                        el.style.fontSize = (Math.random() * 26 + 32) + 'px';
                         el.style.opacity = '0.9';
                         floatContainer.appendChild(el);
-                        setTimeout(() => el.remove(), 6000);
-                    }, i*85);
+                        setTimeout(() => el.remove(), 6500);
+                    }, i * 80);
                 }
                 hugMsgDiv.innerHTML = '💣💖 <strong>COMPLIMENT BOMB!</strong> Every word is true, my beautiful wife! 💖💣';
+                fillJarBy(6);
             });
 
-            // ────────────── DAILY LOVE NOTE ──────────────
-            const loveNotes = ["Every day I wake up grateful you're my wife. 🧸","You're the sunshine that breaks my clouds.","Being your husband is my greatest honor.","You make my heart smile forever.","I fall in love with you all over again. 💖"];
+            // ── DAILY LOVE NOTE ──
+            const loveNotes = ["Every day I wake up grateful you're my wife. 🧸",
+                "You're the sunshine that breaks through all my clouds.", "Being your husband is my greatest honor.",
+                "You make my heart smile forever.", "I fall in love with you all over again, every single day. 💖",
+                "You are the most beautiful part of my life.", "With you, every moment feels like home."
+            ];
             generateNoteBtn.addEventListener('click', () => {
                 dailyNoteSpan.innerHTML = `"${loveNotes[Math.floor(Math.random()*loveNotes.length)]}" ❤️`;
-                burstLight(); createFloating();
+                burstLight();
+                createFloating('📝');
             });
 
-            // ────────────── GIFT BOX WITH HIDDEN SURPRISE ──────────────
+            // ── GIFT BOX ──
             let giftClickCount = 0;
             const secretGiftNotes = [
-                "Psst… there’s more love hidden here! 💌 I have a secret letter just for you, my queen.",
+                "Psst… there's more love hidden here! 💌 I have a secret letter just for you, my queen.",
                 "Another surprise? Of course. I wrote you a tiny poem: Roses are red, violets are blue, every day I'm more grateful I have you. 🧸💖",
                 "You found my secret stash of love! I'll never stop cherishing you, Halima. 💕",
                 "If love were a galaxy, you'd be the brightest star. Thank you for being my everything. ✨"
             ];
 
-            function showLoveNoteModal(text) {
-                modalLoveText.textContent = text;
-                loveNoteModal.classList.add('active');
-            }
-
+            function showLoveNoteModal(text) { modalLoveText.textContent = text;
+                loveNoteModal.classList.add('active'); }
             openGiftBtn.addEventListener('click', () => {
                 if (giftClickCount === 0) {
                     giftBoxSection.classList.add('unwrapped');
-                    giftMsg.innerHTML = '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles<br>✨ A lots of kisses<br>✨ Teddy Bear hugs on demand<br>✨ and, twins ofc.... hehe <br><br>I love you, Halima! 🧸❤️';
+                    giftMsg.innerHTML =
+                        '🎁✨ <strong>SURPRISE!</strong><br>✨ Unlimited cuddles<br>✨ Lots of kisses<br>✨ Teddy Bear hugs on demand<br>✨ And, twins of course... hehe<br><br>I love you, Halima! 🧸❤️';
                     megaConfetti();
                     openGiftBtn.textContent = '🎁 There\'s more? 💖';
                     giftClickCount++;
+                    fillJarBy(10);
                 } else {
-                    // Second (and further) clicks: reveal a hidden love note via modal
                     const note = secretGiftNotes[(giftClickCount - 1) % secretGiftNotes.length];
                     showLoveNoteModal(note);
-                    // Also flash background briefly
                     const origBg = document.body.style.background;
-                    document.body.style.background = 'linear-gradient(165deg, #ffb7c5 0%, #ff85a2 28%, #ff6f91 55%, #ffb7c5 100%)';
-                    setTimeout(() => {
-                        document.body.style.background = origBg;
-                    }, 1000);
+                    document.body.style.background =
+                        'linear-gradient(165deg, #ffb7c5 0%, #ff85a2 28%, #ff6f91 55%, #ffb7c5 100%)';
+                    setTimeout(() => { document.body.style.background = origBg; }, 1100);
                     megaConfetti();
                     giftClickCount++;
+                    fillJarBy(5);
                 }
             });
 
-            // ────────────── 10 REASONS ──────────────
+            // ── 10 REASONS ──
             const reasonsList = [
                 'You came into my life unexpectedly and became my peace.',
                 'Your smile can fix my worst days without even trying.',
@@ -1136,91 +1631,130 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             reasonsList.forEach(r => {
                 const card = document.createElement('div');
                 card.className = 'reason-card';
-                card.innerHTML = `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p>`;
+                card.innerHTML = `<span style="font-size:1.5rem;">❤️</span><p style="font-weight:600;">${r}</p>`;
                 card.addEventListener('click', () => {
                     burstLight();
                     hugMsgDiv.innerHTML = `💖 I love that: <strong>${r.toLowerCase()}</strong> Forever yours. 💖`;
                     createFloating();
-                    totalHugs++; updateStreakOnHug(); updateHugUI();
+                    totalHugs++;
+                    updateStreakOnHug();
+                    updateHugUI();
+                    fillJarBy(3);
                 });
                 reasonsContainer.appendChild(card);
             });
 
-            // ────────────── MOOD ──────────────
+            // ── MOOD ──
             document.querySelectorAll('.moodBtn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const r = { happy:'🧸 So glad you\'re happy! Let me hug you tighter. ❤️', sad:'🧸 Sweet wife, come here. Your Teddy Bear holds you close. I love you. 🤗💗', loved:'🥰 You ARE loved beyond words. Thank God for you. 🧸', tired:'😴 Rest, my queen. Teddy Bear watches over you. 🌙🧸' };
-                    moodResponse.innerHTML = `<i class="fas fa-comment-dots" style="color:#e57393;"></i> ${r[btn.dataset.mood] || r['happy']}`;
-                    burstLight(); createFloating();
+                    const r = { happy: '🧸 So glad you\'re happy! Let me hug you tighter. ❤️',
+                        sad: '🧸 Sweet wife, come here. Your Teddy Bear holds you close. I love you. 🤗💗',
+                        loved: '🥰 You ARE loved beyond words. Thank God for you. 🧸',
+                        tired: '😴 Rest, my queen. Teddy Bear watches over you. 🌙🧸' };
+                    moodResponse.innerHTML =
+                        `<i class="fas fa-comment-dots" style="color:#e57393;"></i> ${r[btn.dataset.mood] || r['happy']}`;
+                    burstLight();
+                    createFloating();
                 });
             });
 
-            // ────────────── SECRET LOVE LETTER ──────────────
-            const secretMsgs = ['My darling Halima, you are the greatest gift of my life. As your husband and Teddy Bear, I promise to adore you every single day. Happy birthday, my wife! 🧸💖','Every love story is beautiful, but ours is my favorite. I love you infinitely. 🎂','You make my world brighter just by existing. Thank you for being mine.','If I had to relive every moment, I\'d still choose you. You are my soulmate, Halima. 🧸💗'];
+            // ── SECRET LOVE LETTER ──
+            const secretMsgs = [
+                'My darling Halima, you are the greatest gift of my life. As your husband and Teddy Bear, I promise to adore you every single day. Happy birthday, my wife! 🧸💖',
+                'Every love story is beautiful, but ours is my favorite. I love you infinitely. 🎂',
+                'You make my world brighter just by existing. Thank you for being mine.',
+                'If I had to relive every moment, I\'d still choose you. You are my soulmate, Halima. 🧸💗'
+            ];
             specialLoveNoteBtn.addEventListener('click', () => {
-                showLoveNoteModal(secretMsgs[Math.floor(Math.random()*secretMsgs.length)]);
+                showLoveNoteModal(secretMsgs[Math.floor(Math.random() * secretMsgs.length)]);
                 burstHeavy();
             });
             closeModalBtn.addEventListener('click', () => loveNoteModal.classList.remove('active'));
             closeModalBtn2.addEventListener('click', () => loveNoteModal.classList.remove('active'));
 
-            // ────────────── CERTIFICATE ──────────────
+            // ── CERTIFICATE ──
             certificateBtn.addEventListener('click', () => {
-                certDateSpan.textContent = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+                certDateSpan.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long',
+                    day: 'numeric' });
                 certificateModal.classList.add('active');
             });
             closeCertificateBtn.addEventListener('click', () => certificateModal.classList.remove('active'));
             printCertificateBtn.addEventListener('click', () => window.print());
 
-            // ────────────── CELEBRATE TODAY ──────────────
+            // ── CELEBRATE TODAY ──
             celebrateTodayBtn.addEventListener('click', () => {
                 birthdayCountdown.textContent = '🎂 TODAY IS YOUR SPECIAL DAY! 🎂';
                 megaConfetti();
-                // optional background flash
                 const origBg = document.body.style.background;
-                document.body.style.background = 'linear-gradient(165deg, #ffb3c6 0%, #ff8faa 28%, #ff6f91 55%, #ffb3c6 100%)';
-                setTimeout(() => { document.body.style.background = origBg; }, 1500);
+                document.body.style.background =
+                    'linear-gradient(165deg, #ffb3c6 0%, #ff8faa 28%, #ff6f91 55%, #ffb3c6 100%)';
+                setTimeout(() => { document.body.style.background = origBg; }, 1600);
                 hugMsgDiv.innerHTML = '🎉🧸 <strong>Every day is your birthday in my heart, Halima!</strong> Love you! 💖';
+                fillJarBy(8);
             });
 
-            // ────────────── RESET ──────────────
+            // ── RESET ──
             resetCountersBtn.addEventListener('click', () => {
-                if (confirm('Reset all hugs, kisses, garden and promises back to zero?')) {
-                    totalHugs = 0; hugStreak = 0; lastHugDate = ''; totalKisses = 0; kissHeartSize = 2.5;
-                    gardenPlanted = []; revealedPromises = [];
-                    updateHugUI(); updateKissUI(); buildGarden(); buildPromiseWall(); saveAll();
+                if (confirm('Reset all hugs, kisses, garden, promises and love jar back to zero?')) {
+                    totalHugs = 0;
+                    hugStreak = 0;
+                    lastHugDate = '';
+                    totalKisses = 0;
+                    kissHeartSize = 2.5;
+                    jarFillPercent = 0;
+                    gardenPlanted = [];
+                    revealedPromises = [];
+                    updateHugUI();
+                    updateKissUI();
+                    updateJarLevel();
+                    buildGarden();
+                    buildPromiseWall();
+                    saveAll();
                     hugMsgDiv.innerHTML = '🔄 Counters reset! But my love for you is eternal, Halima. 💖';
                 }
             });
 
-            // ────────────── HERO DOUBLE‑TAP ──────────────
+            // ── HERO DOUBLE-TAP ──
             document.getElementById('heroSection').addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 megaConfetti();
-                hugMsgDiv.innerHTML = '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear showers you with EXTRA love! 💗💗💗';
-                totalHugs += 2; updateStreakOnHug(); updateHugUI();
-                spawnFloaters(12);
+                hugMsgDiv.innerHTML =
+                    '🐻🧸 <strong>DOUBLE TAP BEAR ATTACK!</strong> Your Teddy Bear showers you with EXTRA love! 💗💗💗';
+                totalHugs += 2;
+                updateStreakOnHug();
+                updateHugUI();
+                fillJarBy(6);
+                spawnFloaters(14);
             });
 
-            // ────────────── NIGHT MODE + STARS ──────────────
-            function generateStars(count = 80) {
+            // ── NIGHT MODE + STARS + SHOOTING STARS ──
+            function generateStars(count = 90) {
                 starsContainer.innerHTML = '';
                 for (let i = 0; i < count; i++) {
                     const star = document.createElement('div');
-                    star.className = 'star';
+                    star.className = 'star-dot';
                     star.style.left = Math.random() * 100 + '%';
                     star.style.top = Math.random() * 100 + '%';
-                    const size = Math.random() * 2.5 + 1;
+                    const size = Math.random() * 2.8 + 1;
                     star.style.width = size + 'px';
                     star.style.height = size + 'px';
-                    star.style.animationDelay = Math.random() * 2 + 's';
-                    star.style.animationDuration = Math.random() * 1.5 + 1 + 's';
+                    star.style.animationDelay = Math.random() * 2.5 + 's';
+                    star.style.animationDuration = Math.random() * 1.8 + 1.2 + 's';
                     starsContainer.appendChild(star);
                 }
+                // Add shooting stars
+                for (let i = 0; i < 4; i++) {
+                    const shooter = document.createElement('div');
+                    shooter.className = 'shooting-star';
+                    shooter.style.left = Math.random() * 70 + '%';
+                    shooter.style.top = Math.random() * 40 + '%';
+                    shooter.style.animationDelay = Math.random() * 5 + i * 2 + 's';
+                    shooter.style.animationDuration = (Math.random() * 2 + 2.2) + 's';
+                    starsContainer.appendChild(shooter);
+                }
             }
-            generateStars(); // prepare stars; they will be visible only when night-mode is active
+            generateStars();
 
-            // Apply saved night mode
             function applyNightMode(state) {
                 if (state) {
                     document.body.classList.add('night-mode');
@@ -1231,7 +1765,6 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 }
             }
             applyNightMode(nightModeState);
-
             nightModeToggle.addEventListener('click', () => {
                 document.body.classList.toggle('night-mode');
                 const isNight = document.body.classList.contains('night-mode');
@@ -1239,7 +1772,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 safeSet('halima_nightMode', isNight);
             });
 
-            // ────────────── MUSIC ──────────────
+            // ── MUSIC ──
             let musicPlaying = false;
             musicToggleBtn.addEventListener('click', () => {
                 if (musicPlaying) {
@@ -1253,19 +1786,17 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                             musicPlaying = true;
                             musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
                         }).catch(() => {
-                            // Autoplay blocked, keep button as Play
                             musicPlaying = false;
                             musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play';
                         });
                     } else {
-                        // Older browser fallback
                         musicPlaying = true;
                         musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
                     }
                 }
             });
 
-            // ────────────── DAYS COUNTER ──────────────
+            // ── DAYS COUNTER ──
             function updateDaysTogether() {
                 const start = new Date(2024, 3, 1);
                 const now = new Date();
@@ -1279,7 +1810,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             updateDaysTogether();
             setInterval(updateDaysTogether, 1000);
 
-            // ────────────── BIRTHDAY COUNTDOWN ──────────────
+            // ── BIRTHDAY COUNTDOWN ──
             function updateBirthdayCountdown() {
                 if (!birthdayCountdown) return;
                 const now = new Date();
@@ -1298,23 +1829,24 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             updateBirthdayCountdown();
             setInterval(updateBirthdayCountdown, 60000);
 
-            // ────────────── LETTER TYPING ──────────────
+            // ── LETTER TYPING ──
             const letter = `My beloved Halima,
 
-I don't really know how to begin this, except with love. From the moment we met, I never imagined that what started as just a random encounter with a random girl (random Barelvi girl) would turn into something so deep… into you becoming the love of my life.
+        I don't really know how to begin this, except with love. From the moment we met, I never imagined that what started as just a random encounter with a random girl (random Barelvi girl) would turn into something so deep… into you becoming the love of my life.
 
-You have become such a strong pillar in my life. The way you support me, stand by me, and care for me means more than I can ever fully express. Every single day, I find myself falling in love with you even more. It is in the little things you do, the way you speak, the way you understand me even when I don't say anything, the way you listen to me... all of it just pulls me closer to you.
+        You have become such a strong pillar in my life. The way you support me, stand by me, and care for me means more than I can ever fully express. Every single day, I find myself falling in love with you even more. It is in the little things you do, the way you speak, the way you understand me even when I don't say anything, the way you listen to me... all of it just pulls me closer to you.
 
-You came into my life so unexpectedly, yet you feel like the most natural, most beautiful part of it. You have seen me at my weakest, my most stressed, and still chose to stay, to uplift me, to remind me of who I am. That is something I will never take for granted.
+        You came into my life so unexpectedly, yet you feel like the most natural, most beautiful part of it. You have seen me at my weakest, my most stressed, and still chose to stay, to uplift me, to remind me of who I am. That is something I will never take for granted.
 
-On this special day of yours, I just want you to feel like the most cherished woman in the world because to me, you truly are. You deserve happiness that never fades, love that never weakens, and a life filled with peace and barakah. I pray that Allah keeps you smiling, protects your heart, and keeps us together in goodness.
+        On this special day of yours, I just want you to feel like the most cherished woman in the world because to me, you truly are. You deserve happiness that never fades, love that never weakens, and a life filled with peace and barakah. I pray that Allah keeps you smiling, protects your heart, and keeps us together in goodness.
 
-I want you to know that you are not just someone I love, you are someone I deeply respect, admire, and am grateful for every single day. You have become a part of my duas, a part of my dreams, and a part of everything I look forward to.
+        I want you to know that you are not just someone I love, you are someone I deeply respect, admire, and am grateful for every single day. You have become a part of my duas, a part of my dreams, and a part of everything I look forward to.
 
-I love you more than all the stars in the sky… more than words can hold, more than I can ever fully explain. And no matter how much time passes, that love will only grow.
+        I love you more than all the stars in the sky… more than words can hold, more than I can ever fully explain. And no matter how much time passes, that love will only grow.
 
-— Your Teddy Bear 🧸`;
+        — Your Teddy Bear 🧸`;
             let letterTyping;
+
             function typeLetter() {
                 let i = 0;
                 typedLetterText.textContent = '';
@@ -1323,10 +1855,13 @@ I love you more than all the stars in the sky… more than words can hold, more 
                     if (i < letter.length) {
                         typedLetterText.textContent += letter.charAt(i);
                         i++;
+                        // Auto-scroll
+                        const wrapper = document.getElementById('letterCard');
+                        if (wrapper) wrapper.scrollTop = wrapper.scrollHeight;
                     } else {
                         clearInterval(letterTyping);
                     }
-                }, 18);
+                }, 16);
             }
             startLetterBtn.addEventListener('click', () => {
                 startLetterBtn.style.display = 'none';
@@ -1334,21 +1869,29 @@ I love you more than all the stars in the sky… more than words can hold, more 
                 burstLight();
             });
 
-            // ────────────── START OVERLAY ──────────────
+            // ── START OVERLAY ──
             let noClicks = 0;
             document.getElementById('yesBtn').addEventListener('click', () => {
                 startOverlay.classList.add('hidden');
                 mainSite.classList.add('visible');
                 mainSite.style.display = 'block';
-                updateHugUI(); updateKissUI(); updateBirthdayCountdown(); buildGarden(); buildPromiseWall();
-                spawnFloaters(8);
+                updateHugUI();
+                updateKissUI();
+                updateJarLevel();
+                updateBirthdayCountdown();
+                buildGarden();
+                buildPromiseWall();
+                spawnFloaters(10);
                 hugMsgDiv.innerHTML = "🧸 Welcome, my queen! Tap a hug button — I'm ready to hold you! 💖";
-                setTimeout(() => { megaConfetti(); }, 300);
+                setTimeout(() => { megaConfetti(); }, 350);
             });
             document.getElementById('noBtn').addEventListener('click', () => {
                 noClicks++;
-                const msgs = ["Oh come on, my love! Tap Yes 🧸💕", "Still no? I promise cuddles! 💖", "You're teasing! Tap Yes for hugs! 🧸✨"];
-                const msg = msgs[Math.min(noClicks-1, msgs.length-1)];
+                const msgs = ["Oh come on, my love! Tap Yes 🧸💕", "Still no? I promise cuddles! 💖",
+                    "You're teasing! Tap Yes for hugs! 🧸✨", "Pretty please with a cherry on top? 🍒🧸",
+                    "I'll give you ALL the teddy bears! Just tap Yes! 🐻💗"
+                ];
+                const msg = msgs[Math.min(noClicks - 1, msgs.length - 1)];
                 const card = document.querySelector('.start-card');
                 const old = card.querySelector('.playful-msg');
                 if (old) old.remove();
@@ -1357,15 +1900,23 @@ I love you more than all the stars in the sky… more than words can hold, more 
                 p.style.cssText = 'color:#c75373;font-weight:600;margin-top:10px;font-size:0.85rem;';
                 p.textContent = msg;
                 card.appendChild(p);
-                safeConfetti({ particleCount: 15, spread: 25, origin: { y: 0.7 }, colors: ['#ffb7c5'] });
+                safeConfetti({ particleCount: 18, spread: 30, origin: { y: 0.68 }, colors: ['#ffb7c5'] });
             });
 
-            // ────────────── INIT ──────────────
-            updateHugUI(); updateKissUI(); buildGarden(); buildPromiseWall();
-            if (mainSite.classList.contains('visible')) spawnFloaters(6);
+            // ── INIT ──
+            updateHugUI();
+            updateKissUI();
+            updateJarLevel();
+            buildGarden();
+            buildPromiseWall();
+            if (mainSite.classList.contains('visible')) spawnFloaters(8);
             setInterval(() => {
-                if (mainSite.classList.contains('visible') && floatContainer.children.length < 8) createFloating();
-            }, 2500);
+                if (mainSite.classList.contains('visible') && floatContainer.children.length < 10) createFloating();
+            }, 2200);
+            // Periodic gentle floaters
+            setInterval(() => {
+                if (mainSite.classList.contains('visible') && Math.random() > 0.55) createFloating();
+            }, 4000);
         })();
     </script>
 </body>
