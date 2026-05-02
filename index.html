@@ -580,13 +580,13 @@
             <!-- Letter moved here -->
             <div class="letter-wrapper" id="letterCard">
                 <p id="typedLetterText" style="min-height:40px;"></p>
-                <button class="letter-start-btn" id="startLetterBtn">💌 Tap to Read My Letter</button>
+                <button class="letter-start-btn" id="startLetterBtn">Tap here please</button>
             </div>
         </div>
 
         <div class="glass-card" style="text-align:center;">
             <h3><i class="fas fa-music"></i> Let's Play a Song</h3>
-            <p style="margin-bottom:10px;">This is how you sound to me — beautiful and lovely 🎶</p>
+            <p style="margin-bottom:10px;">This song is how you sound to me so let's play it 🎶</p>
             <button id="musicToggleBtn" class="hug-btn" style="background:#b34266;"><i class="fas fa-play"></i> Play</button>
             <audio id="bgMusic" loop preload="auto" style="display:none;"><source src="music/music.mp3" type="audio/mpeg"></audio>
         </div>
@@ -636,7 +636,7 @@
 
         <div class="glass-card" style="text-align:center;">
             <h3>🔐 A Secret Message from Your Husband</h3>
-            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="Type nickname…" aria-label="Nickname">
+            <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="type pass" aria-label="Password">
             <br>
             <button id="unlockPuzzleBtn" class="hug-btn btn-alt"><i class="fas fa-key"></i> Unlock Surprise</button>
             <div id="puzzleResult" style="margin-top:12px;font-weight:600;"></div>
@@ -806,7 +806,7 @@
             function megaConfetti() { burstHeavy(); setTimeout(burstHeavy, 300); setTimeout(burstHeavy, 600); }
 
             // ────────────── FLOATING ──────────────
-            function createFloating(emoji = null) {
+            function createFloating(emoji = null, customFontSize = null) {
                 if (!floatContainer) return;
                 const el = document.createElement('div');
                 el.className = 'float-item';
@@ -815,7 +815,11 @@
                 el.style.left = Math.random() * 93 + '%';
                 const dur = Math.random() * 6 + 5;
                 el.style.animationDuration = dur + 's';
-                el.style.fontSize = (Math.random() * 12 + 14) + 'px';
+                if (customFontSize) {
+                    el.style.fontSize = customFontSize + 'px';
+                } else {
+                    el.style.fontSize = (Math.random() * 12 + 14) + 'px';
+                }
                 floatContainer.appendChild(el);
                 setTimeout(() => { if (el.parentNode) el.remove(); }, (dur + 0.5) * 1000);
             }
@@ -1020,7 +1024,7 @@ I love you more than all the stars in the sky… more than words can hold, more 
                 }
             });
 
-            // ────────────── PUZZLE (naughty message + softer hint) ──────────────
+            // ────────────── PUZZLE (naughty message + no hint) ──────────────
             unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
                 if (['teddy bear','teddybear','my teddy bear','teddy'].includes(ans)) {
@@ -1031,7 +1035,7 @@ Tonight, my love, I want you to surrender yourself fully to me with all the trus
 Just melt into my arms, relax, and give yourself completely to me. I want to make you feel so loved, so desired, and so adored that nothing else exists but us. You are my everything, tonight. I can't wait to hold and kiss you all night long, my beautiful wife. 💕"</em>`;
                     megaConfetti();
                 } else {
-                    puzzleResultDiv.innerHTML = '❌ Hint: what you called me as a nickname initially... 🤔';
+                    puzzleResultDiv.innerHTML = '❌ Wrong pass.';
                 }
             });
 
@@ -1044,8 +1048,24 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 });
             });
 
-            // ────────────── LOVE GARDEN ──────────────
-            const gardenMemories = ['🌸 Our first meeting','🌷 Our first laugh','🌼 The day I knew you were the one','🌻 Our first cuddle','🌹 You called me Teddy Bear','🪷 Our first "I love you"','🌺 Every sunset together','💐 The day we became husband & wife','🌾 Morning beside you','🍀 Our inside jokes','🌿 The way you look at me','🪻 Your beautiful smile','🌴 Our dreams','🌵 Conquering hard times','🌸 Forever & always'];
+            // ────────────── LOVE GARDEN (more practical memories) ──────────────
+            const gardenMemories = [
+                '🌸 Our first coffee date',
+                '🌷 Our first movie night',
+                '🌼 The day we cooked together',
+                '🌻 Our first walk in the park',
+                '🌹 The first time you called me Teddy Bear',
+                '🪷 Our first "I love you"',
+                '🌺 Watching sunset together',
+                '💐 The day we got married',
+                '🌾 Morning cuddles',
+                '🍀 Our inside jokes',
+                '🌿 The way you look at me',
+                '🪻 Your beautiful smile',
+                '🌴 Our dreams',
+                '🌵 Getting through tough times',
+                '🌸 Forever & always'
+            ];
             function buildGarden() {
                 gardenGrid.innerHTML = '';
                 gardenMemories.forEach((mem, i) => {
@@ -1094,7 +1114,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 });
             }
 
-            // ────────────── COMPLIMENT BOMB ──────────────
+            // ────────────── COMPLIMENT BOMB (bigger text) ──────────────
             const compliments = ["You're stunning 💖","My Queen 👑","So beautiful","My soulmate","Incredible wife","My sunshine ☀️","Absolutely perfect","Teddy's favorite","Irresistible","My everything"];
             complimentBombBtn.addEventListener('click', () => {
                 for (let i = 0; i < 15; i++) {
@@ -1104,7 +1124,8 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                         el.textContent = compliments[Math.floor(Math.random() * compliments.length)];
                         el.style.left = Math.random()*90+'%';
                         el.style.animationDuration = (Math.random()*4 + 4)+'s';
-                        el.style.opacity = '0.8';
+                        el.style.fontSize = (Math.random() * 24 + 30) + 'px'; // bigger compliments (30-54px)
+                        el.style.opacity = '0.9';
                         floatContainer.appendChild(el);
                         setTimeout(() => el.remove(), 6000);
                     }, i*85);
@@ -1135,7 +1156,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
                 }
             });
 
-            // ────────────── 10 REASONS (replaced with your list) ──────────────
+            // ────────────── 10 REASONS (without "tap to send love") ──────────────
             const reasonsList = [
                 'You came into my life unexpectedly and became my peace.',
                 'Your smile can fix my worst days without even trying.',
@@ -1151,7 +1172,7 @@ Just melt into my arms, relax, and give yourself completely to me. I want to mak
             reasonsList.forEach(r => {
                 const card = document.createElement('div');
                 card.className = 'reason-card';
-                card.innerHTML = `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p><p style="font-size:0.65rem;">tap to send love</p>`;
+                card.innerHTML = `<span style="font-size:1.4rem;">❤️</span><p style="font-weight:600;">${r}</p>`;
                 card.addEventListener('click', () => {
                     burstLight();
                     hugMsgDiv.innerHTML = `💖 I love that: <strong>${r.toLowerCase()}</strong> Forever yours. 💖`;
