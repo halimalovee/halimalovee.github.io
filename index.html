@@ -445,7 +445,7 @@
             100% { transform: translateY(-115vh) scale(0.85); opacity: 0; }
         }
 
-        /* ---------- LETTER ---------- */
+        /* ---------- LETTER (inside hero now) ---------- */
         .letter-wrapper {
             position: relative;
             background: #fffaf5;
@@ -453,11 +453,12 @@
             padding: 24px 20px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.04);
             border: 1px solid rgba(255,220,220,0.6);
-            margin-bottom: 20px;
+            margin: 18px auto 0;
             min-height: 60px;
             font-family: 'Playfair Display', serif;
             white-space: pre-wrap;
             line-height: 1.7;
+            max-width: 700px;
         }
         .letter-start-btn {
             background: #b34266;
@@ -468,11 +469,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
+            display: block;
+            margin: 16px auto 6px;
         }
         .letter-start-btn:hover { background: #9e3857; }
 
@@ -526,7 +524,7 @@
 
         @media (max-width: 700px) {
             .hero h1 { font-size: 1.6rem; }
-            .hero { padding: 32px 16px; border-radius: 56px; }
+            .hero { padding: 32px 16px 28px; border-radius: 56px; }
             .section-title { font-size: 1.3rem; }
             .reason-card { width: 130px; font-size: 0.8rem; padding: 10px 6px; }
             .glass-card { border-radius: 32px; padding: 18px 14px; margin-bottom: 20px; }
@@ -535,6 +533,7 @@
             .garden-plot { width: 45px; height: 45px; font-size: 1.3rem; }
             .night-toggle { top: 12px; right: 12px; width: 40px; height: 40px; }
             .hug-message { font-size: 0.85rem; }
+            .letter-wrapper { padding: 18px 14px; }
         }
         @media print {
             body > * { visibility: hidden; }
@@ -564,25 +563,25 @@
                 <button class="yes-no" id="yesBtn">✨ Yes, my husband! 🧸</button>
                 <button class="yes-no no-btn" id="noBtn">No, I don't. BLEH</button>
             </div>
-            <p style="margin-top:16px;font-size:0.75rem;color:#8a6b75;">*spoiler: hugs, puzzles, a love garden & lots of love :)*</p>
+            <p style="margin-top:16px;font-size:0.75rem;color:#8a6b75;">*spoiler: hugs, puzzles, a love garden & lots of love :)</p>
         </div>
     </div>
 
     <div class="main-site" id="mainSite">
         <div class="floating-teddies" id="floatContainer"></div>
 
+        <!-- HERO + LETTER MERGED -->
         <div class="hero glass-card" id="heroSection">
             <h1>🎂 Happy Birthday, My Queen 🎂</h1>
             <p style="font-family:'Dancing Script',cursive;font-size:1.15rem;">To the queen of my heart 🧸</p>
             <div style="background:#fcc4d2;display:inline-block;padding:7px 20px;border-radius:50px;margin-top:10px;font-weight:500;color:#5c2d3e;">
-                <i class="fas fa-ring"></i> Husband &amp; Wife — best friends, lovers, soulmates <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i> My Soulmate, My Forever Love, My Teddy Bear 🧸💖 <i class="fas fa-heart"></i>
             </div>
-            <p style="margin-top:6px;font-size:0.7rem;opacity:0.7;">💡 Double‑tap this card for a bear hug attack! 🐻</p>
-        </div>
-
-        <div class="letter-wrapper glass-card" id="letterCard">
-            <p id="typedLetterText" style="min-height:40px;"></p>
-            <button class="letter-start-btn" id="startLetterBtn">💌 Tap to Read My Letter</button>
+            <!-- Letter moved here -->
+            <div class="letter-wrapper" id="letterCard">
+                <p id="typedLetterText" style="min-height:40px;"></p>
+                <button class="letter-start-btn" id="startLetterBtn">💌 Tap to Read My Letter</button>
+            </div>
         </div>
 
         <div class="glass-card" style="text-align:center;">
@@ -1007,11 +1006,11 @@
                 }
             });
 
-            // ────────────── PUZZLE ──────────────
+            // ────────────── PUZZLE (now with a naughty twist) ──────────────
             unlockBtn.addEventListener('click', () => {
                 const ans = puzzleAnswer.value.trim().toLowerCase();
                 if (['teddy bear','teddybear','my teddy bear','teddy'].includes(ans)) {
-                    puzzleResultDiv.innerHTML = '🔓✨ <strong>Unlocked!</strong><br><em>"My beautiful wife, I will be your Teddy Bear forever. I love you more than every star. Happy Birthday, Halima! 🧸💖"</em>';
+                    puzzleResultDiv.innerHTML = `🔓✨ <strong>Unlocked!</strong><br><em>"Mmm, my naughty wife... tonight I'm going to kiss you everywhere — your sweet lips, your perfect boobs, and every little spot that drives you wild. Your Teddy Bear is going to make you feel so good, darling. 🧸💋🔥"</em>`;
                     megaConfetti();
                 } else {
                     puzzleResultDiv.innerHTML = '❌ Hint: the fluffy nickname you call me… 🧸 <strong>(Teddy Bear)</strong>';
@@ -1170,7 +1169,7 @@
                 }
             });
 
-            // ────────────── HERO DOUBLE‑TAP ──────────────
+            // ────────────── HERO DOUBLE‑TAP (still works, just no hint) ──────────────
             document.getElementById('heroSection').addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 megaConfetti();
